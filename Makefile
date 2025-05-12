@@ -11,8 +11,6 @@ dev:
 
 build:
 	mdbook build;
-	rm -rf css FontAwesome fonts
-	mv book/* ./
 	git add .
 	git commit
 	git push
