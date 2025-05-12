@@ -1,0 +1,565 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Lince Documentation</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Lince Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p align=center>
+<img width=24% src="https://github.com/lince-social/.github/blob/main/media/logo/preto_no_branco.png">
+<img width=24% src="https://github.com/lince-social/.github/blob/main/media/logo/branco_no_preto.png">
+<img width=24% src="https://github.com/lince-social/.github/blob/main/media/logo/preto_no_branco.png">
+<img width=24% src="https://github.com/lince-social/.github/blob/main/media/logo/branco_no_preto.png">
+</p>
+<h1 id="lince"><a class="header" href="#lince">Lince</a></h1>
+<h3 id="tool-for-registry-interconnection-and-automation-of-needs-and-contributions-with-open-scope"><a class="header" href="#tool-for-registry-interconnection-and-automation-of-needs-and-contributions-with-open-scope">Tool for registry, interconnection and automation of Needs and Contributions with open scope.</a></h3>
+<hr />
+<h2 id="getting-started"><a class="header" href="#getting-started">Getting Started</a></h2>
+<p>If you have <a href="https://www.rust-lang.org/tools/install">cargo</a>, run:</p>
+<pre><code class="language-bash">cargo run
+</code></pre>
+<p>Go to <a href="http://localhost:3000">http://localhost:3000</a></p>
+<hr />
+<h2 id="disclamer"><a class="header" href="#disclamer">Disclamer</a></h2>
+<p>This project is licensed under the GNU GPLv3 license. Crowdfunding is the source of development compensation:</p>
+<p><a href="https://github.com/sponsors/lince-social">GitHub Sponsors</a> | <a href="https://www.patreon.com/lince_social">Patreon</a> | <a href="https://www.apoia.se/lince">Apoia.se</a></p>
+<p>Lince tries to facilitate and automate the connection between people and resources, by transforming needs and contributions into data. The gains and losses related to the interaction, such as transportation, production and services themselves, remain the responsibility of the parties involved.</p>
+<hr />
+<h1 id="documentation"><a class="header" href="#documentation">DOCUMENTATION</a></h1>
+<p>@: What is Lince?</p>
+<p>%: Lince is a tool for registry, interconnection and automation of Needs and Contributions with open scope.</p>
+<p>@: Ok, but what is it?</p>
+<p>%: Lince is an app that can be used to model and/or automate personal tasks, items, computer actions, economic trades between parties... The limit is your imagination (and your wizard skills with computers).</p>
+<p>@: Sure...</p>
+<p>%: Look, I'll explain everything in detail, so follow me. I promise the journey is worth the end, traveler.</p>
+<p>Lince works with a PostgreSQL database, some answers about data types can be found there, it searches for it's data in ~/.config/lince/lince.sql, if not found there, it defaults to the directory Lince was cloned to, in src/db/versions/lince.sql. It is recomended to frequently backup the lince.sql file, if some error or mistake happens, your information is safe.</p>
+<p>It is tempting to say TCITD, or 'The code is the documentation', because documentations are often not up to date and that is the best way of seeing the truth about the program. But that is not best for everyone, so this documentation in text was made. With that said, if you want to learn more about lince by reading the documentation, it is advised to also have the database declaration open: https://github.com/lince-social/lince/blob/main/src/db/schema.sql, for the documentation below has the name and data type of the tables, but not it's constraints.</p>
+<p>Firstly the tables of the database will be explained, then the ways in which they can interact with themselves and/or your/other computers:</p>
+<hr />
+<h1 id="tables"><a class="header" href="#tables">TABLES</a></h1>
+<h2 id="table-record"><a class="header" href="#table-record">Table: <code>record</code></a></h2>
+<div class="table-wrapper"><table><thead><tr><th>record</th></tr></thead><tbody>
+<tr><td>id</td></tr>
+<tr><td>quantity</td></tr>
+<tr><td>head</td></tr>
+<tr><td>body</td></tr>
+<tr><td>location</td></tr>
+</tbody></table>
+</div>
+<p>Lince is centered on the 'record' table, but like, according to the creator... like, what do they know?</p>
+<p>Let's assume this is Lince's sun, it is the most capable one on the task of giving Lince life. The thing the app revolves around.</p>
+<hr />
+<h2 id="table-record-1"><a class="header" href="#table-record-1">Table: <code>record</code></a></h2>
+<div class="table-wrapper"><table><thead><tr><th>record</th><th>DATA STRUCTURE</th></tr></thead><tbody>
+<tr><td>id</td><td>SERIAL</td></tr>
+<tr><td>quantity</td><td>REAL</td></tr>
+<tr><td>head</td><td>TEXT</td></tr>
+<tr><td>body</td><td>TEXT</td></tr>
+<tr><td>location</td><td>POINT</td></tr>
+</tbody></table>
+</div>
+<p>'id's are automatically generated.</p>
+<p>'quantity' represents the availability of the record, if negative it is a Necessity, if positive, a Contribution, zero makes it not mean much, sometimes.</p>
+<p>'head' and 'body' are meant to be parts of a whole, where one can be used for a short summary and the other a description, or one has all the information and the other holds tags for filtering through views. With a pubsub protocol, one can send a short information of the record, in this case it can be the head, and put the rest in the body. Only those interested in the head will ask for the body of the record. That way the minimum amount of information is sent over the network, making it faster and stuff, I think.</p>
+<p>'location' is an important information for interactions outside of computers (they exist, it's insane) or any other use you want to give it.</p>
+<hr />
+<h2 id="table-record-2"><a class="header" href="#table-record-2">Table: <code>record</code></a></h2>
+<div class="table-wrapper"><table><thead><tr><th>record</th><th>DATA STRUCTURE</th><th>USER INPUT</th></tr></thead><tbody>
+<tr><td>id</td><td>SERIAL</td><td></td></tr>
+<tr><td>quantity</td><td>REAL</td><td>-1</td></tr>
+<tr><td>head</td><td>TEXT</td><td>Eat Apple</td></tr>
+<tr><td>body</td><td>TEXT</td><td></td></tr>
+<tr><td>location</td><td>POINT</td><td></td></tr>
+</tbody></table>
+</div>
+<p>So, for an example, imagine that you like apples and you want to create a task to eat it today.</p>
+<p>You create a 'record', giving it '-1' to the 'quantity', for that action is a Necessity in your life right now, and 'Eat Apple' to the 'head'.</p>
+<hr />
+<h2 id="table-record-3"><a class="header" href="#table-record-3">Table: <code>record</code></a></h2>
+<div class="table-wrapper"><table><thead><tr><th>record</th><th>DATA STRUCTURE</th><th>USER INPUT</th><th>ACTUAL RECORD</th></tr></thead><tbody>
+<tr><td>id</td><td>SERIAL</td><td></td><td>1</td></tr>
+<tr><td>quantity</td><td>REAL</td><td>-1</td><td>-1</td></tr>
+<tr><td>head</td><td>TEXT</td><td>Eat Apple</td><td>Eat Apple</td></tr>
+<tr><td>body</td><td>TEXT</td><td></td><td>NULL</td></tr>
+<tr><td>location</td><td>POINT</td><td></td><td>NULL</td></tr>
+</tbody></table>
+</div>
+<p>The end result, on the PostgreSQL database, is this record. In summary, fields with 'NOT NULL' that have defaults don't need to be filled, as it happens automatically.</p>
+<hr />
+<h2 id="table-record-4"><a class="header" href="#table-record-4">Table: <code>record</code></a></h2>
+<div class="table-wrapper"><table><thead><tr><th>id</th><th>quantity</th><th>head</th><th>body</th><th>location</th></tr></thead><tbody>
+<tr><td>1</td><td>-1</td><td>Eat Apple</td><td>NULL</td><td>NULL</td></tr>
+</tbody></table>
+</div>
+<p>The theoretical apple eater in the example chose to put -1 in 'quantity' because they have a view that gives them all the records with a negative 'quantity' (quantity &lt; 0).</p>
+<p>So they will see the 'Eat Apple' task on that view, but more about that in a second, now look at other examples of records (rows are set horizontally now).</p>
+<hr />
+<h2 id="table-record-5"><a class="header" href="#table-record-5">Table: <code>record</code></a></h2>
+<div class="table-wrapper"><table><thead><tr><th>id</th><th>quantity</th><th>head</th><th>body</th><th>location</th></tr></thead><tbody>
+<tr><td>1</td><td>-1</td><td>Eat Apple</td><td>NULL</td><td>NULL</td></tr>
+<tr><td>2</td><td>1</td><td>Apple</td><td>Item, Food</td><td>NULL</td></tr>
+<tr><td>3</td><td>0</td><td>Brush Teeth</td><td>Action, Hygiene</td><td>NULL</td></tr>
+<tr><td>4</td><td>3</td><td>Toothbrush</td><td>Item, Hygiene</td><td>NULL</td></tr>
+<tr><td>5</td><td>-1</td><td>Meditate</td><td>Action, Spirituality</td><td>NULL</td></tr>
+</tbody></table>
+</div>
+<p>As you can see, there are records with different quantities, heads, and bodies. They are modeling actions and items.</p>
+<p>The user likes to center it's filtering through the body column, seeing all actions, or all items of a certain area of their lives, like Hygiene, each in different created views.</p>
+<hr />
+<h2 id="table-views"><a class="header" href="#table-views">Table: <code>views</code></a></h2>
+<div class="table-wrapper"><table><thead><tr><th>views</th><th>DATA STRUCTURE</th></tr></thead><tbody>
+<tr><td>id</td><td>SERIAL</td></tr>
+<tr><td>view</td><td>TEXT</td></tr>
+<tr><td>view_name</td><td>TEXT</td></tr>
+</tbody></table>
+</div>
+<p>We've spoken so much about views, let's dive into them. They are essentially SQL queries, allowing you to select what columns you want to see, filtered, ordered and much more, just the way you want it.
+The view column has the SQL query, the view_name has the view's name. Simple, right?</p>
+<hr />
+<h2 id="table-configuration"><a class="header" href="#table-configuration">Table: <code>configuration</code></a></h2>
+<div class="table-wrapper"><table><thead><tr><th>configuration</th><th>DATA STRUCTURE</th></tr></thead><tbody>
+<tr><td>id</td><td>SERIAL</td></tr>
+<tr><td>quantity</td><td>REAL</td></tr>
+<tr><td>save_mode</td><td>VARCHAR</td></tr>
+<tr><td>view_id</td><td>INTEGER</td></tr>
+<tr><td>column_information_mode</td><td>VARCHAR</td></tr>
+<tr><td>keymap</td><td>JSONB</td></tr>
+<tr><td>truncation</td><td>JSONB</td></tr>
+<tr><td>table_query</td><td>JSONB</td></tr>
+<tr><td>language</td><td>VARCHAR</td></tr>
+<tr><td>timezone</td><td>VARCHAR</td></tr>
+</tbody></table>
+</div>
+<p>This table is responsible for changing the behavior of Lince. The 'quantity' sets the active configuration, with the value of 1, the other rows have it 0. 'save_mode' can be automatic or manual, happening only when the user demands it, or after every database change. 'view_id' sets the rows you will see, this is a reference to the id of a row in view. 'column_information_mode' can be 'silent for no information, 'short', for the data types and constraints or 'verbose' for the previous information plus a description of the functionality/usage of the column. Keymap is for changing the commands sent manually (TODO) so 'd' is not for deleting records but for 'd'escribing lince, printing it's documentation. 'truncation' is somewhat deprecated, used for truncating cells's contents. 'table_query' is too deprecated, somewhat, from the terminal days, but essentially it changes how a table is queried. 'language' and 'timezone' are for the language and timezone :).</p>
+<hr />
+<h2 id="table-history"><a class="header" href="#table-history">Table: <code>history</code></a></h2>
+<div class="table-wrapper"><table><thead><tr><th>history</th><th>DATA STRUCTURE</th></tr></thead><tbody>
+<tr><td>id</td><td>SERIAL</td></tr>
+<tr><td>record_id</td><td>INTEGER</td></tr>
+<tr><td>change_time</td><td>TIMESTAMP</td></tr>
+<tr><td>old_quantity</td><td>REAL</td></tr>
+<tr><td>new_quantity</td><td>REAL</td></tr>
+</tbody></table>
+</div>
+<p>History is a table that automatically logs the change of a record's quantity, to use the 'sum' table.</p>
+<hr />
+<h2 id="table-karma"><a class="header" href="#table-karma">Table: <code>karma</code></a></h2>
+<div class="table-wrapper"><table><thead><tr><th>karma</th><th>DATA STRUCTURE</th></tr></thead><tbody>
+<tr><td>id</td><td>SERIAL</td></tr>
+<tr><td>quantity</td><td>INTEGER</td></tr>
+<tr><td>expression</td><td>TEXT</td></tr>
+</tbody></table>
+</div>
+<p>Karma has it's own section further below for a deeper understanding, it's a way of combining data and taking actions automatically. The 'expression' column contains lince-python-like logic.</p>
+<hr />
+<h2 id="table-frequency"><a class="header" href="#table-frequency">Table: <code>frequency</code></a></h2>
+<div class="table-wrapper"><table><thead><tr><th>frequency</th><th>DATA STRUCTURE</th></tr></thead><tbody>
+<tr><td>id</td><td>SERIAL</td></tr>
+<tr><td>quantity</td><td>INTEGER</td></tr>
+<tr><td>day_week</td><td>REAL</td></tr>
+<tr><td>months</td><td>REAL</td></tr>
+<tr><td>days</td><td>REAL</td></tr>
+<tr><td>seconds</td><td>REAL</td></tr>
+<tr><td>next_date</td><td>TIMESTAMP</td></tr>
+<tr><td>finish_date</td><td>DATE</td></tr>
+<tr><td>catch_up_sum</td><td>INTEGER</td></tr>
+</tbody></table>
+</div>
+<p>'frequency' contains a plethora of ways for modeling a frequency, this is a table that makes more sense when one understands karma. If one wants to automate something that happens, changes every 4 days 9 hours and 53 seconds, finishing at 2029, it can be done so. 'day_week' is the day of the week, monday is 1. 'months', 'days' and 'seconds' are what they seem, 'next_date' is the column that changes when the time comes, advancing to a next date in accordance with the previous columns. 'finish_date' asserts that it will only run before a certain date, 'catch_up_sum' is a value that when negative and the 'next_date' is way behind the current date, the returned value will be of a certain amount, so instead of returning one, it will return the absolute value of this column. Example:</p>
+<p>There is one frequency for every 60 seconds, starting now, but I have activated it with karma 10 minutes from now. With a 'catch_up_sum' of -2 it will return 2, it should return 10, for it's been 10 minutes stopped, and then return 1 every 1 minute, but with a 'catch_up_sum' of -2 it returns 2. If the 'catch_up_sum' is more than zero, it will multiply the value returned, so if instead of -2 it's '2.5, after 10 minutes from being stopped it will return 25, and 2.5 every subsequent minute.</p>
+<hr />
+<h2 id="table-sum"><a class="header" href="#table-sum">Table: <code>sum</code></a></h2>
+<div class="table-wrapper"><table><thead><tr><th>sum</th><th>DATA STRUCTURE</th></tr></thead><tbody>
+<tr><td>id</td><td>SERIAL</td></tr>
+<tr><td>quantity</td><td>INTEGER</td></tr>
+<tr><td>record_id</td><td>INTEGER</td></tr>
+<tr><td>interval_relative</td><td>BOOL</td></tr>
+<tr><td>interval_length</td><td>INTERVAL</td></tr>
+<tr><td>sum_mode</td><td>INTEGER</td></tr>
+<tr><td>end_lag</td><td>INTERVAL</td></tr>
+<tr><td>end_date</td><td>TIMESTAMP</td></tr>
+</tbody></table>
+</div>
+<p>This table is responsible for returning a sum of change. Change of a record's quantity over time. You have the 'record_id' to know what record to look for.
+'interval_length' is a period, can be 1 day, 8 months, etc. If 'interval_relative' is TRUE, will sum all the changes ending now, starting at the past based on the 'interval_length' (ex: 'interval_length' of 8 months and 'interval_relative' is TRUE will make it look at the past 8 months). If FALSE an 'end_date' will need to be supplied. so the past 8 months ending in a certain date. 'end_lag' will give a space between now and the end point of a relative interval. So if the 'interval_length' is 8 months and 'interval_relative' is TRUE, an 'end_lag' of 2 months will make the sum look at the 2 months back to 10 months back, starting 10 months ago, ending 2 months ago. 'sum_mode' tells Lince what to sum, if 0 it's a delta, essentially doing a quantity now - quantity earlier. If it's negative, it sums all negative changes, positive, idem.</p>
+<hr />
+<h2 id="table-command"><a class="header" href="#table-command">Table: <code>command</code></a></h2>
+<div class="table-wrapper"><table><thead><tr><th>command</th><th>DATA STRUCTURE</th></tr></thead><tbody>
+<tr><td>id</td><td>SERIAL</td></tr>
+<tr><td>quantity</td><td>INTEGER</td></tr>
+<tr><td>command</td><td>TEXT</td></tr>
+</tbody></table>
+</div>
+<p>'command' is a command you can run in through a shell, like 'python app.py' or 'touch grass.txt'.</p>
+<hr />
+<h2 id="table-transfer"><a class="header" href="#table-transfer">Table: <code>transfer</code></a></h2>
+<div class="table-wrapper"><table><thead><tr><th>transfer</th><th>DATA STRUCTURE</th></tr></thead><tbody>
+<tr><td>id</td><td>SERIAL</td></tr>
+<tr><td>records_received</td><td>JSON</td></tr>
+<tr><td>records_contributed</td><td>JSON</td></tr>
+<tr><td>agreement</td><td>JSON</td></tr>
+<tr><td>agreement_time</td><td>TIMESTAMP</td></tr>
+<tr><td>transfer_confirmation</td><td>JSON</td></tr>
+<tr><td>transfer_time</td><td>TIMESTAMP</td></tr>
+</tbody></table>
+</div>
+<p><strong>WORK IN PROGRESS</strong>
+'records_received' is a collection of records and their quantities that will interact with our records, things you will receive. 'records_contributed' are the records you will contribute and their quantities, to the records of other parties, can be more than one party. So you can receive 5 moneys and an apple for driving someone from A to B. You don't work with it, but you have a car and their destination was on the way of yours. 'agreement' is a collection of agreement by all parties involved. 'agreement_time' is the moment every party agreed for the conditions of the trade, who will receive what. 'transfer_confirmation' is also a collection but with a confirmation from all parties that the transfer was successful, and 'transfer_time' for saving the event's moment.</p>
+<hr />
+<h1 id="karma"><a class="header" href="#karma">KARMA</a></h1>
+<p>The 'expression' column in the 'karma' table is like Lince's brain.</p>
+<p>It is divided into two parts left and right, like a brain, separated by a '='. For karma to have it's effect, a karma() function is called (currently every 60 seconds), in each expression first the right side has some information searched and replaced if necessary, then it is evaluated, and passed to the left side. (What?)</p>
+<p>Let's look at an example, say you have a record:</p>
+<div class="table-wrapper"><table><thead><tr><th>record</th><th>VALUE</th></tr></thead><tbody>
+<tr><td>id</td><td>1</td></tr>
+<tr><td>quantity</td><td>0</td></tr>
+<tr><td>head</td><td>Eat Apple</td></tr>
+<tr><td>body</td><td>Action, Food</td></tr>
+<tr><td>location</td><td></td></tr>
+</tbody></table>
+</div>
+<p>If we pull the Record Quantity (rq) of this record we get zero (0). In other words, if we pull the rq1, the Record Quantity of the record with ID 1, we get zero (0).</p>
+<p>Our karma expression can be a simple:</p>
+<div class="table-wrapper"><table><thead><tr><th>karma</th><th>VALUE</th></tr></thead><tbody>
+<tr><td>id</td><td>1</td></tr>
+<tr><td>quantity</td><td>1</td></tr>
+<tr><td>expression</td><td>rq1 = -1</td></tr>
+</tbody></table>
+</div>
+<p>For demonstrating purposes, karma expressions will be shown like this, no need for the full table:</p>
+<pre><code class="language-lince">rq1 = -1
+</code></pre>
+<p>When the karma() function is called, every row will have it's consequence if needed. In this case the consequence is that the quantity in the record with ID 1 is now -1.</p>
+<p>How does that happen? The right side of the expression, in this case '-1' is evaluated, a python eval(). The right side is now literal python, you can declare classes, pull libraries, write everything, including writing just -1. The left side of the expression, since it has only the mention of a record quantity will receive that number without problems, the quantity in the record with ID 1 is now -1.</p>
+<hr />
+<h1 id="simple-example"><a class="header" href="#simple-example">Simple Example:</a></h1>
+<p>Now let's say that the rq1 is still zero (0), another karma expression could be:</p>
+<pre><code class="language-lince">rq1 = rq1 -1
+</code></pre>
+<p>So now everytime karma() is called, it will diminish the quantity by one, insead of always setting it to -1. The rq1 is searched and replaced with it's actual value:</p>
+<pre><code class="language-lince">rq1 = rq1 -1
+
+      |
+      V
+
+rq1 = 0 -1
+
+       |
+       V
+
+rq1 = -1
+</code></pre>
+<p>Now your rq1 is -1:</p>
+<div class="table-wrapper"><table><thead><tr><th>record</th><th>VALUE</th></tr></thead><tbody>
+<tr><td>id</td><td>1</td></tr>
+<tr><td>quantity</td><td>-1</td></tr>
+<tr><td>head</td><td>Eat Apple</td></tr>
+<tr><td>body</td><td>Action, Food</td></tr>
+<tr><td>location</td><td></td></tr>
+</tbody></table>
+</div>
+<hr />
+<h1 id="the-zero-case"><a class="header" href="#the-zero-case">The Zero Case:</a></h1>
+<p>And what if the rq1 was 1?
+In that case, it would still be one, why? Because when the right side is zero, nothing changes on the left side. That is not a bug, but a feature, that way, expressions can be ignored if they dont meet certain conditions:</p>
+<pre><code class="language-lince">rq1 = -1 * (rq1 == 10)
+</code></pre>
+<p>In this case the '(rq1 == 10)' in python will be set to False, because '(1 == 10)' is False, and when '-1 * False' is read by python it returns zero. So the record quantity will remain 1.</p>
+<p>But what if I want it to be 0? Then you add '*' before the '=':</p>
+<pre><code class="language-lince">rq1 *= -1 * (rq1 == 10)
+</code></pre>
+<p>If rq1 is ten (10), it turns into one (1), if it is not ten (10), then it turns into zero (0).</p>
+<hr />
+<h1 id="how-it-works-really"><a class="header" href="#how-it-works-really">How it works, really:</a></h1>
+<p>A karma expression is a mix of python and regex for searching and replacing, but that is not all it can do. One of the features is to be able to run commands located in the command table.</p>
+<p>Let's say you have a command:</p>
+<p>| command  | VALUE           |
+| -------- | --------------- | ------------------------------------------- |
+| id       | 3               |
+| quantity | 1               |
+| command  | touch grass.txt | &lt;-- touch <file> in Linux creates the file. |</p>
+<p>This command with ID 3 can be referenced in a karma expression with 'c3'.</p>
+<p>If we have a record:</p>
+<div class="table-wrapper"><table><thead><tr><th>comman</th><th>VALUE</th></tr></thead><tbody>
+<tr><td>id</td><td>2</td></tr>
+<tr><td>quantity</td><td>1</td></tr>
+<tr><td>head</td><td>Create grass.txt</td></tr>
+<tr><td>body</td><td>Action, Command</td></tr>
+<tr><td>location</td><td></td></tr>
+</tbody></table>
+</div>
+<p>We can create a semi-automation, reducing the steps, the clicks, the button presses, the time it takes to do that job:</p>
+<pre><code class="language-lince">rq2,c3 = (rq2 == 0) * 1
+</code></pre>
+<p>When the quantity in record with ID 2 is 0, the command with ID 3 is run through the computer's shell and the grass.txt is created.</p>
+<hr />
+<h1 id="automation-real-automation"><a class="header" href="#automation-real-automation">Automation, real automation:</a></h1>
+<p>But what if we want to automate everything? Like literally everything.</p>
+<p>For that, a general enough system needs to exist. When we talk automation we talk about labor automation, time that does not need to be spent doing something. Automation is a tool, not an end, and it can be a tool for the benefit of everyone, by reducing the labor needed to satiate human needs.</p>
+<p>Lince aims to be a tool that can model human needs and contributions to meet those needs, automating as much as possible for that goal. And the biggest source of automation in Lince, is not shortening the time it takes to give the computer an instruction, but removing the need to do it, satiating that need.</p>
+<p>The 'frequency' table allows for rows with different frequencies to return 1 to a karma expression, activating scripts changing the values in certain cells in certain tables, let's see it in action:</p>
+<div class="table-wrapper"><table><thead><tr><th>frequency</th><th>VALUE</th></tr></thead><tbody>
+<tr><td>id</td><td>6</td></tr>
+<tr><td>quantity</td><td>1</td></tr>
+<tr><td>day_week</td><td></td></tr>
+<tr><td>months</td><td></td></tr>
+<tr><td>days</td><td>1</td></tr>
+<tr><td>seconds</td><td></td></tr>
+<tr><td>next_date</td><td>2024-01-01 22:00:00+00:00</td></tr>
+<tr><td>finish_date</td><td></td></tr>
+<tr><td>when_done</td><td></td></tr>
+</tbody></table>
+</div>
+<p>Let's say that we are in 2024-01-01 21:00:00 living in a place with a +0 timezone and have a karma expression:</p>
+<pre><code class="language-lince">c3 = f6
+
+     |
+     V
+
+c3 = 0
+</code></pre>
+<p>In that same day, when ten (10) P.M. rolls around, the time is exactly '2024-01-02 22:00:00+00:00' or after, the karma() function will receive not zero (0), but one (1) from the frequency with ID 6:</p>
+<pre><code class="language-lince">c3 = 1
+</code></pre>
+<p>The command will receive one, it will be run, the 'touch grass.tx' will be executed, the grass.txt file will be created. It achieves that by updating the date in next_date by one day, as set by the day column with value one (1) in this case.</p>
+<p>In the TODO list, ignore if you want: make all the expressions that use a certain frequency be checked and run if needed before updating next_date. Right now one activation of a frequency negates all other expressions that need to return 1 at that frequency, because it will already have been activated and updated.</p>
+<hr />
+<p>Until now the command was only at the left side, as something that was run because of a consequence on the right side. But, it can also be run and it's output passed as a value from the right side to the left one:</p>
+<div class="table-wrapper"><table><thead><tr><th>command</th><th>VALUE</th></tr></thead><tbody>
+<tr><td>id</td><td>7</td></tr>
+<tr><td>quantity</td><td>1</td></tr>
+<tr><td>command</td><td>python temperature_getter.py</td></tr>
+</tbody></table>
+</div><div class="table-wrapper"><table><thead><tr><th>record</th><th>VALUE</th></tr></thead><tbody>
+<tr><td>id</td><td>10</td></tr>
+<tr><td>quantity</td><td>0</td></tr>
+<tr><td>head</td><td>Get a sweater</td></tr>
+<tr><td>body</td><td>Action, Clothes</td></tr>
+<tr><td>location</td><td></td></tr>
+</tbody></table>
+</div>
+<p>This pseudo python script uses a weather API to get the tomorrow's lowest temperature (in Celsius, obviously) in a certain city, it then prints it to the terminal, very UNIX-like. If we have that, we can ask Lince to put that temperature inside a karma expression and use it.</p>
+<pre><code class="language-lince">rq10 = -f6 * (co7 &lt;= 15)
+</code></pre>
+<p>Notice it says 'co7', there is a letter 'o' because it's supposed to be run a command that outputs the result to a file, so lince can read it. After that, by reusing a previously created frequency, we can create an expression that makes the quantity of the record with ID 10 be -1 at 22h of everyday, if the command with ID 7 returns tommorow's lowest temperature as a value equal to or less then 15. If we have a view that shows only records with a negative quantity, a person will only see the necessity of packing a sweater when tomorrow is 'cold' enough.</p>
+<hr />
+<p>When opening the browser version you will see a view and this table:</p>
+<div class="table-wrapper"><table><thead><tr><th>App</th><th>Operations</th><th>Tables</th></tr></thead><tbody>
+<tr><td>[E] Exit</td><td>[C] Create</td><td>[0] Configuration</td></tr>
+<tr><td>[H] Help</td><td>[R] Read</td><td>[1] History</td></tr>
+<tr><td>[S] Save DB</td><td>[U] Update</td><td>[2] Record</td></tr>
+<tr><td>[L] Load DB</td><td>[D] Delete</td><td>[3] Karma</td></tr>
+<tr><td>[A] Activate Config</td><td>[Q] Query</td><td>[4] Frequency</td></tr>
+<tr><td></td><td>[F] SQL File</td><td>[5] Command</td></tr>
+<tr><td></td><td></td><td>[6] Sum</td></tr>
+<tr><td></td><td></td><td>[7] Transfer</td></tr>
+<tr><td></td><td></td><td>[8] View</td></tr>
+</tbody></table>
+</div>
+<p>As you can see, this menu has letters and numbers. All the numbers in the 'Tables' column can be combined with the CRUD operations in the 'Operations' column. so if you want to create, delete, update, or read a row you can input in the input box at the top of the screen the number of the table, and the operation, so deleting rows from the 'karma' table would be '3d'. If you type one of the crud operations without anumber, it defaults to the record table. Because Lince is still in development, the place for you to write what you want to delete is shown in the window you opened Lince, in the terminal that is. There you will see a python input() for the creation, deletion and updating of table rows. The read operation is also a work in progress, as it used to work in the terminal and is a sort of a 'Jerry-rig' or 'gambiarra'.</p>
+<p>Just typing a number will make the record with ID of that number to have it's quantity set to zero.</p>
+<p>Since the config has a view_id, you will create a view, and put it in as many configs as you want to. To change configs, and also the view, you write 'a' followed by a number, corresponding to the configuration's ID, so 'a2' will change to configuration 2; that configuration might have a 'view_id' of 30, so 'a2' will give me also the view of the records queried by the view with ID 30.</p>
+<p>That's also something of the terminal days. There are plans of making buttons and stuff, but only because people think they need them, with the box up top for writting commands everything happens fast and you can keep you hands on the keyboard, the best way of using computers.</p>
+<hr />
+<h1 id="personal-note--tips"><a class="header" href="#personal-note--tips">Personal Note &amp; Tips:</a></h1>
+<p>Modeling all items and actions to perform takes a while. Making a Lince instance, understanding the possibilities is to me a long term effort, ever increasing the value you get from computers. The possibilites are vast, limited by one's domain of computers and imagination, when combined, wizardry skills arise.</p>
+<p>From a usage standpoint, I recommend having several views, one for each table and a personal view for tasks, mine is:</p>
+<pre><code class="language-sql">SELECT id, head FROM record WHERE quantity &lt; 0 or LOWER(body) IS NULL
+</code></pre>
+<p>I also use the 'body' column in 'record' table as a tag holder, so every area in my life has either 'Action' or 'Item' and 'AREA'. With that, I have a view for every area and change configs rapidly with a2, a4, a3 so I can view the commands for running things or setting things as done (I don't remmember them all).</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
