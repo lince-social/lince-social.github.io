@@ -156,27 +156,17 @@
 
                 <div id="content" class="content">
                     <main>
-                        <p align=center>
-<img width=24% src="https://github.com/lince-social/.github/blob/main/media/logo/preto_no_branco.png">
-<img width=24% src="https://github.com/lince-social/.github/blob/main/media/logo/branco_no_preto.png">
-<img width=24% src="https://github.com/lince-social/.github/blob/main/media/logo/preto_no_branco.png">
-<img width=24% src="https://github.com/lince-social/.github/blob/main/media/logo/branco_no_preto.png">
-</p>
-<h1 id="lince"><a class="header" href="#lince">Lince</a></h1>
-<h3 id="tool-for-registry-interconnection-and-automation-of-needs-and-contributions-with-open-scope"><a class="header" href="#tool-for-registry-interconnection-and-automation-of-needs-and-contributions-with-open-scope">Tool for registry, interconnection and automation of Needs and Contributions with open scope.</a></h3>
-<hr />
-<h2 id="getting-started"><a class="header" href="#getting-started">Getting Started</a></h2>
-<p>If you have <a href="https://www.rust-lang.org/tools/install">cargo</a>, run:</p>
+                        <h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
+<p>You can run Lince as an executable, here are the <a href="https://github.com/lince-social/lince/tags">releases</a>. Pick the latest one for your machine and operating system. After the download, unzip it and run the binary:</p>
+<pre><code class="language-bash">./lince
+</code></pre>
+<p>If you preffer to compile the source code, the easiest way is to download the repo and run:</p>
 <pre><code class="language-bash">cargo run
 </code></pre>
-<p>Go to <a href="http://localhost:3000">http://localhost:3000</a></p>
-<hr />
-<h2 id="disclamer"><a class="header" href="#disclamer">Disclamer</a></h2>
-<p>This project is licensed under the GNU GPLv3 license. Crowdfunding is the source of development compensation:</p>
-<p><a href="https://github.com/sponsors/lince-social">GitHub Sponsors</a> | <a href="https://www.patreon.com/lince_social">Patreon</a> | <a href="https://www.apoia.se/lince">Apoia.se</a></p>
-<p>Lince tries to facilitate and automate the connection between people and resources, by transforming needs and contributions into data. The gains and losses related to the interaction, such as transportation, production and services themselves, remain the responsibility of the parties involved.</p>
-<hr />
-<h1 id="documentation"><a class="header" href="#documentation">DOCUMENTATION</a></h1>
+<p>If you don't have cargo installed, you can install it with with <a href="https://www.rust-lang.org/tools/install">Rustup</a>.</p>
+<p>Have fun.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="lince"><a class="header" href="#lince">Lince</a></h1>
+<h2 id="tool-for-registry-interconnection-and-automation-of-needs-and-contributions-with-open-scope"><a class="header" href="#tool-for-registry-interconnection-and-automation-of-needs-and-contributions-with-open-scope">Tool for registry, interconnection and automation of Needs and Contributions with open scope.</a></h2>
 <p>@: What is Lince?</p>
 <p>%: Lince is a tool for registry, interconnection and automation of Needs and Contributions with open scope.</p>
 <p>@: Ok, but what is it?</p>
@@ -186,9 +176,20 @@
 <p>Lince works with a PostgreSQL database, some answers about data types can be found there, it searches for it's data in ~/.config/lince/lince.sql, if not found there, it defaults to the directory Lince was cloned to, in src/db/versions/lince.sql. It is recomended to frequently backup the lince.sql file, if some error or mistake happens, your information is safe.</p>
 <p>It is tempting to say TCITD, or 'The code is the documentation', because documentations are often not up to date and that is the best way of seeing the truth about the program. But that is not best for everyone, so this documentation in text was made. With that said, if you want to learn more about lince by reading the documentation, it is advised to also have the database declaration open: https://github.com/lince-social/lince/blob/main/src/db/schema.sql, for the documentation below has the name and data type of the tables, but not it's constraints.</p>
 <p>Firstly the tables of the database will be explained, then the ways in which they can interact with themselves and/or your/other computers:</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="disclamer"><a class="header" href="#disclamer">Disclamer</a></h1>
+<p>This project is licensed under the GNU GPLv3 license. Crowdfunding is the source of development compensation:</p>
+<p><a href="https://github.com/sponsors/lince-social">GitHub Sponsors</a> | <a href="https://www.patreon.com/lince_social">Patreon</a> | <a href="https://www.apoia.se/lince">Apoia.se</a></p>
+<p>Lince tries to facilitate and automate the connection between people and resources, by transforming needs and contributions into data. The gains and losses related to the interaction, such as transportation, production and services themselves, remain the responsibility of the parties involved.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="organization"><a class="header" href="#organization">Organization</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="stack"><a class="header" href="#stack">Stack</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="tech-structure"><a class="header" href="#tech-structure">Tech Structure</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="tables"><a class="header" href="#tables">Tables</a></h1>
 <hr />
-<h1 id="tables"><a class="header" href="#tables">TABLES</a></h1>
-<h2 id="table-record"><a class="header" href="#table-record">Table: <code>record</code></a></h2>
+<hr />
+<hr />
+<hr />
+<hr />
+<div style="break-before: page; page-break-before: always;"></div><h1 id="record"><a class="header" href="#record">Record</a></h1>
 <div class="table-wrapper"><table><thead><tr><th>record</th></tr></thead><tbody>
 <tr><td>id</td></tr>
 <tr><td>quantity</td></tr>
@@ -200,7 +201,6 @@
 <p>Lince is centered on the 'record' table, but like, according to the creator... like, what do they know?</p>
 <p>Let's assume this is Lince's sun, it is the most capable one on the task of giving Lince life. The thing the app revolves around.</p>
 <hr />
-<h2 id="table-record-1"><a class="header" href="#table-record-1">Table: <code>record</code></a></h2>
 <div class="table-wrapper"><table><thead><tr><th>record</th><th>DATA STRUCTURE</th></tr></thead><tbody>
 <tr><td>id</td><td>SERIAL</td></tr>
 <tr><td>quantity</td><td>REAL</td></tr>
@@ -214,7 +214,6 @@
 <p>'head' and 'body' are meant to be parts of a whole, where one can be used for a short summary and the other a description, or one has all the information and the other holds tags for filtering through views. With a pubsub protocol, one can send a short information of the record, in this case it can be the head, and put the rest in the body. Only those interested in the head will ask for the body of the record. That way the minimum amount of information is sent over the network, making it faster and stuff, I think.</p>
 <p>'location' is an important information for interactions outside of computers (they exist, it's insane) or any other use you want to give it.</p>
 <hr />
-<h2 id="table-record-2"><a class="header" href="#table-record-2">Table: <code>record</code></a></h2>
 <div class="table-wrapper"><table><thead><tr><th>record</th><th>DATA STRUCTURE</th><th>USER INPUT</th></tr></thead><tbody>
 <tr><td>id</td><td>SERIAL</td><td></td></tr>
 <tr><td>quantity</td><td>REAL</td><td>-1</td></tr>
@@ -226,7 +225,6 @@
 <p>So, for an example, imagine that you like apples and you want to create a task to eat it today.</p>
 <p>You create a 'record', giving it '-1' to the 'quantity', for that action is a Necessity in your life right now, and 'Eat Apple' to the 'head'.</p>
 <hr />
-<h2 id="table-record-3"><a class="header" href="#table-record-3">Table: <code>record</code></a></h2>
 <div class="table-wrapper"><table><thead><tr><th>record</th><th>DATA STRUCTURE</th><th>USER INPUT</th><th>ACTUAL RECORD</th></tr></thead><tbody>
 <tr><td>id</td><td>SERIAL</td><td></td><td>1</td></tr>
 <tr><td>quantity</td><td>REAL</td><td>-1</td><td>-1</td></tr>
@@ -237,7 +235,6 @@
 </div>
 <p>The end result, on the PostgreSQL database, is this record. In summary, fields with 'NOT NULL' that have defaults don't need to be filled, as it happens automatically.</p>
 <hr />
-<h2 id="table-record-4"><a class="header" href="#table-record-4">Table: <code>record</code></a></h2>
 <div class="table-wrapper"><table><thead><tr><th>id</th><th>quantity</th><th>head</th><th>body</th><th>location</th></tr></thead><tbody>
 <tr><td>1</td><td>-1</td><td>Eat Apple</td><td>NULL</td><td>NULL</td></tr>
 </tbody></table>
@@ -245,7 +242,6 @@
 <p>The theoretical apple eater in the example chose to put -1 in 'quantity' because they have a view that gives them all the records with a negative 'quantity' (quantity &lt; 0).</p>
 <p>So they will see the 'Eat Apple' task on that view, but more about that in a second, now look at other examples of records (rows are set horizontally now).</p>
 <hr />
-<h2 id="table-record-5"><a class="header" href="#table-record-5">Table: <code>record</code></a></h2>
 <div class="table-wrapper"><table><thead><tr><th>id</th><th>quantity</th><th>head</th><th>body</th><th>location</th></tr></thead><tbody>
 <tr><td>1</td><td>-1</td><td>Eat Apple</td><td>NULL</td><td>NULL</td></tr>
 <tr><td>2</td><td>1</td><td>Apple</td><td>Item, Food</td><td>NULL</td></tr>
@@ -256,6 +252,7 @@
 </div>
 <p>As you can see, there are records with different quantities, heads, and bodies. They are modeling actions and items.</p>
 <p>The user likes to center it's filtering through the body column, seeing all actions, or all items of a certain area of their lives, like Hygiene, each in different created views.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="views"><a class="header" href="#views">Views</a></h1>
 <hr />
 <h2 id="table-views"><a class="header" href="#table-views">Table: <code>views</code></a></h2>
 <div class="table-wrapper"><table><thead><tr><th>views</th><th>DATA STRUCTURE</th></tr></thead><tbody>
@@ -266,7 +263,9 @@
 </div>
 <p>We've spoken so much about views, let's dive into them. They are essentially SQL queries, allowing you to select what columns you want to see, filtered, ordered and much more, just the way you want it.
 The view column has the SQL query, the view_name has the view's name. Simple, right?</p>
-<hr />
+<div style="break-before: page; page-break-before: always;"></div><h1 id="collection"><a class="header" href="#collection">Collection</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="collection-view"><a class="header" href="#collection-view">Collection View</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="configuration"><a class="header" href="#configuration">Configuration</a></h1>
 <h2 id="table-configuration"><a class="header" href="#table-configuration">Table: <code>configuration</code></a></h2>
 <div class="table-wrapper"><table><thead><tr><th>configuration</th><th>DATA STRUCTURE</th></tr></thead><tbody>
 <tr><td>id</td><td>SERIAL</td></tr>
@@ -282,19 +281,7 @@ The view column has the SQL query, the view_name has the view's name. Simple, ri
 </tbody></table>
 </div>
 <p>This table is responsible for changing the behavior of Lince. The 'quantity' sets the active configuration, with the value of 1, the other rows have it 0. 'save_mode' can be automatic or manual, happening only when the user demands it, or after every database change. 'view_id' sets the rows you will see, this is a reference to the id of a row in view. 'column_information_mode' can be 'silent for no information, 'short', for the data types and constraints or 'verbose' for the previous information plus a description of the functionality/usage of the column. Keymap is for changing the commands sent manually (TODO) so 'd' is not for deleting records but for 'd'escribing lince, printing it's documentation. 'truncation' is somewhat deprecated, used for truncating cells's contents. 'table_query' is too deprecated, somewhat, from the terminal days, but essentially it changes how a table is queried. 'language' and 'timezone' are for the language and timezone :).</p>
-<hr />
-<h2 id="table-history"><a class="header" href="#table-history">Table: <code>history</code></a></h2>
-<div class="table-wrapper"><table><thead><tr><th>history</th><th>DATA STRUCTURE</th></tr></thead><tbody>
-<tr><td>id</td><td>SERIAL</td></tr>
-<tr><td>record_id</td><td>INTEGER</td></tr>
-<tr><td>change_time</td><td>TIMESTAMP</td></tr>
-<tr><td>old_quantity</td><td>REAL</td></tr>
-<tr><td>new_quantity</td><td>REAL</td></tr>
-</tbody></table>
-</div>
-<p>History is a table that automatically logs the change of a record's quantity, to use the 'sum' table.</p>
-<hr />
-<h2 id="table-karma"><a class="header" href="#table-karma">Table: <code>karma</code></a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="karma"><a class="header" href="#karma">Karma</a></h1>
 <div class="table-wrapper"><table><thead><tr><th>karma</th><th>DATA STRUCTURE</th></tr></thead><tbody>
 <tr><td>id</td><td>SERIAL</td></tr>
 <tr><td>quantity</td><td>INTEGER</td></tr>
@@ -302,62 +289,7 @@ The view column has the SQL query, the view_name has the view's name. Simple, ri
 </tbody></table>
 </div>
 <p>Karma has it's own section further below for a deeper understanding, it's a way of combining data and taking actions automatically. The 'expression' column contains lince-python-like logic.</p>
-<hr />
-<h2 id="table-frequency"><a class="header" href="#table-frequency">Table: <code>frequency</code></a></h2>
-<div class="table-wrapper"><table><thead><tr><th>frequency</th><th>DATA STRUCTURE</th></tr></thead><tbody>
-<tr><td>id</td><td>SERIAL</td></tr>
-<tr><td>quantity</td><td>INTEGER</td></tr>
-<tr><td>day_week</td><td>REAL</td></tr>
-<tr><td>months</td><td>REAL</td></tr>
-<tr><td>days</td><td>REAL</td></tr>
-<tr><td>seconds</td><td>REAL</td></tr>
-<tr><td>next_date</td><td>TIMESTAMP</td></tr>
-<tr><td>finish_date</td><td>DATE</td></tr>
-<tr><td>catch_up_sum</td><td>INTEGER</td></tr>
-</tbody></table>
-</div>
-<p>'frequency' contains a plethora of ways for modeling a frequency, this is a table that makes more sense when one understands karma. If one wants to automate something that happens, changes every 4 days 9 hours and 53 seconds, finishing at 2029, it can be done so. 'day_week' is the day of the week, monday is 1. 'months', 'days' and 'seconds' are what they seem, 'next_date' is the column that changes when the time comes, advancing to a next date in accordance with the previous columns. 'finish_date' asserts that it will only run before a certain date, 'catch_up_sum' is a value that when negative and the 'next_date' is way behind the current date, the returned value will be of a certain amount, so instead of returning one, it will return the absolute value of this column. Example:</p>
-<p>There is one frequency for every 60 seconds, starting now, but I have activated it with karma 10 minutes from now. With a 'catch_up_sum' of -2 it will return 2, it should return 10, for it's been 10 minutes stopped, and then return 1 every 1 minute, but with a 'catch_up_sum' of -2 it returns 2. If the 'catch_up_sum' is more than zero, it will multiply the value returned, so if instead of -2 it's '2.5, after 10 minutes from being stopped it will return 25, and 2.5 every subsequent minute.</p>
-<hr />
-<h2 id="table-sum"><a class="header" href="#table-sum">Table: <code>sum</code></a></h2>
-<div class="table-wrapper"><table><thead><tr><th>sum</th><th>DATA STRUCTURE</th></tr></thead><tbody>
-<tr><td>id</td><td>SERIAL</td></tr>
-<tr><td>quantity</td><td>INTEGER</td></tr>
-<tr><td>record_id</td><td>INTEGER</td></tr>
-<tr><td>interval_relative</td><td>BOOL</td></tr>
-<tr><td>interval_length</td><td>INTERVAL</td></tr>
-<tr><td>sum_mode</td><td>INTEGER</td></tr>
-<tr><td>end_lag</td><td>INTERVAL</td></tr>
-<tr><td>end_date</td><td>TIMESTAMP</td></tr>
-</tbody></table>
-</div>
-<p>This table is responsible for returning a sum of change. Change of a record's quantity over time. You have the 'record_id' to know what record to look for.
-'interval_length' is a period, can be 1 day, 8 months, etc. If 'interval_relative' is TRUE, will sum all the changes ending now, starting at the past based on the 'interval_length' (ex: 'interval_length' of 8 months and 'interval_relative' is TRUE will make it look at the past 8 months). If FALSE an 'end_date' will need to be supplied. so the past 8 months ending in a certain date. 'end_lag' will give a space between now and the end point of a relative interval. So if the 'interval_length' is 8 months and 'interval_relative' is TRUE, an 'end_lag' of 2 months will make the sum look at the 2 months back to 10 months back, starting 10 months ago, ending 2 months ago. 'sum_mode' tells Lince what to sum, if 0 it's a delta, essentially doing a quantity now - quantity earlier. If it's negative, it sums all negative changes, positive, idem.</p>
-<hr />
-<h2 id="table-command"><a class="header" href="#table-command">Table: <code>command</code></a></h2>
-<div class="table-wrapper"><table><thead><tr><th>command</th><th>DATA STRUCTURE</th></tr></thead><tbody>
-<tr><td>id</td><td>SERIAL</td></tr>
-<tr><td>quantity</td><td>INTEGER</td></tr>
-<tr><td>command</td><td>TEXT</td></tr>
-</tbody></table>
-</div>
-<p>'command' is a command you can run in through a shell, like 'python app.py' or 'touch grass.txt'.</p>
-<hr />
-<h2 id="table-transfer"><a class="header" href="#table-transfer">Table: <code>transfer</code></a></h2>
-<div class="table-wrapper"><table><thead><tr><th>transfer</th><th>DATA STRUCTURE</th></tr></thead><tbody>
-<tr><td>id</td><td>SERIAL</td></tr>
-<tr><td>records_received</td><td>JSON</td></tr>
-<tr><td>records_contributed</td><td>JSON</td></tr>
-<tr><td>agreement</td><td>JSON</td></tr>
-<tr><td>agreement_time</td><td>TIMESTAMP</td></tr>
-<tr><td>transfer_confirmation</td><td>JSON</td></tr>
-<tr><td>transfer_time</td><td>TIMESTAMP</td></tr>
-</tbody></table>
-</div>
-<p><strong>WORK IN PROGRESS</strong>
-'records_received' is a collection of records and their quantities that will interact with our records, things you will receive. 'records_contributed' are the records you will contribute and their quantities, to the records of other parties, can be more than one party. So you can receive 5 moneys and an apple for driving someone from A to B. You don't work with it, but you have a car and their destination was on the way of yours. 'agreement' is a collection of agreement by all parties involved. 'agreement_time' is the moment every party agreed for the conditions of the trade, who will receive what. 'transfer_confirmation' is also a collection but with a confirmation from all parties that the transfer was successful, and 'transfer_time' for saving the event's moment.</p>
-<hr />
-<h1 id="karma"><a class="header" href="#karma">KARMA</a></h1>
+<h1 id="karma-1"><a class="header" href="#karma-1">KARMA</a></h1>
 <p>The 'expression' column in the 'karma' table is like Lince's brain.</p>
 <p>It is divided into two parts left and right, like a brain, separated by a '='. For karma to have it's effect, a karma() function is called (currently every 60 seconds), in each expression first the right side has some information searched and replaced if necessary, then it is evaluated, and passed to the left side. (What?)</p>
 <p>Let's look at an example, say you have a record:</p>
@@ -511,13 +443,87 @@ c3 = 0
 <p>Just typing a number will make the record with ID of that number to have it's quantity set to zero.</p>
 <p>Since the config has a view_id, you will create a view, and put it in as many configs as you want to. To change configs, and also the view, you write 'a' followed by a number, corresponding to the configuration's ID, so 'a2' will change to configuration 2; that configuration might have a 'view_id' of 30, so 'a2' will give me also the view of the records queried by the view with ID 30.</p>
 <p>That's also something of the terminal days. There are plans of making buttons and stuff, but only because people think they need them, with the box up top for writting commands everything happens fast and you can keep you hands on the keyboard, the best way of using computers.</p>
-<hr />
+<div style="break-before: page; page-break-before: always;"></div><h1 id="karma-condition"><a class="header" href="#karma-condition">Karma Condition</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="karma-consequence"><a class="header" href="#karma-consequence">Karma Consequence</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="frequency"><a class="header" href="#frequency">Frequency</a></h1>
+<div class="table-wrapper"><table><thead><tr><th>frequency</th><th>DATA STRUCTURE</th></tr></thead><tbody>
+<tr><td>id</td><td>SERIAL</td></tr>
+<tr><td>quantity</td><td>INTEGER</td></tr>
+<tr><td>day_week</td><td>REAL</td></tr>
+<tr><td>months</td><td>REAL</td></tr>
+<tr><td>days</td><td>REAL</td></tr>
+<tr><td>seconds</td><td>REAL</td></tr>
+<tr><td>next_date</td><td>TIMESTAMP</td></tr>
+<tr><td>finish_date</td><td>DATE</td></tr>
+<tr><td>catch_up_sum</td><td>INTEGER</td></tr>
+</tbody></table>
+</div>
+<p>'frequency' contains a plethora of ways for modeling a frequency, this is a table that makes more sense when one understands karma. If one wants to automate something that happens, changes every 4 days 9 hours and 53 seconds, finishing at 2029, it can be done so. 'day_week' is the day of the week, monday is 1. 'months', 'days' and 'seconds' are what they seem, 'next_date' is the column that changes when the time comes, advancing to a next date in accordance with the previous columns. 'finish_date' asserts that it will only run before a certain date, 'catch_up_sum' is a value that when negative and the 'next_date' is way behind the current date, the returned value will be of a certain amount, so instead of returning one, it will return the absolute value of this column. Example:</p>
+<p>There is one frequency for every 60 seconds, starting now, but I have activated it with karma 10 minutes from now. With a 'catch_up_sum' of -2 it will return 2, it should return 10, for it's been 10 minutes stopped, and then return 1 every 1 minute, but with a 'catch_up_sum' of -2 it returns 2. If the 'catch_up_sum' is more than zero, it will multiply the value returned, so if instead of -2 it's '2.5, after 10 minutes from being stopped it will return 25, and 2.5 every subsequent minute.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="command"><a class="header" href="#command">Command</a></h1>
+<div class="table-wrapper"><table><thead><tr><th>command</th><th>DATA STRUCTURE</th></tr></thead><tbody>
+<tr><td>id</td><td>SERIAL</td></tr>
+<tr><td>quantity</td><td>INTEGER</td></tr>
+<tr><td>command</td><td>TEXT</td></tr>
+</tbody></table>
+</div>
+<p>'command' is a command you can run in through a shell, like 'python app.py' or 'touch grass.txt'.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="query"><a class="header" href="#query">Query</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sum"><a class="header" href="#sum">Sum</a></h1>
+<div class="table-wrapper"><table><thead><tr><th>sum</th><th>DATA STRUCTURE</th></tr></thead><tbody>
+<tr><td>id</td><td>SERIAL</td></tr>
+<tr><td>quantity</td><td>INTEGER</td></tr>
+<tr><td>record_id</td><td>INTEGER</td></tr>
+<tr><td>interval_relative</td><td>BOOL</td></tr>
+<tr><td>interval_length</td><td>INTERVAL</td></tr>
+<tr><td>sum_mode</td><td>INTEGER</td></tr>
+<tr><td>end_lag</td><td>INTERVAL</td></tr>
+<tr><td>end_date</td><td>TIMESTAMP</td></tr>
+</tbody></table>
+</div>
+<p>This table is responsible for returning a sum of change. Change of a record's quantity over time. You have the 'record_id' to know what record to look for.
+'interval_length' is a period, can be 1 day, 8 months, etc. If 'interval_relative' is TRUE, will sum all the changes ending now, starting at the past based on the 'interval_length' (ex: 'interval_length' of 8 months and 'interval_relative' is TRUE will make it look at the past 8 months). If FALSE an 'end_date' will need to be supplied. so the past 8 months ending in a certain date. 'end_lag' will give a space between now and the end point of a relative interval. So if the 'interval_length' is 8 months and 'interval_relative' is TRUE, an 'end_lag' of 2 months will make the sum look at the 2 months back to 10 months back, starting 10 months ago, ending 2 months ago. 'sum_mode' tells Lince what to sum, if 0 it's a delta, essentially doing a quantity now - quantity earlier. If it's negative, it sums all negative changes, positive, idem.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="examples"><a class="header" href="#examples">Examples</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="transfer"><a class="header" href="#transfer">Transfer</a></h1>
+<h2 id="table-transfer"><a class="header" href="#table-transfer">Table: <code>transfer</code></a></h2>
+<div class="table-wrapper"><table><thead><tr><th>transfer</th><th>DATA STRUCTURE</th></tr></thead><tbody>
+<tr><td>id</td><td>SERIAL</td></tr>
+<tr><td>records_received</td><td>JSON</td></tr>
+<tr><td>records_contributed</td><td>JSON</td></tr>
+<tr><td>agreement</td><td>JSON</td></tr>
+<tr><td>agreement_time</td><td>TIMESTAMP</td></tr>
+<tr><td>transfer_confirmation</td><td>JSON</td></tr>
+<tr><td>transfer_time</td><td>TIMESTAMP</td></tr>
+</tbody></table>
+</div>
+<p><strong>WORK IN PROGRESS</strong>
+'records_received' is a collection of records and their quantities that will interact with our records, things you will receive. 'records_contributed' are the records you will contribute and their quantities, to the records of other parties, can be more than one party. So you can receive 5 moneys and an apple for driving someone from A to B. You don't work with it, but you have a car and their destination was on the way of yours. 'agreement' is a collection of agreement by all parties involved. 'agreement_time' is the moment every party agreed for the conditions of the trade, who will receive what. 'transfer_confirmation' is also a collection but with a confirmation from all parties that the transfer was successful, and 'transfer_time' for saving the event's moment.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="dna"><a class="header" href="#dna">Dna</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="history"><a class="header" href="#history">History</a></h1>
+<div class="table-wrapper"><table><thead><tr><th>history</th><th>DATA STRUCTURE</th></tr></thead><tbody>
+<tr><td>id</td><td>SERIAL</td></tr>
+<tr><td>record_id</td><td>INTEGER</td></tr>
+<tr><td>change_time</td><td>TIMESTAMP</td></tr>
+<tr><td>old_quantity</td><td>REAL</td></tr>
+<tr><td>new_quantity</td><td>REAL</td></tr>
+</tbody></table>
+</div>
+<p>History is a table that automatically logs the change of a record's quantity, to use the 'sum' table.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="good-practices"><a class="header" href="#good-practices">Good Practices</a></h1>
+<h2 id="karma-2"><a class="header" href="#karma-2">Karma</a></h2>
+<p>Until Lince has Deterministic Simulation Testing (DST), you have to be mindfull of the Command table you produce, every command you set may possibly break your system if you don't tidy things up. If you have logic of running a command every hour if one record has quantity &gt; X and you forget about it, any simple change will trigger it, so put guardrails for running things, be it Commands, Queries or even changing Record Quantities. Changes might cascade and deliver unforeseen consequences.</p>
+<p>With DST this is easier to do, the plan is to have a containerized environment that runs a simulation of your system, isolated from the outside world. Your DNA (your personal configuration of lince) is a seed that can be run multiple times arriving at the same result (hopefully). Being able to run it with a high speed, changing the date (affecting the Frequency table) and record quantities will bring reproducible results. When you want to add something to your DNA you can check it's effects with a simulation and get info if it breaks anything in an edge case.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="authors-style"><a class="header" href="#authors-style">Author's Style</a></h1>
 <h1 id="personal-note--tips"><a class="header" href="#personal-note--tips">Personal Note &amp; Tips:</a></h1>
 <p>Modeling all items and actions to perform takes a while. Making a Lince instance, understanding the possibilities is to me a long term effort, ever increasing the value you get from computers. The possibilites are vast, limited by one's domain of computers and imagination, when combined, wizardry skills arise.</p>
 <p>From a usage standpoint, I recommend having several views, one for each table and a personal view for tasks, mine is:</p>
 <pre><code class="language-sql">SELECT id, head FROM record WHERE quantity &lt; 0 or LOWER(body) IS NULL
 </code></pre>
 <p>I also use the 'body' column in 'record' table as a tag holder, so every area in my life has either 'Action' or 'Item' and 'AREA'. With that, I have a view for every area and change configs rapidly with a2, a4, a3 so I can view the commands for running things or setting things as done (I don't remmember them all).</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="tables-1"><a class="header" href="#tables-1">Tables</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="karma-3"><a class="header" href="#karma-3">Karma</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="tasks"><a class="header" href="#tasks">Tasks</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="items"><a class="header" href="#items">Items</a></h1>
 
                     </main>
 

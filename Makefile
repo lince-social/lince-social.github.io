@@ -7,7 +7,7 @@ dev:
 		cargo install mdbook; \
 	fi; \
 	echo "Using mdbook at $$MDBOOK_BIN"; \
-	"$$MDBOOK_BIN" serve --port 9999
+	"$$MDBOOK_BIN" serve --port 6173
 
 build:
 	mdbook build;
