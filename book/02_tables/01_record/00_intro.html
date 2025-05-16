@@ -164,15 +164,14 @@
 <tr><td>location</td></tr>
 </tbody></table>
 </div>
-<p>Lince is centered on the 'record' table, but like, according to the creator... like, what do they know?</p>
-<p>Let's assume this is Lince's sun, it is the most capable one on the task of giving Lince life. The thing the app revolves around.</p>
+<p>Lince is centered on the 'record' table, but like, according to the creator... like... what does he know?</p>
 <hr />
 <div class="table-wrapper"><table><thead><tr><th>record</th><th>DATA STRUCTURE</th></tr></thead><tbody>
-<tr><td>id</td><td>SERIAL</td></tr>
-<tr><td>quantity</td><td>REAL</td></tr>
-<tr><td>head</td><td>TEXT</td></tr>
-<tr><td>body</td><td>TEXT</td></tr>
-<tr><td>location</td><td>POINT</td></tr>
+<tr><td>id</td><td>INT</td></tr>
+<tr><td>quantity</td><td>FLOAT</td></tr>
+<tr><td>head</td><td>STRING</td></tr>
+<tr><td>body</td><td>STRING</td></tr>
+<tr><td>location</td><td>3D POINT (still thinking)</td></tr>
 </tbody></table>
 </div>
 <p>'id's are automatically generated.</p>
@@ -181,10 +180,10 @@
 <p>'location' is an important information for interactions outside of computers (they exist, it's insane) or any other use you want to give it.</p>
 <hr />
 <div class="table-wrapper"><table><thead><tr><th>record</th><th>DATA STRUCTURE</th><th>USER INPUT</th></tr></thead><tbody>
-<tr><td>id</td><td>SERIAL</td><td></td></tr>
-<tr><td>quantity</td><td>REAL</td><td>-1</td></tr>
-<tr><td>head</td><td>TEXT</td><td>Eat Apple</td></tr>
-<tr><td>body</td><td>TEXT</td><td></td></tr>
+<tr><td>id</td><td>INT</td><td></td></tr>
+<tr><td>quantity</td><td>FLOAT</td><td>-1</td></tr>
+<tr><td>head</td><td>STRING</td><td>Eat Apple</td></tr>
+<tr><td>body</td><td>STRING</td><td></td></tr>
 <tr><td>location</td><td>POINT</td><td></td></tr>
 </tbody></table>
 </div>
@@ -192,33 +191,24 @@
 <p>You create a 'record', giving it '-1' to the 'quantity', for that action is a Necessity in your life right now, and 'Eat Apple' to the 'head'.</p>
 <hr />
 <div class="table-wrapper"><table><thead><tr><th>record</th><th>DATA STRUCTURE</th><th>USER INPUT</th><th>ACTUAL RECORD</th></tr></thead><tbody>
-<tr><td>id</td><td>SERIAL</td><td></td><td>1</td></tr>
-<tr><td>quantity</td><td>REAL</td><td>-1</td><td>-1</td></tr>
-<tr><td>head</td><td>TEXT</td><td>Eat Apple</td><td>Eat Apple</td></tr>
-<tr><td>body</td><td>TEXT</td><td></td><td>NULL</td></tr>
+<tr><td>id</td><td>INT</td><td></td><td>1</td></tr>
+<tr><td>quantity</td><td>FLOAT</td><td>-1</td><td>-1</td></tr>
+<tr><td>head</td><td>STRING</td><td>Eat Apple</td><td>Eat Apple</td></tr>
+<tr><td>body</td><td>STRING</td><td></td><td>NULL</td></tr>
 <tr><td>location</td><td>POINT</td><td></td><td>NULL</td></tr>
 </tbody></table>
 </div>
-<p>The end result, on the PostgreSQL database, is this record. In summary, fields with 'NOT NULL' that have defaults don't need to be filled, as it happens automatically.</p>
+<p>The end result, on the database, is this record.</p>
 <hr />
+<p>Here is an example of different possible records for individual items and actions.</p>
 <div class="table-wrapper"><table><thead><tr><th>id</th><th>quantity</th><th>head</th><th>body</th><th>location</th></tr></thead><tbody>
 <tr><td>1</td><td>-1</td><td>Eat Apple</td><td>NULL</td><td>NULL</td></tr>
-</tbody></table>
-</div>
-<p>The theoretical apple eater in the example chose to put -1 in 'quantity' because they have a view that gives them all the records with a negative 'quantity' (quantity &lt; 0).</p>
-<p>So they will see the 'Eat Apple' task on that view, but more about that in a second, now look at other examples of records (rows are set horizontally now).</p>
-<hr />
-<div class="table-wrapper"><table><thead><tr><th>id</th><th>quantity</th><th>head</th><th>body</th><th>location</th></tr></thead><tbody>
-<tr><td>1</td><td>-1</td><td>Eat Apple</td><td>NULL</td><td>NULL</td></tr>
-<tr><td>2</td><td>1</td><td>Apple</td><td>Item, Food</td><td>NULL</td></tr>
+<tr><td>2</td><td>-1</td><td>Apple</td><td>Item, Food</td><td>NULL</td></tr>
 <tr><td>3</td><td>0</td><td>Brush Teeth</td><td>Action, Hygiene</td><td>NULL</td></tr>
 <tr><td>4</td><td>3</td><td>Toothbrush</td><td>Item, Hygiene</td><td>NULL</td></tr>
-<tr><td>5</td><td>-1</td><td>Meditate</td><td>Action, Spirituality</td><td>NULL</td></tr>
+<tr><td>5</td><td>-1</td><td>Meditate</td><td>Action</td><td>NULL</td></tr>
 </tbody></table>
 </div>
-<p>As you can see, there are records with different quantities, heads, and bodies. They are modeling actions and items.</p>
-<p>The user likes to center it's filtering through the body column, seeing all actions, or all items of a certain area of their lives, like Hygiene, each in different created views.</p>
-
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

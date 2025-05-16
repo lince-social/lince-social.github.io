@@ -155,17 +155,26 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="lince"><a class="header" href="#lince">Lince</a></h1>
-<h2 id="tool-for-registry-interconnection-and-automation-of-needs-and-contributions-with-open-scope"><a class="header" href="#tool-for-registry-interconnection-and-automation-of-needs-and-contributions-with-open-scope">Tool for registry, interconnection and automation of Needs and Contributions with open scope.</a></h2>
-<p>@: What is Lince?</p>
-<p>%: Lince is a tool for registry, interconnection and automation of Needs and Contributions with open scope.</p>
-<p>@: Ok, but what is it?</p>
-<p>%: Lince is an app that can be used to model and/or automate personal tasks, items, computer actions, economic trades between parties... The limit is your imagination (and your wizard skills with computers).</p>
-<p>@: Sure...</p>
-<p>%: Look, I'll explain everything in detail, so follow me. I promise the journey is worth the end, traveler.</p>
-<p>Lince works with a PostgreSQL database, some answers about data types can be found there, it searches for it's data in ~/.config/lince/lince.sql, if not found there, it defaults to the directory Lince was cloned to, in src/db/versions/lince.sql. It is recomended to frequently backup the lince.sql file, if some error or mistake happens, your information is safe.</p>
-<p>It is tempting to say TCITD, or 'The code is the documentation', because documentations are often not up to date and that is the best way of seeing the truth about the program. But that is not best for everyone, so this documentation in text was made. With that said, if you want to learn more about lince by reading the documentation, it is advised to also have the database declaration open: https://github.com/lince-social/lince/blob/main/src/db/schema.sql, for the documentation below has the name and data type of the tables, but not it's constraints.</p>
-<p>Firstly the tables of the database will be explained, then the ways in which they can interact with themselves and/or your/other computers:</p>
+                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<p>Lince is a tool for registry, interconnection and automation of Needs and Contributions with open scope.</p>
+<p>The phrase above is the densest way to explain Lince. The current page serves as an overview, and the subsequent chapters cover it in much more detail. Let's start with the registry part:</p>
+<h1 id="registry"><a class="header" href="#registry">Registry</a></h1>
+<p>Users will start their Lince application for the first time, and that will create a personal database</p>
+<p>(for UNIX systems [Linux and macOS] it is located at '~/.config/lince/lince.db').</p>
+<p>That database is a Sqlite file, that is reffered by the application as a DNA. That file can be altered to make the app behave differently.</p>
+<p>The behavior can be of: setting personal/professional tasks, modeling personal items, scheduling computer actions, act out economic trades between parties, and many more, the sky, your imagination and computing power is the limit.</p>
+<p>Any app behavior mentioned above can be boiled down to a Need, or a Contribution to a Need. The differentiator of the two is a Quantity. If such quantity is negative, that will be a Need.</p>
+<p>Having -2 Apples means you need to go and get two apples to be neutral, to satiate your needs. The same applies to a habit, having a -1 Quantity in Exercise means you need to exercise.</p>
+<p>The previous description is the basis of the whole app, everything revolves around it.</p>
+<h1 id="automation"><a class="header" href="#automation">Automation</a></h1>
+<p>If there is predictability in your Needs, and a fixed frequency is enough to describe them, then a simple automation can be constructed.</p>
+<p>One can set the automatic every day change of the 'Studying' habit's Quantity to -1. And with another feature, if that Quantity is -1 a Command is sent to the computer that closes all programs that are gaming related.</p>
+<p>Another point of automation is the forementioned DNA. One aspect of constructing systems is that many great ideas often are lost with time, memory and the passing away of those contributors. Common patterns and knowledge about production and maintenance of commodities, economic trades, access to resources and ways of living is scattered.</p>
+<p>These patterns could be saved into some form of database, that when fed into a program like Lince, will create Needs and Contributions, so users can have a headstart in any endeavor. From production according to a bill-of-materials to morning routines and parties organization, these activities create Needs for gathering resources and acting out tasks.</p>
+<p>Contributions to Lince DNAs are like creating blueprints for others to get up and running. They might not be a perfect fit, but allow for great customization. Currently the way of centralizing DNAs is the <a href="https://github.com/lince-social/dna">Github Repository</a>.</p>
+<h1 id="interconnection"><a class="header" href="#interconnection">Interconnection</a></h1>
+<p>With great customizability and automation of people's DNAs, the next barrier is the connection of those individual apps, turning each machine into a p2p node, also called a Lince Cell. The same way you create triggers and rules for the quantites of your DNA, you can do the same for others.</p>
+<p>If one Market has 200 apples and you need 5 you can create a Transfer Proposal. The Quantity of money diminishes on your side, and the Apple one increases. On the Market side, a manual price can be inputed and accepted when proposals come, or it can be adaptive. Donations of clothes and asking people close to you for a tool would be similar, just without the money part.</p>
 
                     </main>
 
@@ -175,7 +184,7 @@
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../00_intro/02_disclaimer.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../00_intro/03_organization.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -189,7 +198,7 @@
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../00_intro/02_disclaimer.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../00_intro/03_organization.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

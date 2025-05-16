@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Disclaimer - Lince Documentation</title>
+        <title>Tech Stack - Lince Documentation</title>
 
 
         <!-- Custom HTML head -->
@@ -155,20 +155,61 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="disclamer"><a class="header" href="#disclamer">Disclamer</a></h1>
-<p>This project is licensed under the GNU GPLv3 license. Crowdfunding is the source of development compensation:</p>
-<p><a href="https://github.com/sponsors/lince-social">GitHub Sponsors</a> | <a href="https://www.patreon.com/lince_social">Patreon</a> | <a href="https://www.apoia.se/lince">Apoia.se</a></p>
-<p>Lince tries to facilitate and automate the connection between people and resources, by transforming needs and contributions into data. The gains and losses related to the interaction, such as transportation, production and services themselves, remain the responsibility of the parties involved.</p>
+                        <h1 id="tech-stack"><a class="header" href="#tech-stack">Tech Stack</a></h1>
+<p>Backend:</p>
+<ul>
+<li>Programming Language: <a href="https://www.rust-lang.org">Rust</a></li>
+<li>Server: <a href="https://github.com/tokio-rs/axum">Axum</a></li>
+<li>Database: <a href="https://www.sqlite.org/">Sqlite</a> | Easiest to replicate the concept of DNA.</li>
+<li>Database Driver: <a href="https://github.com/launchbadge/sqlx">SQLx</a> | Fun async, previously was Rusqlite but didn't prototype that well.</li>
+</ul>
+<p>Frontend:</p>
+<ul>
+<li>Base: HTML, CSS</li>
+<li>Templating (Backend): <a href="https://github.com/lambda-fairy/maud">Maud</a></li>
+<li>Framework: <a href="https://github.com/bigskysoftware/htmx">HTMX</a> + <a href="https://github.com/starfederation/datastar">Datastar</a> (transitioning into)</li>
+</ul>
+<p>Dirty Architecture:</p>
+<ul>
+<li>Application
+<ul>
+<li>Providers: simple CRUD operations.</li>
+<li>Use_cases: anything complex, business ruly, that calls providers or manipulates data.</li>
+<li>Schema: structure of data that comes in or goes out through the endpoints, or an alias for a data structure as a Type so it doesnt clutter the screen.</li>
+</ul>
+</li>
+<li>Domain:
+<ul>
+<li>Entities: the most accurate representation of the main drivers of the application. The source of truth of Lince's concepts.</li>
+</ul>
+</li>
+<li>Infrastructure:
+<ul>
+<li>Http:
+<ul>
+<li>Routers: the paths and arguments of endpoints.</li>
+<li>Handlers: the functions that are called by endpoints, that receive the query params, path variables, header, body if wanted. Responsible for calling providers, use_cases and/or returning presentation functions (frontend).</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Presentation
+<ul>
+<li>Web: the templates made with maud, or sometimes just big strings. that are returned from functions. These HTML may contain HTMX and/or Datastar. The directories are divided rudimentary by concepts/entities like 'operation', 'table', 'pages'.</li>
+<li>Tui: not implemented yet, but mainly for a non gui, terminal based version, with hyper keyboard centric workflows, designed for portability, Actions Per Minute (APM) and performance.</li>
+</ul>
+</li>
+</ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../00_intro/01_introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../00_intro/03_organization.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../00_intro/03_organization.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../02_tables/00_introduction/00_intro.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -178,11 +219,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../00_intro/01_introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../00_intro/03_organization.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../00_intro/03_organization.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../02_tables/00_introduction/00_intro.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

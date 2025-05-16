@@ -8,19 +8,17 @@
 | body     |
 | location |
 
-Lince is centered on the 'record' table, but like, according to the creator... like, what do they know?
-
-Let's assume this is Lince's sun, it is the most capable one on the task of giving Lince life. The thing the app revolves around.
+Lince is centered on the 'record' table, but like, according to the creator... like... what does he know?
 
 ---
 
-| record   | DATA STRUCTURE |
-| -------- | -------------- |
-| id       | SERIAL         |
-| quantity | REAL           |
-| head     | TEXT           |
-| body     | TEXT           |
-| location | POINT          |
+| record   | DATA STRUCTURE            |
+| -------- | ------------------------- |
+| id       | INT                       |
+| quantity | FLOAT                     |
+| head     | STRING                    |
+| body     | STRING                    |
+| location | 3D POINT (still thinking) |
 
 'id's are automatically generated.
 
@@ -34,10 +32,10 @@ Let's assume this is Lince's sun, it is the most capable one on the task of givi
 
 | record   | DATA STRUCTURE | USER INPUT |
 | -------- | -------------- | ---------- |
-| id       | SERIAL         |            |
-| quantity | REAL           | -1         |
-| head     | TEXT           | Eat Apple  |
-| body     | TEXT           |            |
+| id       | INT            |            |
+| quantity | FLOAT          | -1         |
+| head     | STRING         | Eat Apple  |
+| body     | STRING         |            |
 | location | POINT          |            |
 
 So, for an example, imagine that you like apples and you want to create a task to eat it today.
@@ -48,34 +46,22 @@ You create a 'record', giving it '-1' to the 'quantity', for that action is a Ne
 
 | record   | DATA STRUCTURE | USER INPUT | ACTUAL RECORD |
 | -------- | -------------- | ---------- | ------------- |
-| id       | SERIAL         |            | 1             |
-| quantity | REAL           | -1         | -1            |
-| head     | TEXT           | Eat Apple  | Eat Apple     |
-| body     | TEXT           |            | NULL          |
+| id       | INT            |            | 1             |
+| quantity | FLOAT          | -1         | -1            |
+| head     | STRING         | Eat Apple  | Eat Apple     |
+| body     | STRING         |            | NULL          |
 | location | POINT          |            | NULL          |
 
-The end result, on the PostgreSQL database, is this record. In summary, fields with 'NOT NULL' that have defaults don't need to be filled, as it happens automatically.
+The end result, on the database, is this record.
 
 ---
 
-| id  | quantity | head      | body | location |
-| --- | -------- | --------- | ---- | -------- |
-| 1   | -1       | Eat Apple | NULL | NULL     |
+Here is an example of different possible records for individual items and actions.
 
-The theoretical apple eater in the example chose to put -1 in 'quantity' because they have a view that gives them all the records with a negative 'quantity' (quantity < 0).
-
-So they will see the 'Eat Apple' task on that view, but more about that in a second, now look at other examples of records (rows are set horizontally now).
-
----
-
-| id  | quantity | head        | body                 | location |
-| --- | -------- | ----------- | -------------------- | -------- |
-| 1   | -1       | Eat Apple   | NULL                 | NULL     |
-| 2   | 1        | Apple       | Item, Food           | NULL     |
-| 3   | 0        | Brush Teeth | Action, Hygiene      | NULL     |
-| 4   | 3        | Toothbrush  | Item, Hygiene        | NULL     |
-| 5   | -1       | Meditate    | Action, Spirituality | NULL     |
-
-As you can see, there are records with different quantities, heads, and bodies. They are modeling actions and items.
-
-The user likes to center it's filtering through the body column, seeing all actions, or all items of a certain area of their lives, like Hygiene, each in different created views.
+| id  | quantity | head        | body            | location |
+| --- | -------- | ----------- | --------------- | -------- |
+| 1   | -1       | Eat Apple   | NULL            | NULL     |
+| 2   | -1       | Apple       | Item, Food      | NULL     |
+| 3   | 0        | Brush Teeth | Action, Hygiene | NULL     |
+| 4   | 3        | Toothbrush  | Item, Hygiene   | NULL     |
+| 5   | -1       | Meditate    | Action          | NULL     |

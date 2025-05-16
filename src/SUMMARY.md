@@ -1,11 +1,9 @@
 # Summary
 
 - [Installation](./00_intro/00_installation.md)
-- [Introduction](./00_intro/01_introduction.md)
-- [Disclaimer](./00_intro/02_disclaimer.md)
-  - [Organization](./00_intro/03_organization.md)
-- [Stack](./01_stack/00_stack.md)
-  - [Tech Structure](./01_stack/01_structure.md)
+- [Introduction](./00_intro/02_introduction.md)
+- [Organization](./00_intro/03_organization.md)
+- [Tech Stack](./01_stack/00_tech_stack.md)
 - [Tables](./02_tables/00_introduction/00_intro.md)
   - [Record](./02_tables/01_record/00_intro.md)
   - [Views](./02_tables/02_views/00_intro.md)

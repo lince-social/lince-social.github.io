@@ -165,30 +165,90 @@
 </code></pre>
 <p>If you don't have cargo installed, you can install it with with <a href="https://www.rust-lang.org/tools/install">Rustup</a>.</p>
 <p>Have fun.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="lince"><a class="header" href="#lince">Lince</a></h1>
-<h2 id="tool-for-registry-interconnection-and-automation-of-needs-and-contributions-with-open-scope"><a class="header" href="#tool-for-registry-interconnection-and-automation-of-needs-and-contributions-with-open-scope">Tool for registry, interconnection and automation of Needs and Contributions with open scope.</a></h2>
-<p>@: What is Lince?</p>
-<p>%: Lince is a tool for registry, interconnection and automation of Needs and Contributions with open scope.</p>
-<p>@: Ok, but what is it?</p>
-<p>%: Lince is an app that can be used to model and/or automate personal tasks, items, computer actions, economic trades between parties... The limit is your imagination (and your wizard skills with computers).</p>
-<p>@: Sure...</p>
-<p>%: Look, I'll explain everything in detail, so follow me. I promise the journey is worth the end, traveler.</p>
-<p>Lince works with a PostgreSQL database, some answers about data types can be found there, it searches for it's data in ~/.config/lince/lince.sql, if not found there, it defaults to the directory Lince was cloned to, in src/db/versions/lince.sql. It is recomended to frequently backup the lince.sql file, if some error or mistake happens, your information is safe.</p>
-<p>It is tempting to say TCITD, or 'The code is the documentation', because documentations are often not up to date and that is the best way of seeing the truth about the program. But that is not best for everyone, so this documentation in text was made. With that said, if you want to learn more about lince by reading the documentation, it is advised to also have the database declaration open: https://github.com/lince-social/lince/blob/main/src/db/schema.sql, for the documentation below has the name and data type of the tables, but not it's constraints.</p>
-<p>Firstly the tables of the database will be explained, then the ways in which they can interact with themselves and/or your/other computers:</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="disclamer"><a class="header" href="#disclamer">Disclamer</a></h1>
-<p>This project is licensed under the GNU GPLv3 license. Crowdfunding is the source of development compensation:</p>
-<p><a href="https://github.com/sponsors/lince-social">GitHub Sponsors</a> | <a href="https://www.patreon.com/lince_social">Patreon</a> | <a href="https://www.apoia.se/lince">Apoia.se</a></p>
-<p>Lince tries to facilitate and automate the connection between people and resources, by transforming needs and contributions into data. The gains and losses related to the interaction, such as transportation, production and services themselves, remain the responsibility of the parties involved.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<p>Lince is a tool for registry, interconnection and automation of Needs and Contributions with open scope.</p>
+<p>The phrase above is the densest way to explain Lince. The current page serves as an overview, and the subsequent chapters cover it in much more detail. Let's start with the registry part:</p>
+<h1 id="registry"><a class="header" href="#registry">Registry</a></h1>
+<p>Users will start their Lince application for the first time, and that will create a personal database</p>
+<p>(for UNIX systems [Linux and macOS] it is located at '~/.config/lince/lince.db').</p>
+<p>That database is a Sqlite file, that is reffered by the application as a DNA. That file can be altered to make the app behave differently.</p>
+<p>The behavior can be of: setting personal/professional tasks, modeling personal items, scheduling computer actions, act out economic trades between parties, and many more, the sky, your imagination and computing power is the limit.</p>
+<p>Any app behavior mentioned above can be boiled down to a Need, or a Contribution to a Need. The differentiator of the two is a Quantity. If such quantity is negative, that will be a Need.</p>
+<p>Having -2 Apples means you need to go and get two apples to be neutral, to satiate your needs. The same applies to a habit, having a -1 Quantity in Exercise means you need to exercise.</p>
+<p>The previous description is the basis of the whole app, everything revolves around it.</p>
+<h1 id="automation"><a class="header" href="#automation">Automation</a></h1>
+<p>If there is predictability in your Needs, and a fixed frequency is enough to describe them, then a simple automation can be constructed.</p>
+<p>One can set the automatic every day change of the 'Studying' habit's Quantity to -1. And with another feature, if that Quantity is -1 a Command is sent to the computer that closes all programs that are gaming related.</p>
+<p>Another point of automation is the forementioned DNA. One aspect of constructing systems is that many great ideas often are lost with time, memory and the passing away of those contributors. Common patterns and knowledge about production and maintenance of commodities, economic trades, access to resources and ways of living is scattered.</p>
+<p>These patterns could be saved into some form of database, that when fed into a program like Lince, will create Needs and Contributions, so users can have a headstart in any endeavor. From production according to a bill-of-materials to morning routines and parties organization, these activities create Needs for gathering resources and acting out tasks.</p>
+<p>Contributions to Lince DNAs are like creating blueprints for others to get up and running. They might not be a perfect fit, but allow for great customization. Currently the way of centralizing DNAs is the <a href="https://github.com/lince-social/dna">Github Repository</a>.</p>
+<h1 id="interconnection"><a class="header" href="#interconnection">Interconnection</a></h1>
+<p>With great customizability and automation of people's DNAs, the next barrier is the connection of those individual apps, turning each machine into a p2p node, also called a Lince Cell. The same way you create triggers and rules for the quantites of your DNA, you can do the same for others.</p>
+<p>If one Market has 200 apples and you need 5 you can create a Transfer Proposal. The Quantity of money diminishes on your side, and the Apple one increases. On the Market side, a manual price can be inputed and accepted when proposals come, or it can be adaptive. Donations of clothes and asking people close to you for a tool would be similar, just without the money part.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="organization"><a class="header" href="#organization">Organization</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="stack"><a class="header" href="#stack">Stack</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="tech-structure"><a class="header" href="#tech-structure">Tech Structure</a></h1>
+<h3 id="disclaimers"><a class="header" href="#disclaimers">Disclaimers</a></h3>
+<p>All the repositories in the Lince ecosystem have the <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU GPLv3</a> license. Lince is a non-profit project and crowdfunding is the source of development compensation:</p>
+<p><a href="https://github.com/sponsors/lince-social">GitHub Sponsors</a> | <a href="https://www.patreon.com/lince_social">Patreon</a> | <a href="https://www.apoia.se/lince">Apoia.se</a></p>
+<p>Lince tries to facilitate and automate the connection between people and resources, by transforming needs and contributions into data. The gains and losses related to the interaction, such as transportation, production and services themselves, remain the responsibility and risk of the parties involved.</p>
+<h3 id="contributions"><a class="header" href="#contributions">Contributions</a></h3>
+<p>The workflow of contributing to the Lince ecosystem can be of simply making a Pull Request. But if one wants to have certainty of developing a wanted feature, the best way is to see the DNA of Lince programming tasks.</p>
+<p>The online resource to communicate is the <a href="https://discord.gg/3Gr9rYWHpu">Discord</a>.</p>
+<p>The git repositories hosted currently in the <a href="https://github.com/lince-social">lince-social</a> GitHub Organization mean this:</p>
+<ul>
+<li><a href="https://github.com/lince-social/lince">lince</a>: the app's code.</li>
+<li><a href="https://github.com/lince-social/dna">dna</a>: the databases for different Lince behaviors.</li>
+<li><a href="https://github.com/lince-social/lince-social.github.io">lince-social.github.io</a>: this documentation.</li>
+<li><a href="https://github.com/lince-social/cub">cub</a>: homework and challenges to understand how do use Lince, from begginer to advanced.</li>
+<li><a href="https://github.com/lince-social/mosca">mosca</a>: tool for different computer actions, like cleaning the system, linking dotfiles and more. The goal is that the Command table calls this binary with different flags for common tasks. This repo is what should evolve into an Operating System or customization of an existing one.</li>
+<li><a href="https://github.com/lince-social/.github">.github</a>: general stuff, like photos, icons and information about GitHub sponsors.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="tech-stack"><a class="header" href="#tech-stack">Tech Stack</a></h1>
+<p>Backend:</p>
+<ul>
+<li>Programming Language: <a href="https://www.rust-lang.org">Rust</a></li>
+<li>Server: <a href="https://github.com/tokio-rs/axum">Axum</a></li>
+<li>Database: <a href="https://www.sqlite.org/">Sqlite</a> | Easiest to replicate the concept of DNA.</li>
+<li>Database Driver: <a href="https://github.com/launchbadge/sqlx">SQLx</a> | Fun async, previously was Rusqlite but didn't prototype that well.</li>
+</ul>
+<p>Frontend:</p>
+<ul>
+<li>Base: HTML, CSS</li>
+<li>Templating (Backend): <a href="https://github.com/lambda-fairy/maud">Maud</a></li>
+<li>Framework: <a href="https://github.com/bigskysoftware/htmx">HTMX</a> + <a href="https://github.com/starfederation/datastar">Datastar</a> (transitioning into)</li>
+</ul>
+<p>Dirty Architecture:</p>
+<ul>
+<li>Application
+<ul>
+<li>Providers: simple CRUD operations.</li>
+<li>Use_cases: anything complex, business ruly, that calls providers or manipulates data.</li>
+<li>Schema: structure of data that comes in or goes out through the endpoints, or an alias for a data structure as a Type so it doesnt clutter the screen.</li>
+</ul>
+</li>
+<li>Domain:
+<ul>
+<li>Entities: the most accurate representation of the main drivers of the application. The source of truth of Lince's concepts.</li>
+</ul>
+</li>
+<li>Infrastructure:
+<ul>
+<li>Http:
+<ul>
+<li>Routers: the paths and arguments of endpoints.</li>
+<li>Handlers: the functions that are called by endpoints, that receive the query params, path variables, header, body if wanted. Responsible for calling providers, use_cases and/or returning presentation functions (frontend).</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Presentation
+<ul>
+<li>Web: the templates made with maud, or sometimes just big strings. that are returned from functions. These HTML may contain HTMX and/or Datastar. The directories are divided rudimentary by concepts/entities like 'operation', 'table', 'pages'.</li>
+<li>Tui: not implemented yet, but mainly for a non gui, terminal based version, with hyper keyboard centric workflows, designed for portability, Actions Per Minute (APM) and performance.</li>
+</ul>
+</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="tables"><a class="header" href="#tables">Tables</a></h1>
-<hr />
-<hr />
-<hr />
-<hr />
-<hr />
+<p>This is where the real fun begins.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="record"><a class="header" href="#record">Record</a></h1>
 <div class="table-wrapper"><table><thead><tr><th>record</th></tr></thead><tbody>
 <tr><td>id</td></tr>
@@ -198,15 +258,14 @@
 <tr><td>location</td></tr>
 </tbody></table>
 </div>
-<p>Lince is centered on the 'record' table, but like, according to the creator... like, what do they know?</p>
-<p>Let's assume this is Lince's sun, it is the most capable one on the task of giving Lince life. The thing the app revolves around.</p>
+<p>Lince is centered on the 'record' table, but like, according to the creator... like... what does he know?</p>
 <hr />
 <div class="table-wrapper"><table><thead><tr><th>record</th><th>DATA STRUCTURE</th></tr></thead><tbody>
-<tr><td>id</td><td>SERIAL</td></tr>
-<tr><td>quantity</td><td>REAL</td></tr>
-<tr><td>head</td><td>TEXT</td></tr>
-<tr><td>body</td><td>TEXT</td></tr>
-<tr><td>location</td><td>POINT</td></tr>
+<tr><td>id</td><td>INT</td></tr>
+<tr><td>quantity</td><td>FLOAT</td></tr>
+<tr><td>head</td><td>STRING</td></tr>
+<tr><td>body</td><td>STRING</td></tr>
+<tr><td>location</td><td>3D POINT (still thinking)</td></tr>
 </tbody></table>
 </div>
 <p>'id's are automatically generated.</p>
@@ -215,10 +274,10 @@
 <p>'location' is an important information for interactions outside of computers (they exist, it's insane) or any other use you want to give it.</p>
 <hr />
 <div class="table-wrapper"><table><thead><tr><th>record</th><th>DATA STRUCTURE</th><th>USER INPUT</th></tr></thead><tbody>
-<tr><td>id</td><td>SERIAL</td><td></td></tr>
-<tr><td>quantity</td><td>REAL</td><td>-1</td></tr>
-<tr><td>head</td><td>TEXT</td><td>Eat Apple</td></tr>
-<tr><td>body</td><td>TEXT</td><td></td></tr>
+<tr><td>id</td><td>INT</td><td></td></tr>
+<tr><td>quantity</td><td>FLOAT</td><td>-1</td></tr>
+<tr><td>head</td><td>STRING</td><td>Eat Apple</td></tr>
+<tr><td>body</td><td>STRING</td><td></td></tr>
 <tr><td>location</td><td>POINT</td><td></td></tr>
 </tbody></table>
 </div>
@@ -226,56 +285,64 @@
 <p>You create a 'record', giving it '-1' to the 'quantity', for that action is a Necessity in your life right now, and 'Eat Apple' to the 'head'.</p>
 <hr />
 <div class="table-wrapper"><table><thead><tr><th>record</th><th>DATA STRUCTURE</th><th>USER INPUT</th><th>ACTUAL RECORD</th></tr></thead><tbody>
-<tr><td>id</td><td>SERIAL</td><td></td><td>1</td></tr>
-<tr><td>quantity</td><td>REAL</td><td>-1</td><td>-1</td></tr>
-<tr><td>head</td><td>TEXT</td><td>Eat Apple</td><td>Eat Apple</td></tr>
-<tr><td>body</td><td>TEXT</td><td></td><td>NULL</td></tr>
+<tr><td>id</td><td>INT</td><td></td><td>1</td></tr>
+<tr><td>quantity</td><td>FLOAT</td><td>-1</td><td>-1</td></tr>
+<tr><td>head</td><td>STRING</td><td>Eat Apple</td><td>Eat Apple</td></tr>
+<tr><td>body</td><td>STRING</td><td></td><td>NULL</td></tr>
 <tr><td>location</td><td>POINT</td><td></td><td>NULL</td></tr>
 </tbody></table>
 </div>
-<p>The end result, on the PostgreSQL database, is this record. In summary, fields with 'NOT NULL' that have defaults don't need to be filled, as it happens automatically.</p>
+<p>The end result, on the database, is this record.</p>
 <hr />
+<p>Here is an example of different possible records for individual items and actions.</p>
 <div class="table-wrapper"><table><thead><tr><th>id</th><th>quantity</th><th>head</th><th>body</th><th>location</th></tr></thead><tbody>
 <tr><td>1</td><td>-1</td><td>Eat Apple</td><td>NULL</td><td>NULL</td></tr>
-</tbody></table>
-</div>
-<p>The theoretical apple eater in the example chose to put -1 in 'quantity' because they have a view that gives them all the records with a negative 'quantity' (quantity &lt; 0).</p>
-<p>So they will see the 'Eat Apple' task on that view, but more about that in a second, now look at other examples of records (rows are set horizontally now).</p>
-<hr />
-<div class="table-wrapper"><table><thead><tr><th>id</th><th>quantity</th><th>head</th><th>body</th><th>location</th></tr></thead><tbody>
-<tr><td>1</td><td>-1</td><td>Eat Apple</td><td>NULL</td><td>NULL</td></tr>
-<tr><td>2</td><td>1</td><td>Apple</td><td>Item, Food</td><td>NULL</td></tr>
+<tr><td>2</td><td>-1</td><td>Apple</td><td>Item, Food</td><td>NULL</td></tr>
 <tr><td>3</td><td>0</td><td>Brush Teeth</td><td>Action, Hygiene</td><td>NULL</td></tr>
 <tr><td>4</td><td>3</td><td>Toothbrush</td><td>Item, Hygiene</td><td>NULL</td></tr>
-<tr><td>5</td><td>-1</td><td>Meditate</td><td>Action, Spirituality</td><td>NULL</td></tr>
+<tr><td>5</td><td>-1</td><td>Meditate</td><td>Action</td><td>NULL</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="views"><a class="header" href="#views">Views</a></h1>
+<div class="table-wrapper"><table><thead><tr><th>COLUMNS</th><th>DATA STRUCTURE</th></tr></thead><tbody>
+<tr><td>id</td><td>INT</td></tr>
+<tr><td>name</td><td>STRING</td></tr>
+<tr><td>query</td><td>STRING</td></tr>
 </tbody></table>
 </div>
-<p>As you can see, there are records with different quantities, heads, and bodies. They are modeling actions and items.</p>
-<p>The user likes to center it's filtering through the body column, seeing all actions, or all items of a certain area of their lives, like Hygiene, each in different created views.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="views"><a class="header" href="#views">Views</a></h1>
-<hr />
-<h2 id="table-views"><a class="header" href="#table-views">Table: <code>views</code></a></h2>
-<div class="table-wrapper"><table><thead><tr><th>views</th><th>DATA STRUCTURE</th></tr></thead><tbody>
-<tr><td>id</td><td>SERIAL</td></tr>
-<tr><td>view</td><td>TEXT</td></tr>
-<tr><td>view_name</td><td>TEXT</td></tr>
+<p>Views are ways to select records.</p>
+<p>A view will have a name, so it is human readable and a query to display different data.</p>
+<p>The query is made with SQL allowing you to select what columns you want to see, filtered, ordered and much more, just the way you want it.</p>
+<h3 id="examples"><a class="header" href="#examples">Examples:</a></h3>
+<p>Let's grab the record table shown before.</p>
+<div class="table-wrapper"><table><thead><tr><th>id</th><th>quantity</th><th>head</th><th>body</th><th>location</th></tr></thead><tbody>
+<tr><td>1</td><td>-1</td><td>Eat Apple</td><td>NULL</td><td>NULL</td></tr>
+<tr><td>2</td><td>-1</td><td>Apple</td><td>Item, Food</td><td>NULL</td></tr>
+<tr><td>3</td><td>0</td><td>Brush Teeth</td><td>Action, Hygiene</td><td>NULL</td></tr>
+<tr><td>4</td><td>3</td><td>Toothbrush</td><td>Item, Hygiene</td><td>NULL</td></tr>
+<tr><td>5</td><td>-1</td><td>Meditate</td><td>Action</td><td>NULL</td></tr>
 </tbody></table>
 </div>
-<p>We've spoken so much about views, let's dive into them. They are essentially SQL queries, allowing you to select what columns you want to see, filtered, ordered and much more, just the way you want it.
-The view column has the SQL query, the view_name has the view's name. Simple, right?</p>
+<p>A view of things you need to buy may look like this:</p>
+<div class="table-wrapper"><table><thead><tr><th>COLUMN</th><th>VALUE</th></tr></thead><tbody>
+<tr><td>id</td><td>1</td></tr>
+<tr><td>name</td><td>Buy</td></tr>
+<tr><td>query</td><td>SELECT * FROM record WHERE LOWER(body) LIKE '%item%' AND quantity &lt; 0</td></tr>
+</tbody></table>
+</div>
+<p>And in this case, will display only:</p>
+<div class="table-wrapper"><table><thead><tr><th>id</th><th>quantity</th><th>head</th><th>body</th><th>location</th></tr></thead><tbody>
+<tr><td>2</td><td>-1</td><td>Apple</td><td>Item, Food</td><td>NULL</td></tr>
+</tbody></table>
+</div>
+<p>Since no other records with a body containing 'Item' (lower, upper, pascal case...) exist with a negative quantity.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="collection"><a class="header" href="#collection">Collection</a></h1>
+<p>|</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="collection-view"><a class="header" href="#collection-view">Collection View</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="configuration"><a class="header" href="#configuration">Configuration</a></h1>
 <h2 id="table-configuration"><a class="header" href="#table-configuration">Table: <code>configuration</code></a></h2>
 <div class="table-wrapper"><table><thead><tr><th>configuration</th><th>DATA STRUCTURE</th></tr></thead><tbody>
 <tr><td>id</td><td>SERIAL</td></tr>
 <tr><td>quantity</td><td>REAL</td></tr>
-<tr><td>save_mode</td><td>VARCHAR</td></tr>
-<tr><td>view_id</td><td>INTEGER</td></tr>
-<tr><td>column_information_mode</td><td>VARCHAR</td></tr>
-<tr><td>keymap</td><td>JSONB</td></tr>
-<tr><td>truncation</td><td>JSONB</td></tr>
-<tr><td>table_query</td><td>JSONB</td></tr>
 <tr><td>language</td><td>VARCHAR</td></tr>
 <tr><td>timezone</td><td>VARCHAR</td></tr>
 </tbody></table>
@@ -483,7 +550,7 @@ c3 = 0
 </div>
 <p>This table is responsible for returning a sum of change. Change of a record's quantity over time. You have the 'record_id' to know what record to look for.
 'interval_length' is a period, can be 1 day, 8 months, etc. If 'interval_relative' is TRUE, will sum all the changes ending now, starting at the past based on the 'interval_length' (ex: 'interval_length' of 8 months and 'interval_relative' is TRUE will make it look at the past 8 months). If FALSE an 'end_date' will need to be supplied. so the past 8 months ending in a certain date. 'end_lag' will give a space between now and the end point of a relative interval. So if the 'interval_length' is 8 months and 'interval_relative' is TRUE, an 'end_lag' of 2 months will make the sum look at the 2 months back to 10 months back, starting 10 months ago, ending 2 months ago. 'sum_mode' tells Lince what to sum, if 0 it's a delta, essentially doing a quantity now - quantity earlier. If it's negative, it sums all negative changes, positive, idem.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="examples"><a class="header" href="#examples">Examples</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="examples-1"><a class="header" href="#examples-1">Examples</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="transfer"><a class="header" href="#transfer">Transfer</a></h1>
 <h2 id="table-transfer"><a class="header" href="#table-transfer">Table: <code>transfer</code></a></h2>
 <div class="table-wrapper"><table><thead><tr><th>transfer</th><th>DATA STRUCTURE</th></tr></thead><tbody>
@@ -513,6 +580,8 @@ c3 = 0
 <h2 id="karma-2"><a class="header" href="#karma-2">Karma</a></h2>
 <p>Until Lince has Deterministic Simulation Testing (DST), you have to be mindfull of the Command table you produce, every command you set may possibly break your system if you don't tidy things up. If you have logic of running a command every hour if one record has quantity &gt; X and you forget about it, any simple change will trigger it, so put guardrails for running things, be it Commands, Queries or even changing Record Quantities. Changes might cascade and deliver unforeseen consequences.</p>
 <p>With DST this is easier to do, the plan is to have a containerized environment that runs a simulation of your system, isolated from the outside world. Your DNA (your personal configuration of lince) is a seed that can be run multiple times arriving at the same result (hopefully). Being able to run it with a high speed, changing the date (affecting the Frequency table) and record quantities will bring reproducible results. When you want to add something to your DNA you can check it's effects with a simulation and get info if it breaks anything in an edge case.</p>
+<h2 id="command-1"><a class="header" href="#command-1">Command</a></h2>
+<p>Lince works with Sqlite files for it's database. It is recomended to frequently backup your DNAs, weekly, daily or hourly if you are paranoid. If some error or mistake happens, your information is safe.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="authors-style"><a class="header" href="#authors-style">Author's Style</a></h1>
 <h1 id="personal-note--tips"><a class="header" href="#personal-note--tips">Personal Note &amp; Tips:</a></h1>
 <p>Modeling all items and actions to perform takes a while. Making a Lince instance, understanding the possibilities is to me a long term effort, ever increasing the value you get from computers. The possibilites are vast, limited by one's domain of computers and imagination, when combined, wizardry skills arise.</p>
