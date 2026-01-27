@@ -1,6 +1,16 @@
 # Lince Website
 
-Run it with cargo run, it will generate all the html files.
+# Commands
+
+You can run the application using [mise](https://mise.jdx.dev/) installed with:
+
+```bash
+curl https://mise.run | sh
+```
+
+The dependencies are installed automatically, once, when running commands. Just type `mise dev` to run and `mise clean` to clean the project.
+
+It uses `maud` for templating html and typst for the blogposts, created automaticaly in Rust.
 
 # Versioning
 
@@ -37,13 +47,3 @@ This project uses the [Git Cliff](https://github.com/orhun/git-cliff) crate alon
 | `BREAKING CHANGE` | Major (`X.*.*`) | Change that breaks compatibility with previous versions. |
 
 > ⚠️ Commits with prefixes like `chore`, `build`, `ci`, `docs`, `style`, `test`, or `refactor` **do not generate a version bump**, but still appear in the changelog.
-
-# Commands
-
-You can run the application using [mise](https://mise.jdx.dev/) installed with:
-
-```bash
-curl https://mise.run | sh
-```
-
-The dependencies are installed automatically, once, when running commands. Just type `mise dev` to run and `mise clean` to clean the project.

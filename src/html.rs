@@ -18,9 +18,21 @@ pub fn page(body: &str, t: &Translations, current_page: &str) -> String {
     // to the actual files produced by `main.rs` (e.g. `index.pt-br.html`).
     let home_href = format!("/index{}.html", suffix);
     let about_href = format!("/about{}.html", suffix);
+    let blog_href = format!("/blogposts{}.html", suffix);
     let link_en = format!("/{}{}.html", current_page, "");
     let link_pt = format!("/{}{}.html", current_page, ".pt-br");
     let link_zh = format!("/{}{}.html", current_page, ".zh");
+
+    // Determine asset path based on whether this is a blog post (in subdirectory)
+    let asset_prefix = if current_page.starts_with("blog/") {
+        "../"
+    } else {
+        ""
+    };
+    let assets_css = format!("{}assets/style.css", asset_prefix);
+    let assets_logo = format!("{}assets/logo/preto_no_branco.png", asset_prefix);
+    let assets_logo_branco = format!("{}assets/logo/branco.png", asset_prefix);
+    let assets_datastar = format!("{}assets/datastar.js", asset_prefix);
 
     html! {
             (DOCTYPE)
@@ -30,19 +42,19 @@ pub fn page(body: &str, t: &Translations, current_page: &str) -> String {
                 meta name="viewport" content="width=device-width, initial-scale=1.0";
                 meta http-equiv="X-UA-Compatible" content="ie=edge";
                 meta name="description" content="Lince - Registry, Interconnection, and Automation of Needs and Contributions";
-                link rel="icon" href="assets/logo/preto_no_branco.png" type="image/png";
+                link rel="icon" href=(assets_logo) type="image/png";
                 script {
                     (PreEscaped(r#"(function(){try{const s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else document.documentElement.setAttribute('data-theme','dark');}catch(e){} })();"#))
                 }
-                link rel="stylesheet" href="assets/style.css";
-                script type="module" src="assets/datastar.js" {}
+                link rel="stylesheet" href=(assets_css);
+                script type="module" src=(assets_datastar) {}
                 title { "Lince" }
             }
             body {
                 nav class="navbar" {
                     div class="navbar-container" {
                         a class="navbar-brand" href=(home_href) {
-                            img src="assets/logo/branco.png" alt="Lince Logo";
+                            img src=(assets_logo_branco) alt="Lince Logo";
                             "Lince"
                         }
                         ul class="navbar-menu" {
@@ -58,6 +70,12 @@ pub fn page(body: &str, t: &Translations, current_page: &str) -> String {
                                     (t.nav_about)
                                 }
                             }
+                            li {
+                                a class=(if current_page == "blogposts" || current_page.starts_with("blog/") { "navbar-item active" } else { "navbar-item" })
+                                    href=(blog_href.clone()) {
+                                    (t.nav_blog)
+                                }
+                            }
                             li class="desktop-only" {
                                 a class="navbar-item" href="https://github.com/lince-social/lince" {
                                     (t.nav_github)
@@ -70,9 +88,7 @@ pub fn page(body: &str, t: &Translations, current_page: &str) -> String {
                             }
                             li class="lang-switcher" {
                                 button class="lang-btn" onclick="toggleLangDropdown()" {
-                                    @if t.lang_code == "en" { "EN" }
-                                    @else if t.lang_code == "pt-br" { "PT" }
-                                    @else { "中文" }
+                                    (t.lang_name)
                                 }
                                 div class="lang-dropdown" id="langDropdown" {
                                     a class="lang-option" href=(link_en) { "English" }
@@ -96,6 +112,7 @@ pub fn page(body: &str, t: &Translations, current_page: &str) -> String {
                             ul class="footer-links" {
                                 li { a href=(format!("index{}.html", suffix)) { (t.nav_home) } }
                                 li { a href=(format!("about{}.html", suffix)) { (t.nav_about) } }
+                                li { a href=(format!("blogposts{}.html", suffix)) { (t.nav_blog) } }
                             }
                         }
                         div class="footer-section" {

@@ -13,6 +13,7 @@ pub struct Translations {
     // Navigation
     pub nav_home: &'static str,
     pub nav_about: &'static str,
+    pub nav_blog: &'static str,
     pub nav_github: &'static str,
     pub nav_download: &'static str,
     pub nav_theme: &'static str,
@@ -101,6 +102,12 @@ pub struct Translations {
     pub footer_legal: &'static str,
     pub footer_license: &'static str,
     pub footer_copyright: &'static str,
+
+    // Blog
+    pub blog_title: &'static str,
+    pub blog_posts: &'static str,
+    pub blog_posted_on: &'static str,
+    pub blog_back_to_posts: &'static str,
 }
 
 pub fn get_translations() -> HashMap<&'static str, Translations> {
@@ -116,27 +123,28 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
         // Navigation
         nav_home: "Home",
         nav_about: "About",
+        nav_blog: "Blog",
         nav_github: "GitHub",
         nav_download: "Download",
         nav_theme: "Theme",
 
         // Hero Section
-        hero_tagline: "Open Source • Non-Profit • Local First • Your Data, Your Rules",
+        hero_tagline: "Open Source • Non-Profit • Local First • Data-Powered",
         hero_title: "Lince",
-        hero_subtitle: "A powerful open-source tool for registry, interconnection, and automation of Needs and Contributions. Built by the community, for the community — forever free, forever yours.",
+        hero_subtitle: "A tool for registry, interconnection, and automation of Needs and Contributions with open scope",
         hero_download: "Download Lince",
         hero_docs: "Documentation",
         hero_learn_more: "Learn More",
 
         // Index Page - Open Source Section
-        opensource_title: "Open Source, Non-Profit, Forever Free",
-        opensource_desc: "Lince is built on principles of transparency, community ownership, and digital freedom. No venture capital, no hidden agendas — just software that serves you.",
+        opensource_title: "Open Source, Non-Profit, Free Forever",
+        opensource_desc: "Lince is built by a community, backed by it's own Lince Institute.",
         opensource_free_title: "100% Free & Open Source",
-        opensource_free_desc: "Every line of code is open for inspection, modification, and redistribution. No premium tiers, no paywalls, no artificial limitations. The complete source code is available under a permissive license.",
+        opensource_free_desc: "Every line of code is open for inspection, modification, and redistribution. All under the GPLv3 license.",
         opensource_community_title: "Community Driven",
-        opensource_community_desc: "Development is guided by user needs, not profit margins. Features are prioritized based on community feedback and real-world use cases. Everyone can contribute code, documentation, or ideas.",
+        opensource_community_desc: r#"Development is guided by the anger of not having certain features, and love for the process and the people it helps. Everyone can do something for the documentation, code, design, legal, financial, marketing, tidying... If you are interested, join the <a href="https://discord.gg/3Gr9rYWHpu">Discord</a>!"#,
         opensource_privacy_title: "Privacy by Design",
-        opensource_privacy_desc: "Your data stays on your device. No cloud accounts, no telemetry, no tracking. Lince works entirely offline. You own your data — export it, back it up, delete it. Complete control.",
+        opensource_privacy_desc: "Your data is stored locally and the app can work perfectly offline. Features for making parts of it public for collaboration are being developed.",
 
         // Index Page - Goal Summary
         goal_title: "What is Lince?",
@@ -203,7 +211,13 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
         footer_contributing: "Contributing",
         footer_legal: "Legal",
         footer_license: "License",
-        footer_copyright: "Copyleft 2023-2026 Lince. Built with love and Rust.",
+        footer_copyright: "Copyleft 2023-.* Lince. Built with love and Rust.",
+
+        // Blog
+        blog_title: "Blog",
+        blog_posts: "Blog Posts",
+        blog_posted_on: "Posted on",
+        blog_back_to_posts: "← Back to Blog Posts",
     });
 
     // ============================================================
@@ -216,6 +230,7 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
         // Navigation
         nav_home: "Início",
         nav_about: "Sobre",
+        nav_blog: "Blog",
         nav_github: "GitHub",
         nav_download: "Baixar",
         nav_theme: "Tema",
@@ -303,7 +318,13 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
         footer_contributing: "Contribuindo",
         footer_legal: "Legal",
         footer_license: "Licença",
-        footer_copyright: "Copyleft 2023-2026 Lince. Feito com amor e Rust.",
+        footer_copyright: "Copyleft 2023-.* Lince. Feito com amor e Rust.",
+
+        // Blog
+        blog_title: "Blog",
+        blog_posts: "Postagens do Blog",
+        blog_posted_on: "Postado em",
+        blog_back_to_posts: "← Voltar para Postagens do Blog",
     });
 
     // ============================================================
@@ -316,6 +337,7 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
         // Navigation
         nav_home: "首页",
         nav_about: "关于",
+        nav_blog: "博客",
         nav_github: "GitHub",
         nav_download: "下载",
         nav_theme: "主题",
@@ -403,7 +425,13 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
         footer_contributing: "贡献",
         footer_legal: "法律",
         footer_license: "许可证",
-        footer_copyright: "Copyleft 2023-2026 Lince。用爱和 Rust 构建。",
+        footer_copyright: "Copyleft 2023-.* Lince。用爱和 Rust 构建。",
+
+        // Blog
+        blog_title: "博客",
+        blog_posts: "博客文章",
+        blog_posted_on: "发布于",
+        blog_back_to_posts: "← 返回博客文章",
     });
 
     map
