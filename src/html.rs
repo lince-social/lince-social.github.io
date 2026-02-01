@@ -35,6 +35,7 @@ pub fn page(body: &str, t: &Translations, current_page: &str) -> String {
                     (PreEscaped(r#"(function(){try{const s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else document.documentElement.setAttribute('data-theme','dark');}catch(e){} })();"#))
                 }
                 link rel="stylesheet" href="/assets/style.css";
+                link rel="stylesheet" href="/assets/lince-spirit.css";
                 title { "Lince" }
             }
             body {
@@ -134,6 +135,7 @@ pub fn page(body: &str, t: &Translations, current_page: &str) -> String {
                     });
                     "#))
                 }
+                script src="/assets/lince-spirit.js" defer="true" {}
             }
         }
     }
