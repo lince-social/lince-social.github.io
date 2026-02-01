@@ -1,0 +1,23 @@
+<!DOCTYPE html><html lang="zh" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="ie=edge"><meta name="description" content="Lince - Registry, Interconnection, and Automation of Needs and Contributions"><link rel="icon" href="/assets/logo/preto_no_branco.png" type="image/png"><script>(function(){try{const s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else document.documentElement.setAttribute('data-theme','dark');}catch(e){} })();</script><link rel="stylesheet" href="/assets/style.css"><title>Lince</title></head><body><nav class="navbar"><div class="navbar-container"><a class="navbar-brand" href="/index.zh.html"><img src="/assets/logo/branco.png" alt="Lince Logo">Lince</a><ul class="navbar-menu"><li><a class="navbar-item" href="/index.zh.html">首页</a></li><li><a class="navbar-item active" href="/blog.zh.html">博客</a></li><li class="desktop-only"><a class="navbar-item" href="https://github.com/lince-social/lince">GitHub</a></li><li class="desktop-only"><a class="navbar-item" href="https://github.com/lince-social/lince/releases">下载</a></li><li class="lang-switcher"><button class="lang-btn" onclick="toggleLangDropdown()">中文</button><div class="lang-dropdown" id="langDropdown"><a class="lang-option" href="/blog.html">English</a><a class="lang-option" href="/blog.pt-br.html">Português</a><a class="lang-option" href="/blog.zh.html">中文</a></div></li><li><button class="theme-toggle" onclick="toggleTheme()" title="主题">◐</button></li></ul></div></nav><main class="main-content"><section class="blog-header"><h1 class="section-title">博客</h1><p class="section-description">博客文章</p></section><section class="blog-posts-container"><ul class="blog-posts-list"><li class="blog-post-item"><a class="blog-post-link" href="/blog/0001_hello_world.zh.html"><h3 class="blog-post-title">0001_hello_world</h3><span class="blog-post-slug">0001_hello_world</span></a></li></ul></section></main><footer class="footer"><div class="footer-container"><div class="footer-section"><h4>资源</h4><ul class="footer-links"><li><a href="https://github.com/lince-social/lince">源代码</a></li><li><a href="https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main.pdf">文档</a></li><li><a href="https://github.com/lince-social/lince/releases">下载</a></li><li><a href="https://github.com/lince-social/lince-social.github.io">网站源码</a></li></ul></div><div class="footer-section"><h4>社区</h4><ul class="footer-links"><li><a href="https://www.youtube.com/@lince-social">YouTube</a></li><li><a href="https://discord.gg/3Gr9rYWHpu">Discord</a></li><li><a href="https://www.instagram.com/lincesocial">Instagram</a></li><li><a href="https://github.com/lince-social/lince/discussions">讨论</a></li></ul></div><div class="footer-section"><h4>法律</h4><ul class="footer-links"><li><a href="https://github.com/lince-social/lince/blob/main/LICENSE">许可证</a></li></ul></div></div></footer><script>
+                    function toggleTheme() {
+                        const html = document.documentElement;
+                        const current = html.getAttribute('data-theme');
+                        const next = current === 'dark' ? 'light' : 'dark';
+                        html.setAttribute('data-theme', next);
+                        localStorage.setItem('theme', next);
+                    }
+                    (function() {
+                        const saved = localStorage.getItem('theme');
+                        if (saved) {
+                            document.documentElement.setAttribute('data-theme', saved);
+                        }
+                    })();
+                    function toggleLangDropdown() {
+                        document.getElementById('langDropdown').classList.toggle('show');
+                    }
+                    document.addEventListener('click', function(e) {
+                        if (!e.target.closest('.lang-switcher')) {
+                            document.getElementById('langDropdown').classList.remove('show');
+                        }
+                    });
+                    </script></body></html>

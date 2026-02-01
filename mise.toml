@@ -1,14 +1,9 @@
-[tools]
-rust = "stable"
-bun = "latest"
-"cargo:bacon" = "latest"
-"cargo:mprocs" = "latest"
-"cargo:cargo-edit" = "latest"
-
 [tasks.dev]
 description = "Full hot-reloading stack"
+tools = { "rust" = "stable", "bun" = "latest", "cargo:bacon" = "latest", "cargo:mprocs" = "latest"}
 run = "mprocs \"bacon --job run .\" \"bunx live-server output --port=3000 --no-browser\""
 
 [tasks.clean]
 description = "Bump dependencies and cargo fix"
+tools = { "rust" = "stable", "cargo:cargo-edit" = "latest" }
 run = "cargo upgrade; cargo fix --broken-code --allow-dirty && cargo clippy --fix --allow-dirty --quiet >/dev/null 2>&1 "

@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^bash -lc \"which watchexec \\|\\| true; which bunx \\|\\| true; which mprocs \\|\\| true; which live-server \\|\\| true; stat -c '%y %n' output/index\\.html \\|\\| true; stat -c '%y %n' src/main\\.rs \\|\\| true; ps aux \\| grep -E 'live-server\\|watchexec\\|bunx\\|mprocs\\|cargo run' \\| grep -v grep \\|\\| true\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}

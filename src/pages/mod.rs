@@ -1,3 +1,2 @@
-pub mod about;
-pub mod blogposts;
+pub mod blog;
 pub mod index;
