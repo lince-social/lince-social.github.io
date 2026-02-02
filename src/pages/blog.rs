@@ -85,7 +85,7 @@ pub fn get_blog_posts() -> Vec<(String, String)> {
     posts.sort_by(|a, b| b.0.cmp(&a.0));
     posts
 }
-pub fn generate_blog_posts(t: &Translations, suffix: &str) {
+pub fn generate_blog_posts(t: &Translations, suffix: &str, show_home: bool) {
     let paths = fs::read_dir("src/blog").expect("Could not read blog directory");
     let blog_href = format!("/blog{}.html", suffix);
 
@@ -108,7 +108,7 @@ pub fn generate_blog_posts(t: &Translations, suffix: &str) {
                 }
             };
             let blog_post_page = format!("blog/{}", stem);
-            let final_html = page(&markup.0, t, &blog_post_page);
+            let final_html = page(&markup.0, t, &blog_post_page, show_home);
 
             fs::write(format!("output/blog/{}{}.html", stem, suffix), final_html).unwrap();
         }

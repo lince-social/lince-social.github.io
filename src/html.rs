@@ -12,7 +12,7 @@ fn lang_suffix(lang: &str) -> &str {
     }
 }
 
-pub fn page(body: &str, t: &Translations, current_page: &str) -> String {
+pub fn page(body: &str, t: &Translations, current_page: &str, show_home: bool) -> String {
     let suffix = lang_suffix(t.lang_code);
 
     // Prepare language suffixes and page links so generated pages point
@@ -46,10 +46,12 @@ pub fn page(body: &str, t: &Translations, current_page: &str) -> String {
                             "Lince"
                         }
                         ul class="navbar-menu" {
-                            li {
-                                a class=(if current_page == "index" { "navbar-item active" } else { "navbar-item" })
-                                    href=(home_href.clone()) {
-                                    (t.nav_home)
+                            @if show_home {
+                                li {
+                                    a class=(if current_page == "index" { "navbar-item active" } else { "navbar-item" })
+                                        href=(home_href.clone()) {
+                                        (t.nav_home)
+                                    }
                                 }
                             }
                             @if INCLUDE_BLOG {

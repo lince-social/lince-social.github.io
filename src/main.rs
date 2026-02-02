@@ -28,18 +28,20 @@ fn main() {
             format!(".{}", lang_code)
         };
 
-        if INCLUDE_BLOG {
-            generate_blog_posts(t, &suffix);
-        }
-
         let mut pages: Vec<(&str, String)> = Vec::new();
         pages.push(("index", page_index(t)));
         if INCLUDE_BLOG {
             pages.push(("blog", page_blog(t)));
         }
 
+        let show_home = pages.len() > 1;
+
+        if INCLUDE_BLOG {
+            generate_blog_posts(t, &suffix, show_home);
+        }
+
         for (name, content) in pages {
-            let html_out = page(&content, t, name);
+            let html_out = page(&content, t, name, show_home);
             fs::write(format!("output/{}{}.html", name, suffix), html_out).unwrap();
         }
     }
