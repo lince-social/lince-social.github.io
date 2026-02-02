@@ -1,3 +1,4 @@
+use crate::config::INCLUDE_BLOG;
 use crate::i18n::Translations;
 use maud::{DOCTYPE, PreEscaped, html};
 
@@ -51,10 +52,12 @@ pub fn page(body: &str, t: &Translations, current_page: &str) -> String {
                                     (t.nav_home)
                                 }
                             }
-                            li {
-                                a class=(if current_page.starts_with("blog") || current_page == "blog" { "navbar-item active" } else { "navbar-item" })
-                                    href=(blog_href.clone()) {
-                                    (t.nav_blog)
+                            @if INCLUDE_BLOG {
+                                li {
+                                    a class=(if current_page.starts_with("blog") || current_page == "blog" { "navbar-item active" } else { "navbar-item" })
+                                        href=(blog_href.clone()) {
+                                        (t.nav_blog)
+                                    }
                                 }
                             }
                             li class="desktop-only" {

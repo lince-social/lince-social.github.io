@@ -1,3 +1,4 @@
+use crate::config::INCLUDE_BLOG;
 use crate::{
     html::page,
     i18n::get_translations,
@@ -8,6 +9,7 @@ use crate::{
 };
 use std::fs;
 
+mod config;
 mod html;
 mod i18n;
 mod macros;
@@ -15,7 +17,9 @@ mod pages;
 
 fn main() {
     let translations = get_translations();
-    fs::create_dir_all("output/blog").expect("Failed to create output directory");
+    if INCLUDE_BLOG {
+        fs::create_dir_all("output/blog").expect("Failed to create output directory");
+    }
 
     for (lang_code, t) in &translations {
         let suffix = if lang_code == &"en" {
@@ -24,9 +28,15 @@ fn main() {
             format!(".{}", lang_code)
         };
 
-        generate_blog_posts(t, &suffix);
+        if INCLUDE_BLOG {
+            generate_blog_posts(t, &suffix);
+        }
 
-        let pages = [("index", page_index(t)), ("blog", page_blog(t))];
+        let mut pages: Vec<(&str, String)> = Vec::new();
+        pages.push(("index", page_index(t)));
+        if INCLUDE_BLOG {
+            pages.push(("blog", page_blog(t)));
+        }
 
         for (name, content) in pages {
             let html_out = page(&content, t, name);
