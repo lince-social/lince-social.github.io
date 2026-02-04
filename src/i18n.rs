@@ -135,7 +135,7 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
         hero_subtitle: "A tool for registry, interconnection, and automation of Needs and Contributions with open scope",
         hero_buttons: vec![
             LinkItem::with_class("https://github.com/lince-social/lince/releases", "Download", "btn btn-primary"),
-            LinkItem::with_class("https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main.pdf", "Documentation", "btn btn-secondary"),
+            LinkItem::with_class("https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main-dark.pdf", "Documentation", "btn btn-secondary"),
         ],
 
         // Index Page - Main Content
@@ -150,7 +150,9 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
                 Everyone can do something for the documentation, code, design, legal, financial, marketing, tidying, etc.
                 If you are interested, join the
                 <a href="https://discord.gg/3Gr9rYWHpu">Discord</a> and check the end of the
-                <a href="https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main.pdf">Documentation</a>
+                <a href="https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main-dark.pdf">Documentation (Dark Mode)</a>
+                <a href="https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main-light.pdf">Documentation (Light Mode)</a>
+
                 for tasks (soon to be a DNA).
                 "#,
             ),
@@ -190,7 +192,7 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
                 title: "Resources",
                 links: vec![
                     LinkItem::new("https://github.com/lince-social/lince", "Lince Source"),
-                    LinkItem::new("https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main.pdf", "Documentation"),
+                    LinkItem::new("https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main-dark.pdf", "Documentation"),
                     LinkItem::new("https://github.com/lince-social/lince/releases", "Downloads"),
                     LinkItem::new("https://github.com/lince-social/lince-social.github.io", "Website Source"),
                 ],
@@ -239,7 +241,7 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
         hero_subtitle: "Uma ferramenta para registro, interconexão e automação de Necessidades e Contribuições com escopo aberto",
         hero_buttons: vec![
             LinkItem::with_class("https://github.com/lince-social/lince/releases", "Baixar", "btn btn-primary"),
-            LinkItem::with_class("https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main.pdf", "Documentação", "btn btn-secondary"),
+            LinkItem::with_class("https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main-dark.pdf", "Documentação", "btn btn-secondary"),
         ],
 
         // Index Page - Main Content
@@ -254,7 +256,7 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
                 Todos podem contribuir com documentação, código, design, jurídico, finanças, marketing, organização, etc.
                 Se tiver interesse, junte-se ao
                 <a href="https://discord.gg/3Gr9rYWHpu">Discord</a> e confira o fim da
-                <a href="https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main.pdf">Documentação</a>
+                <a href="https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main-dark.pdf">Documentação</a>
                 para tarefas (em breve uma espécie de DNA).
                 "#,
             ),
@@ -293,7 +295,7 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
                 title: "Recursos",
                 links: vec![
                     LinkItem::new("https://github.com/lince-social/lince", "Código Fonte"),
-                    LinkItem::new("https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main.pdf", "Documentação"),
+                    LinkItem::new("https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main-dark.pdf", "Documentação"),
                     LinkItem::new("https://github.com/lince-social/lince/releases", "Downloads"),
                     LinkItem::new("https://github.com/lince-social/lince-social.github.io", "Código do Site"),
                 ],
@@ -342,7 +344,7 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
         hero_subtitle: "用于需求与贡献的登记、互联和自动化的工具，开放范围",
         hero_buttons: vec![
             LinkItem::with_class("https://github.com/lince-social/lince/releases", "下载", "btn btn-primary"),
-            LinkItem::with_class("https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main.pdf", "文档", "btn btn-secondary"),
+            LinkItem::with_class("https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main-dark.pdf", "文档", "btn btn-secondary"),
         ],
 
         // Index Page - Main Content
@@ -357,7 +359,7 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
                 每个人都可以为文档、代码、设计、法律、财务、市场、整理等方面做出贡献。
                 如果您有兴趣，请加入
                 <a href="https://discord.gg/3Gr9rYWHpu">Discord</a>，并查看
-                <a href="https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main.pdf">文档</a>
+                <a href="https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main-dark.pdf">文档</a>
                 的末尾以了解任务（很快会成为一种 DNA）。
                 "#,
             ),
@@ -396,7 +398,7 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
                 title: "资源",
                 links: vec![
                     LinkItem::new("https://github.com/lince-social/lince", "源代码"),
-                    LinkItem::new("https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main.pdf", "文档"),
+                    LinkItem::new("https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main-dark.pdf", "文档"),
                     LinkItem::new("https://github.com/lince-social/lince/releases", "下载"),
                     LinkItem::new("https://github.com/lince-social/lince-social.github.io", "网站源码"),
                 ],
