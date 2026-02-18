@@ -148,7 +148,7 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
                 <br>
                 <br>
                 Everyone can do something for the documentation, code, design, legal, financial, marketing, tidying, etc.
-                If you are interested, join the
+                If you are interested, join the <a href="https://matrix.to/#/#lince:matrix.org">Matrix</a> or
                 <a href="https://discord.gg/3Gr9rYWHpu">Discord</a> and check the end of the
                 <a href="https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main-dark.pdf">Documentation (Dark Mode)</a>
                 <a href="https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main-light.pdf">Documentation (Light Mode)</a>
@@ -254,9 +254,11 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
                 <br>
                 <br>
                 Todos podem contribuir com documentação, código, design, jurídico, finanças, marketing, organização, etc.
-                Se tiver interesse, junte-se ao
+                Se tiver interesse, entre no
+                <a href="https://matrix.to/#/#lince:matrix.org">Matrix</a> ou
                 <a href="https://discord.gg/3Gr9rYWHpu">Discord</a> e confira o fim da
-                <a href="https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main-dark.pdf">Documentação</a>
+                <a href="https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main-dark.pdf">Documentação (Modo Escuro)</a>
+                <a href="https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main-light.pdf">Documentação (Modo Claro)</a>
                 para tarefas (em breve uma espécie de DNA).
                 "#,
             ),
@@ -358,8 +360,10 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
                 <br>
                 每个人都可以为文档、代码、设计、法律、财务、市场、整理等方面做出贡献。
                 如果您有兴趣，请加入
+                <a href="https://matrix.to/#/#lince:matrix.org">Matrix</a> 或
                 <a href="https://discord.gg/3Gr9rYWHpu">Discord</a>，并查看
-                <a href="https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main-dark.pdf">文档</a>
+                <a href="https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main-dark.pdf">文档（深色模式）</a>
+                <a href="https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main-light.pdf">文档（浅色模式）</a>
                 的末尾以了解任务（很快会成为一种 DNA）。
                 "#,
             ),
