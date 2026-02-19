@@ -5,7 +5,7 @@ pub fn page_index(t: &Translations) -> String {
     html! {
         section class="hero" {
             div class="hero-container" {
-                img class="hero-logo" src="assets/logo/branco.png" alt="Lince Logo";
+                img class="hero-logo" src="assets/logo/white.svg" alt="Lince Logo";
                 h1 class="hero-title" { (t.hero_title) }
                 p class="hero-tagline" { (t.hero_tagline) }
                 p class="hero-subtitle" { (t.hero_subtitle) }

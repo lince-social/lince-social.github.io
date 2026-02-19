@@ -31,7 +31,7 @@ pub fn page(body: &str, t: &Translations, current_page: &str, show_home: bool) -
                 meta name="viewport" content="width=device-width, initial-scale=1.0";
                 meta http-equiv="X-UA-Compatible" content="ie=edge";
                 meta name="description" content="Lince - Registry, Interconnection, and Automation of Needs and Contributions";
-                link rel="icon" href="/assets/logo/preto_no_branco.png" type="image/png";
+                link rel="icon" href="/assets/black_in_white.ico" type="image/x-icon";
                 script {
                     (PreEscaped(r#"(function(){try{const s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else document.documentElement.setAttribute('data-theme','dark');}catch(e){} })();"#))
                 }
@@ -42,7 +42,7 @@ pub fn page(body: &str, t: &Translations, current_page: &str, show_home: bool) -
                 nav class="navbar" {
                     div class="navbar-container" {
                         a class="navbar-brand" href=(home_href) {
-                            img src="/assets/logo/branco.png" alt="Lince Logo";
+                            img src="/assets/logo/white.svg" alt="Lince Logo";
                             "Lince"
                         }
                         ul class="navbar-menu" {

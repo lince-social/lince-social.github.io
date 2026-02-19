@@ -1,7 +1,7 @@
 Hello world
 
 #image(
-  "../../output/assets/logo/branco.png",
+  "../../output/assets/logo/white.svg",
   width: 10%,
 )
 

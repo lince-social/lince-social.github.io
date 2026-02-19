@@ -1,4 +1,12 @@
 /* ===== CSS Variables - Dark Mode (Default) ===== */
+@font-face {
+    font-family: "Lispector Script";
+    src: url("/assets/font/LispectorScript.otf") format("opentype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
 :root {
     --color-bg: #000000;
     --color-bg-secondary: #0a0a0a;
@@ -347,8 +355,8 @@ img {
 }
 
 .hero-logo {
-    width: 80px;
-    height: 80px;
+    width: 150px;
+    height: 150px;
     margin-bottom: 1.5rem;
 }
 
@@ -358,12 +366,13 @@ img {
 }
 
 .hero-title {
-    font-size: 2.5rem;
-    font-weight: 300;
+    font-family: "Lispector Script", cursive;
+    font-size: 8rem;
+    font-weight: 400;
     margin-bottom: 1.5rem;
     color: var(--color-text);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    letter-spacing: 0;
+    text-transform: lowercase;
 }
 
 .hero-subtitle {

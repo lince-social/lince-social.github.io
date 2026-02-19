@@ -5,6 +5,7 @@ use crate::{
     pages::{
         blog::{generate_blog_posts, page_blog},
         index::page_index,
+        visual_identity::page_visual_identity,
     },
 };
 use std::fs;
@@ -30,6 +31,7 @@ fn main() {
 
         let mut pages: Vec<(&str, String)> = Vec::new();
         pages.push(("index", page_index(t)));
+        pages.push(("visual-identity", page_visual_identity()));
         if INCLUDE_BLOG {
             pages.push(("blog", page_blog(t)));
         }

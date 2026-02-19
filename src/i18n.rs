@@ -194,12 +194,14 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
                     LinkItem::new("https://github.com/lince-social/lince", "Lince Source"),
                     LinkItem::new("https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main-dark.pdf", "Documentation"),
                     LinkItem::new("https://github.com/lince-social/lince/releases", "Downloads"),
+                    LinkItem::new("visual-identity.html", "Visual Identity"),
                     LinkItem::new("https://github.com/lince-social/lince-social.github.io", "Website Source"),
                 ],
             },
             LinkGroup {
                 title: "Community",
                 links: vec![
+                    LinkItem::new("https://matrix.to/#/#lince:matrix.org", "Matrix"),
                     LinkItem::new("https://www.youtube.com/@lince-social", "Youtube"),
                     LinkItem::new("https://discord.gg/3Gr9rYWHpu", "Discord"),
                     LinkItem::new("https://www.instagram.com/lincesocial", "Instagram"),
@@ -299,12 +301,14 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
                     LinkItem::new("https://github.com/lince-social/lince", "Código Fonte"),
                     LinkItem::new("https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main-dark.pdf", "Documentação"),
                     LinkItem::new("https://github.com/lince-social/lince/releases", "Downloads"),
+                    LinkItem::new("visual-identity.pt-br.html", "Identidade Visual"),
                     LinkItem::new("https://github.com/lince-social/lince-social.github.io", "Código do Site"),
                 ],
             },
             LinkGroup {
                 title: "Comunidade",
                 links: vec![
+                    LinkItem::new("https://matrix.to/#/#lince:matrix.org", "Matrix"),
                     LinkItem::new("https://www.youtube.com/@lince-social", "YouTube"),
                     LinkItem::new("https://discord.gg/3Gr9rYWHpu", "Discord"),
                     LinkItem::new("https://www.instagram.com/lincesocial", "Instagram"),
@@ -404,12 +408,14 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
                     LinkItem::new("https://github.com/lince-social/lince", "源代码"),
                     LinkItem::new("https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main-dark.pdf", "文档"),
                     LinkItem::new("https://github.com/lince-social/lince/releases", "下载"),
+                    LinkItem::new("visual-identity.zh.html", "视觉识别"),
                     LinkItem::new("https://github.com/lince-social/lince-social.github.io", "网站源码"),
                 ],
             },
             LinkGroup {
                 title: "社区",
                 links: vec![
+                    LinkItem::new("https://matrix.to/#/#lince:matrix.org", "Matrix"),
                     LinkItem::new("https://www.youtube.com/@lince-social", "YouTube"),
                     LinkItem::new("https://discord.gg/3Gr9rYWHpu", "Discord"),
                     LinkItem::new("https://www.instagram.com/lincesocial", "Instagram"),
