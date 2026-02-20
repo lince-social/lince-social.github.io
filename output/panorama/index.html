@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Panorama Countdown</title>
+
+<style>
+  body {
+    margin: 0;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .count {
+    display: flex;
+    gap: 40px;
+  }
+  .num {
+    color: white;
+    font-weight: bold;
+    font-size: 80px;
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums;
+  }
+  @media (min-width: 768px) {
+    .count {
+      gap: 80px;
+    }
+    .num {
+      font-size: 140px;
+    }
+  }
+</style>
+
+</head>
+<body>
+
+<div class="count">
+  <div class="num" id="d">00</div>
+  <div class="num" id="h">00</div>
+  <div class="num" id="m">00</div>
+  <div class="num" id="s">00</div>
+</div>
+
+<script>
+function getNextPanorama() {
+  const now = new Date();
+  const poaTime = new Date(now.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
+
+  let year = poaTime.getFullYear();
+  let month = poaTime.getMonth();
+
+  let firstDay = new Date(year, month, 1);
+  let dayOfWeek = firstDay.getDay();
+  let daysUntilTuesday = (2 - dayOfWeek + 7) % 7;
+  if (daysUntilTuesday === 0 && dayOfWeek !== 2) daysUntilTuesday = 7;
+
+  let firstTuesday = new Date(year, month, 1 + daysUntilTuesday);
+  firstTuesday.setHours(11, 0, 0, 0);
+
+  if (firstTuesday <= poaTime) {
+    month++;
+    if (month > 11) { month = 0; year++; }
+
+    firstDay = new Date(year, month, 1);
+    dayOfWeek = firstDay.getDay();
+    daysUntilTuesday = (2 - dayOfWeek + 7) % 7;
+    if (daysUntilTuesday === 0 && dayOfWeek !== 2) daysUntilTuesday = 7;
+
+    firstTuesday = new Date(year, month, 1 + daysUntilTuesday);
+    firstTuesday.setHours(11, 0, 0, 0);
+  }
+
+  return firstTuesday;
+}
+
+function calculateTimeLeft(target) {
+  const now = new Date();
+  const diff = target - now;
+
+  if (diff <= 0) return { d: 0, h: 0, m: 0, s: 0 };
+
+  return {
+    d: Math.floor(diff / (1000 * 60 * 60 * 24)),
+    h: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+    m: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
+    s: Math.floor((diff % (1000 * 60)) / 1000)
+  };
+}
+
+let nextPanorama = getNextPanorama();
+
+function update() {
+  const t = calculateTimeLeft(nextPanorama);
+
+  if (t.d === 0 && t.h === 0 && t.m === 0 && t.s === 0) {
+    nextPanorama = getNextPanorama();
+  }
+
+  document.getElementById("d").textContent = String(t.d).padStart(2, "0");
+  document.getElementById("h").textContent = String(t.h).padStart(2, "0");
+  document.getElementById("m").textContent = String(t.m).padStart(2, "0");
+  document.getElementById("s").textContent = String(t.s).padStart(2, "0");
+}
+
+update();
+setInterval(update, 1000);
+</script>
+
+</body>
+</html>
