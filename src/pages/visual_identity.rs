@@ -29,6 +29,10 @@ fn sections() -> Vec<IdentitySection> {
                     label: "PNG",
                     href: "/assets/logo/white.png",
                 },
+                AssetLink {
+                    label: "JPG",
+                    href: "/assets/logo/white.jpg",
+                },
             ],
         },
         IdentitySection {
@@ -45,6 +49,10 @@ fn sections() -> Vec<IdentitySection> {
                     label: "PNG",
                     href: "/assets/logo/white_in_black.png",
                 },
+                AssetLink {
+                    label: "JPG",
+                    href: "/assets/logo/white_in_black.jpg",
+                },
             ],
         },
         IdentitySection {
@@ -60,6 +68,10 @@ fn sections() -> Vec<IdentitySection> {
                 AssetLink {
                     label: "PNG",
                     href: "/assets/logo/black.png",
+                },
+                AssetLink {
+                    label: "JPG",
+                    href: "/assets/logo/black.jpg",
                 },
             ],
         },
@@ -78,6 +90,10 @@ fn sections() -> Vec<IdentitySection> {
                     href: "/assets/logo/black_in_white.png",
                 },
                 AssetLink {
+                    label: "JPG",
+                    href: "/assets/logo/black_in_white.jpg",
+                },
+                AssetLink {
                     label: "ICO",
                     href: "/assets/black_in_white.ico",
                 },
@@ -94,7 +110,7 @@ pub fn page_visual_identity() -> String {
             section class="content-block" {
                 h1 class="content-block__title" { "Visual Identity" }
                 p class="content-block__body" {
-                    "Official logo files for download in SVG, PNG, and ICO formats."
+                    "Official logo files for download in SVG, PNG, JPG, and ICO formats."
                 }
             }
 
