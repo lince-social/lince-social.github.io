@@ -1,58 +1,268 @@
-<!DOCTYPE html><html lang="zh" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="ie=edge"><meta name="description" content="Lince - Registry, Interconnection, and Automation of Needs and Contributions"><link rel="icon" href="/assets/black_in_white.ico" type="image/x-icon"><script>(function(){try{const s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else document.documentElement.setAttribute('data-theme','dark');}catch(e){} })();</script><link rel="stylesheet" href="/assets/style.css"><title>Lince</title></head><body><nav class="navbar"><div class="navbar-container"><a class="navbar-brand" href="/index.zh.html"><img src="/assets/logo/white.svg" alt="Lince Logo">Lince</a><ul class="navbar-menu"><li><a class="navbar-item active" href="/index.zh.html">首页</a></li><li class="desktop-only"><a class="navbar-item" href="https://github.com/lince-social/lince">GitHub</a></li><li class="desktop-only"><a class="navbar-item" href="https://github.com/lince-social/lince/releases">下载</a></li><li class="lang-switcher"><button class="lang-btn" onclick="toggleLangDropdown()">中文</button><div class="lang-dropdown" id="langDropdown"><a class="lang-option" href="/index.html">English</a><a class="lang-option" href="/index.pt-br.html">Português</a><a class="lang-option" href="/index.zh.html">中文</a></div></li><li><button class="theme-toggle" onclick="toggleTheme()" title="主题">◐</button></li></ul></div></nav><section class="hero"><div class="hero-container"><img class="hero-logo" src="assets/logo/white.svg" alt="Lince Logo"><h1 class="hero-title">Lince</h1><p class="hero-tagline">开源 • 非营利 • 本地优先 • 数据驱动</p><p class="hero-subtitle">用于需求与贡献的登记、互联和自动化的工具，开放范围</p><div class="hero-buttons"><a class="btn btn-primary" href="https://github.com/lince-social/lince/releases">下载</a><a class="btn btn-secondary" href="https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main-dark.pdf">文档</a></div></div></section><main class="main-content"><div class="content-block"><h2 class="content-block__title">Lince 研究所</h2><p class="content-block__body">
-                Lince：一个开源、永久免费工具，由社区构建，
-                并由非营利机构 Lince 研究所支持。
-                <br>
-                <br>
-                每个人都可以为文档、代码、设计、法律、财务、市场、整理等方面做出贡献。
-                如果您有兴趣，请加入
-                <a href="https://matrix.to/#/#lince:matrix.org">Matrix</a> 或
-                <a href="https://discord.gg/3Gr9rYWHpu">Discord</a>，并查看
-                <a href="https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main-dark.pdf">文档（深色模式）</a>
-                <a href="https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main-light.pdf">文档（浅色模式）</a>
-                的末尾以了解任务（很快会成为一种 DNA）。
-                </p></div><div class="content-block"><h2 class="content-block__title">什么是 Lince？</h2><p class="content-block__body">
-                本质上，Lince 是一个个人数据库，通过需求与贡献的视角来管理任何事物。
-                <br>
-                <br>
-                你可以在一个记录中建模任何事物：任务、物品、目标等。该记录包含一些用于描述的定性文本字段，以及一些用于度量和控制的可量化数字字段。
-                <br>
-                <br>
-                记录中的负数表示需求：[-1，苹果] 表示需要一个苹果。
-                <br>
-                正数表示贡献：[+1，苹果] 表示可用于消费、捐赠或出售的苹果存量。
-                <br>
-                <br>
-                在你自己的 Lince 实例中，你可以建模所有的任务、物品和目标。
-                可以围绕记录的属性、终端命令和频率创建许多自动化。
-                <br>
-                <br>
-                当多个参与方发生交互时，可以发生转移。你可以作为贡献给出 3（三）货币来满足你对 1（一）个苹果的需求。
-                可能性有很多，正如参与方交换资源的方式多样。
-                <br>
-                <br>
-                Lince 的目标首先是帮助人们为他们自己的需求做出贡献，
-                通过将待办事项列表、所需资源和财务模拟集中在一个地方来进行组织。
-                然后，帮助他们将部分数据与世界共享，连接所有生产，以高效满足我们所建模的需求。
-                </p></div></main><footer class="footer"><div class="footer-container"><div class="footer-section"><h4>资源</h4><ul class="footer-links"><li><a href="https://github.com/lince-social/lince">源代码</a></li><li><a href="https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/main-dark.pdf">文档</a></li><li><a href="https://github.com/lince-social/lince/releases">下载</a></li><li><a href="/visual-identity.zh.html">视觉识别</a></li><li><a href="https://github.com/lince-social/lince-social.github.io">网站源码</a></li></ul></div><div class="footer-section"><h4>社区</h4><ul class="footer-links"><li><a href="https://matrix.to/#/#lince:matrix.org">Matrix</a></li><li><a href="https://www.youtube.com/@lince-social">YouTube</a></li><li><a href="https://discord.gg/3Gr9rYWHpu">Discord</a></li><li><a href="https://www.instagram.com/lincesocial">Instagram</a></li><li><a href="https://github.com/lince-social/lince/discussions">讨论</a></li></ul></div><div class="footer-section"><h4>法律</h4><ul class="footer-links"><li><a href="https://github.com/lince-social/lince/blob/main/LICENSE">许可证</a></li></ul></div></div></footer><script>
-                    function toggleTheme() {
-                        const html = document.documentElement;
-                        const current = html.getAttribute('data-theme');
-                        const next = current === 'dark' ? 'light' : 'dark';
-                        html.setAttribute('data-theme', next);
-                        localStorage.setItem('theme', next);
-                    }
-                    (function() {
-                        const saved = localStorage.getItem('theme');
-                        if (saved) {
-                            document.documentElement.setAttribute('data-theme', saved);
-                        }
-                    })();
-                    function toggleLangDropdown() {
-                        document.getElementById('langDropdown').classList.toggle('show');
-                    }
-                    document.addEventListener('click', function(e) {
-                        if (!e.target.closest('.lang-switcher')) {
-                            document.getElementById('langDropdown').classList.remove('show');
-                        }
-                    });
-                    </script></body></html>
+<!doctype html>
+<html lang="zh" data-theme="dark">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <meta
+            name="description"
+            content="Lince - Registry, Interconnection, and Automation of Needs and Contributions"
+        />
+        <link
+            rel="icon"
+            href="/assets/black_in_white.ico"
+            type="image/x-icon"
+        />
+        <script>
+            (function () {
+                try {
+                    const s = localStorage.getItem("theme");
+                    if (s)
+                        document.documentElement.setAttribute("data-theme", s);
+                    else
+                        document.documentElement.setAttribute(
+                            "data-theme",
+                            "dark",
+                        );
+                } catch (e) {}
+            })();
+        </script>
+        <link rel="stylesheet" href="/assets/style.css" />
+        <title>Lince</title>
+    </head>
+    <body>
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a class="navbar-brand" href="/index.zh.html"
+                    ><img
+                        src="/assets/logo/white.svg"
+                        alt="Lince Logo"
+                    />Lince</a
+                >
+                <ul class="navbar-menu">
+                    <li>
+                        <a class="navbar-item active" href="/index.zh.html"
+                            >首页</a
+                        >
+                    </li>
+                    <li class="desktop-only">
+                        <a
+                            class="navbar-item"
+                            href="https://github.com/lince-social/lince"
+                            >GitHub</a
+                        >
+                    </li>
+                    <li class="desktop-only">
+                        <a
+                            class="navbar-item"
+                            href="https://github.com/lince-social/lince/releases"
+                            >下载</a
+                        >
+                    </li>
+                    <li class="lang-switcher">
+                        <button class="lang-btn" onclick="toggleLangDropdown()">
+                            中文
+                        </button>
+                        <div class="lang-dropdown" id="langDropdown">
+                            <a class="lang-option" href="/index.html">English</a
+                            ><a class="lang-option" href="/index.pt-br.html"
+                                >Português</a
+                            ><a class="lang-option" href="/index.zh.html"
+                                >中文</a
+                            >
+                        </div>
+                    </li>
+                    <li>
+                        <button
+                            class="theme-toggle"
+                            onclick="toggleTheme()"
+                            title="主题"
+                        >
+                            ◐
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <section class="hero">
+            <div class="hero-container">
+                <img
+                    class="hero-logo"
+                    src="assets/logo/white.svg"
+                    alt="Lince Logo"
+                />
+                <h1 class="hero-title">Lince</h1>
+                <p class="hero-tagline">开源 • 非营利 • 本地优先 • 数据驱动</p>
+                <p class="hero-subtitle">
+                    用于需求与贡献的登记、互联和自动化的工具，开放范围
+                </p>
+                <div class="hero-buttons">
+                    <a
+                        class="btn btn-primary"
+                        href="https://github.com/lince-social/lince/releases"
+                        >下载</a
+                    ><a
+                        class="btn btn-secondary"
+                        href="https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/lince-documentation-dark.pdf"
+                        >文档</a
+                    >
+                </div>
+            </div>
+        </section>
+        <main class="main-content">
+            <div class="content-block">
+                <h2 class="content-block__title">Lince 研究所</h2>
+                <p class="content-block__body">
+                    Lince：一个开源、永久免费工具，由社区构建， 并由非营利机构
+                    Lince 研究所支持。
+                    <br />
+                    <br />
+                    每个人都可以为文档、代码、设计、法律、财务、市场、整理等方面做出贡献。
+                    如果您有兴趣，请加入
+                    <a href="https://matrix.to/#/#lince:matrix.org">Matrix</a>
+                    或
+                    <a href="https://discord.gg/3Gr9rYWHpu">Discord</a>，并查看
+                    <a
+                        href="https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/lince-documentation-dark.pdf"
+                        >文档（深色模式）</a
+                    >
+                    <a
+                        href="https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/lince-documentation-light.pdf"
+                        >文档（浅色模式）</a
+                    >
+                    的末尾以了解任务（很快会成为一种 DNA）。
+                </p>
+            </div>
+            <div class="content-block">
+                <h2 class="content-block__title">什么是 Lince？</h2>
+                <p class="content-block__body">
+                    本质上，Lince
+                    是一个个人数据库，通过需求与贡献的视角来管理任何事物。
+                    <br />
+                    <br />
+                    你可以在一个记录中建模任何事物：任务、物品、目标等。该记录包含一些用于描述的定性文本字段，以及一些用于度量和控制的可量化数字字段。
+                    <br />
+                    <br />
+                    记录中的负数表示需求：[-1，苹果] 表示需要一个苹果。
+                    <br />
+                    正数表示贡献：[+1，苹果]
+                    表示可用于消费、捐赠或出售的苹果存量。
+                    <br />
+                    <br />
+                    在你自己的 Lince 实例中，你可以建模所有的任务、物品和目标。
+                    可以围绕记录的属性、终端命令和频率创建许多自动化。
+                    <br />
+                    <br />
+                    当多个参与方发生交互时，可以发生转移。你可以作为贡献给出
+                    3（三）货币来满足你对 1（一）个苹果的需求。
+                    可能性有很多，正如参与方交换资源的方式多样。
+                    <br />
+                    <br />
+                    Lince 的目标首先是帮助人们为他们自己的需求做出贡献，
+                    通过将待办事项列表、所需资源和财务模拟集中在一个地方来进行组织。
+                    然后，帮助他们将部分数据与世界共享，连接所有生产，以高效满足我们所建模的需求。
+                </p>
+            </div>
+        </main>
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-section">
+                    <h4>资源</h4>
+                    <ul class="footer-links">
+                        <li>
+                            <a href="https://github.com/lince-social/lince"
+                                >源代码</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/lince-documentation-dark.pdf"
+                                >文档</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="https://github.com/lince-social/lince/releases"
+                                >下载</a
+                            >
+                        </li>
+                        <li><a href="/visual-identity.zh.html">视觉识别</a></li>
+                        <li>
+                            <a
+                                href="https://github.com/lince-social/lince-social.github.io"
+                                >网站源码</a
+                            >
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>社区</h4>
+                    <ul class="footer-links">
+                        <li>
+                            <a href="https://matrix.to/#/#lince:matrix.org"
+                                >Matrix</a
+                            >
+                        </li>
+                        <li>
+                            <a href="https://www.youtube.com/@lince-social"
+                                >YouTube</a
+                            >
+                        </li>
+                        <li>
+                            <a href="https://discord.gg/3Gr9rYWHpu">Discord</a>
+                        </li>
+                        <li>
+                            <a href="https://www.instagram.com/lincesocial"
+                                >Instagram</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="https://github.com/lince-social/lince/discussions"
+                                >讨论</a
+                            >
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>法律</h4>
+                    <ul class="footer-links">
+                        <li>
+                            <a
+                                href="https://github.com/lince-social/lince/blob/main/LICENSE"
+                                >许可证</a
+                            >
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+        <script>
+            function toggleTheme() {
+                const html = document.documentElement;
+                const current = html.getAttribute("data-theme");
+                const next = current === "dark" ? "light" : "dark";
+                html.setAttribute("data-theme", next);
+                localStorage.setItem("theme", next);
+            }
+            (function () {
+                const saved = localStorage.getItem("theme");
+                if (saved) {
+                    document.documentElement.setAttribute("data-theme", saved);
+                }
+            })();
+            function toggleLangDropdown() {
+                document
+                    .getElementById("langDropdown")
+                    .classList.toggle("show");
+            }
+            document.addEventListener("click", function (e) {
+                if (!e.target.closest(".lang-switcher")) {
+                    document
+                        .getElementById("langDropdown")
+                        .classList.remove("show");
+                }
+            });
+        </script>
+    </body>
+</html>

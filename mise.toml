@@ -7,3 +7,38 @@ run = "mprocs \"bacon --job run .\" \"bunx live-server output --port=3000 --no-b
 description = "Bump dependencies and cargo fix"
 tools = { "rust" = "stable", "cargo:cargo-edit" = "latest" }
 run = "cargo upgrade; cargo fix --broken-code --allow-dirty && cargo clippy --fix --allow-dirty --quiet >/dev/null 2>&1 "
+
+[tasks.blog]
+description = "Preview a blog Typst post by numeric id (e.g. mise blog 0001)"
+tools = { "tinymist" = "latest", "typst" = "latest" }
+usage = '''
+arg "<id>" help="Blog post numeric prefix (e.g. 0001)"
+flag "-l --light" help="Use light mode in tinymist preview (disable inversion)"
+'''
+run = """
+SEARCH_PATH="output/assets/blog/posts"
+BLOG_ID="${usage_id?}"
+
+if [ "${usage_light:-false}" = "true" ]; then
+  PREVIEW_INVERT="never"
+else
+  PREVIEW_INVERT="auto"
+fi
+
+POST_FILE=$(find "$SEARCH_PATH" -mindepth 1 -maxdepth 1 -type f -name "${BLOG_ID}_*.typ" -printf '%f\\n' | sort -V | tail -n 1)
+
+if [ -z "$POST_FILE" ]; then
+  echo "No blog post found for id: $BLOG_ID in $SEARCH_PATH"
+  exit 1
+fi
+
+SOURCE_PATH="$SEARCH_PATH/$POST_FILE"
+echo "Using blog post: $SOURCE_PATH"
+
+tinymist preview \
+  --root . \
+  --control-plane-host 127.0.0.1:0 \
+  --data-plane-host 127.0.0.1:0 \
+  --invert-colors "$PREVIEW_INVERT" \
+  "$SOURCE_PATH"
+"""

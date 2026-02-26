@@ -70,7 +70,7 @@ fn extract_title_from_typst(file_path: &str) -> String {
 pub fn get_blog_posts() -> Vec<(String, String)> {
     let mut posts = Vec::new();
 
-    if let Ok(entries) = fs::read_dir("src/blog") {
+    if let Ok(entries) = fs::read_dir("output/assets/blog/posts") {
         for entry in entries.flatten() {
             let file_path = entry.path();
             if file_path.extension().and_then(|s| s.to_str()) == Some("typ") {
@@ -86,7 +86,7 @@ pub fn get_blog_posts() -> Vec<(String, String)> {
     posts
 }
 pub fn generate_blog_posts(t: &Translations, suffix: &str, show_home: bool) {
-    let paths = fs::read_dir("src/blog").expect("Could not read blog directory");
+    let paths = fs::read_dir("output/assets/blog").expect("Could not read blog directory");
     let blog_href = format!("/blog{}.html", suffix);
 
     for entry in paths.flatten() {
