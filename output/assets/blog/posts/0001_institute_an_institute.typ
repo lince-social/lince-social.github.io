@@ -44,6 +44,4 @@
   Like as the morning tide pushing outward, we receive from the world.
 
   Like the horizon sun changing the tides, we keep the movement, with the Lince Institute.
-
-  oioioiiosjaosixj
 ]
