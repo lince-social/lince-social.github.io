@@ -33,17 +33,17 @@
 
   \
 
-  This was a pros and cons list, playing the devil's advocate and prossecutor. I wanted this to explain the: why not. Unfortunatelly, this time, the devil had a solid case. I convinced myself of the contrary and ended up thinking: why not?
+  This was a pros and cons list, playing the devil's advocate and prossecutor. I wanted this to explain the: why not. Unfortunatelly, this time, the devil had a solid case. I convinced myself of the contrary and ended up thinking: why not?.
 
   The Lince Institute is a contradiction, probably not the best idea, we keep it alive to kill it. The more we code and sustain it's growth, the less we Need it, the closer it is to it's end and to another start, the freshest start, with the freshest air, the freshest food and the freshest views.
 
   \
 
-  #align(bottom)[
-    Like for the night tide pulling inward, we gift the world.
+  Like for the night tide pulling inward, we gift the world.
 
-    Like as the morning tide pushing outward, we receive from the world.
+  Like as the morning tide pushing outward, we receive from the world.
 
-    Like the horizon sun changing the tides, we keep the movement, with the Lince Institute.
-  ]
+  Like the horizon sun changing the tides, we keep the movement, with the Lince Institute.
+
+  oioioiiosjaosixj
 ]

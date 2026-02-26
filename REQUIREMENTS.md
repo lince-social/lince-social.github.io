@@ -1,0 +1,4 @@
+- [ ] The blogpost shouldnt break the typst.
+- [x] The this_by of output/assets/blog/components.typ should be shown.
+- [x] When I change the typst in output/assets/blog/posts/somepost.typ, the website post should be updated.
+- [x] I think the 'oioioiiosjaosixj' at the end of the typst is not being shown in the website because it is showing only what would be one page in tinymist, can i configure the typst post to be like a page 10 times the normal height?

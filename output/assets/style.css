@@ -464,6 +464,12 @@ img {
     width: 100%;
 }
 
+/* Blog post pages can be wider than generic content pages */
+.main-content.blog-post-content {
+    max-width: none;
+    width: 100%;
+}
+
 /* ===== Section ===== */
 .section {
     margin-bottom: 4rem;
@@ -531,10 +537,103 @@ img {
     padding: 1rem 0;
 }
 
+.blog-breadcrumbs {
+    margin-bottom: 1rem;
+}
+
+.blog-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.35rem 0.6rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-card);
+    color: var(--color-text) !important;
+    text-decoration: none !important;
+}
+
+.blog-back-link:hover {
+    background: var(--color-highlight);
+    border-color: var(--color-text);
+    color: var(--color-text) !important;
+    text-decoration: none !important;
+}
+
 .blog_post p {
     margin-bottom: 1rem;
     color: var(--color-text);
     line-height: 1.8;
+}
+
+.blog_post_embed {
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.blog_post_embed .tinymist-native {
+    --tinymist-zoom: 1;
+    width: 90%;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+}
+
+.blog_post_embed .tinymist-native svg.typst-doc {
+    display: block;
+    width: 100% !important;
+    max-width: 100%;
+    height: auto !important;
+    margin-left: 0;
+    background: transparent !important;
+}
+
+.blog_post_embed .tinymist-native .typst-page-outer,
+.blog_post_embed .tinymist-native .typst-preview-canvas-page-number,
+.blog_post_embed .tinymist-native .typst-preview-svg-page-number {
+    display: none !important;
+}
+
+/* Make Tinymist output follow the website theme colors naturally */
+.blog_post_embed .tinymist-native .typst-page-inner {
+    fill: var(--color-bg) !important;
+}
+
+.blog_post_embed .tinymist-native [fill="#000"],
+.blog_post_embed .tinymist-native [fill="#000000"] {
+    fill: var(--color-text) !important;
+}
+
+.blog_post_embed .tinymist-native [fill="#fff"],
+.blog_post_embed .tinymist-native [fill="#ffffff"] {
+    fill: var(--color-bg) !important;
+}
+
+.blog_post_embed .tinymist-native [stroke="#000"],
+.blog_post_embed .tinymist-native [stroke="#000000"] {
+    stroke: var(--color-text) !important;
+}
+
+.blog_post_embed .tinymist-native .typst-text {
+    cursor: text;
+}
+
+.blog_post_embed .tinymist-native .tsel,
+.blog_post_embed .tinymist-native .tsel span {
+    color: transparent !important;
+    user-select: text;
+    -webkit-user-select: text;
+}
+
+.blog_post_embed .tinymist-native .tsel::selection,
+.blog_post_embed .tinymist-native .tsel span::selection {
+    color: transparent !important;
+    background: #7db9dea0;
+}
+
+.blog_post_embed .tinymist-native .tsel::-moz-selection,
+.blog_post_embed .tinymist-native .tsel span::-moz-selection {
+    color: transparent !important;
+    background: #7db9dea0;
 }
 
 .section-header {
@@ -905,6 +1004,15 @@ pre code {
         padding: 2rem 1rem;
     }
 
+    /*.main-content.blog-post-content {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }*/
+
+    .blog_post_embed .tinymist-native {
+        --tinymist-zoom: 1;
+    }
+
     .footer-container {
         flex-direction: column;
         gap: 1.5rem;
@@ -926,6 +1034,15 @@ pre code {
 
     .navbar-brand img {
         height: 20px;
+    }
+
+    .main-content.blog-post-content {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    .blog_post_embed .tinymist-native {
+        --tinymist-zoom: 1;
     }
 }
 

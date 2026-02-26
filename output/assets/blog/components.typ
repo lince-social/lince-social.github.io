@@ -1,5 +1,5 @@
 #let by(start: bool, name: str, email: str, date: datetime) = [
-  #align(if start { left } else { right + bottom })[
+  #align(if start { left } else { right })[
     #name | #email
 
     #date.display()
@@ -7,6 +7,8 @@
 ]
 
 #let post(title: str, name: str, email: str, date: datetime, body) = [
+  // #set page(height: 10 * 297mm)
+
   #let this_by(start: bool) = by(
     start: start,
     name: name,
@@ -24,7 +26,11 @@
 
   #body
 
+  \
+
   #v(1em)
+
+  \
 
   #this_by(start: false)
 ]

@@ -1,6 +1,6 @@
 use crate::{html::page, i18n::Translations};
 use maud::{PreEscaped, html};
-use std::{fs, process::Command};
+use std::{fs, path::Path, process::Command};
 
 #[derive(Default)]
 struct BlogMetadata {
@@ -33,6 +33,185 @@ pub fn compile_blog_body(source_path: &str) -> String {
 
     // 2. Extract the inner body
     extract_body(full_html)
+}
+
+fn tinymist_sidecar_path(stem: &str, _source_path: &Path) -> Option<String> {
+    let sidecar_path = format!("output/assets/blog/posts/{stem}.tinymist.html");
+    let sidecar = Path::new(&sidecar_path);
+    if sidecar.exists() {
+        return Some(sidecar_path);
+    }
+    None
+}
+
+fn generate_svg_sidecar(stem: &str, source_path: &Path) -> Option<String> {
+    let sidecar_path = format!("output/assets/blog/posts/{stem}.tinymist.html");
+    let sidecar = Path::new(&sidecar_path);
+    let components = Path::new("output/assets/blog/components.typ");
+
+    let sidecar_mtime = fs::metadata(sidecar).and_then(|m| m.modified()).ok();
+    let source_mtime = fs::metadata(source_path).and_then(|m| m.modified()).ok();
+    let components_mtime = fs::metadata(components).and_then(|m| m.modified()).ok();
+
+    let needs_regen = match sidecar_mtime {
+        None => true,
+        Some(sidecar_time) => {
+            let source_newer = source_mtime.map(|t| t > sidecar_time).unwrap_or(false);
+            let components_newer = components_mtime.map(|t| t > sidecar_time).unwrap_or(false);
+            source_newer || components_newer
+        }
+    };
+
+    if !needs_regen {
+        return Some(sidecar_path);
+    }
+
+    let output = Command::new("tinymist")
+        .arg("compile")
+        .arg(source_path)
+        .arg(&sidecar_path)
+        .arg("--root")
+        .arg(".")
+        .arg("--format")
+        .arg("svg")
+        .output()
+        .ok()?;
+
+    if !output.status.success() {
+        return None;
+    }
+
+    Some(sidecar_path)
+}
+
+fn extract_first_block(input: &str, start_marker: &str, end_marker: &str) -> Option<String> {
+    let start = input.find(start_marker)?;
+    let end_rel = input[start..].find(end_marker)?;
+    let end = start + end_rel + end_marker.len();
+    Some(input[start..end].to_string())
+}
+
+fn extract_balanced_svg(input: &str, start: usize) -> Option<String> {
+    let mut cursor = start;
+    let mut depth = 0usize;
+
+    while cursor < input.len() {
+        let next_open = input[cursor..].find("<svg").map(|p| cursor + p);
+        let next_close = input[cursor..].find("</svg>").map(|p| cursor + p);
+
+        match (next_open, next_close) {
+            (Some(open), Some(close)) if open < close => {
+                depth += 1;
+                cursor = open + 4;
+            }
+            (_, Some(close)) => {
+                if depth == 0 {
+                    return None;
+                }
+                depth -= 1;
+                cursor = close + "</svg>".len();
+                if depth == 0 {
+                    return Some(input[start..cursor].to_string());
+                }
+            }
+            _ => return None,
+        }
+    }
+
+    None
+}
+
+fn extract_typst_doc_svg(input: &str) -> Option<String> {
+    if let Some(app_start) = input.find("<div id=\"typst-app\"") {
+        if let Some(svg_rel_start) = input[app_start..].find("<svg") {
+            let svg_start = app_start + svg_rel_start;
+            if let Some(svg) = extract_balanced_svg(input, svg_start) {
+                return Some(svg);
+            }
+        }
+    }
+
+    // Support static Tinymist HTML exports where the document SVG is emitted directly.
+    if let Some(svg_start) = input.find("<svg class=\"typst-doc\"") {
+        return extract_balanced_svg(input, svg_start);
+    }
+
+    None
+}
+
+fn tinymist_native_html(sidecar_path: &str, stem: &str) -> Option<String> {
+    let raw = fs::read_to_string(sidecar_path).ok()?;
+    let resources = extract_first_block(&raw, "<svg id=\"typst-svg-resources\"", "</svg>")
+        .or_else(|| extract_first_block(&raw, "<svg class=\"typst-svg-resources\"", "</svg>"))
+        .unwrap_or_default();
+    let doc_svg = extract_typst_doc_svg(&raw)?;
+
+    Some(format!(
+        r##"<div class="blog_post_embed">
+  <div class="tinymist-native" id="tinymist-native-{stem}">
+    {resources}
+    {doc_svg}
+  </div>
+</div>
+<script>
+(function() {{
+  const root = document.getElementById("tinymist-native-{stem}");
+  if (!root) {{
+    return;
+  }}
+  const svg = root.querySelector("svg.typst-doc");
+  if (!svg) {{
+    return;
+  }}
+
+  // Flatten pages so Tinymist output reads like one continuous post.
+  const pages = Array.from(svg.querySelectorAll("g.typst-page"));
+  let y = 0;
+  const pageGap = 10;
+  for (const page of pages) {{
+    let targetY = y;
+    let advance = Number(page.getAttribute("data-page-height")) || 0;
+    try {{
+      // Measure only page content so pages collapse without huge blank bands.
+      const content = page.querySelector("g.typst-group") || page;
+      const box = content.getBBox();
+      if (box.height > 0) {{
+        targetY = y - box.y;
+        advance = box.height + pageGap;
+      }}
+    }} catch (_err) {{
+      // Keep data-page-height fallback when geometry isn't measurable.
+    }}
+    page.setAttribute("transform", `translate(0, ${{targetY}})`);
+    y += advance;
+  }}
+
+  const width = Number(svg.getAttribute("data-width"))
+    || Number((pages[0] && pages[0].getAttribute("data-page-width")) || 596);
+  if (width > 0 && y > 0) {{
+    svg.setAttribute("viewBox", `0 0 ${{width}} ${{y}}`);
+  }}
+
+  svg.removeAttribute("height");
+  svg.setAttribute("width", "100%");
+  svg.style.height = "auto";
+  svg.style.display = "block";
+  svg.style.maxWidth = "100%";
+  svg.style.background = "transparent";
+
+  for (const outer of svg.querySelectorAll(".typst-page-outer")) {{
+    outer.remove();
+  }}
+  for (const inner of svg.querySelectorAll(".typst-page-inner")) {{
+    inner.remove();
+  }}
+  for (const ind of svg.querySelectorAll(".typst-preview-canvas-page-number, .typst-preview-svg-page-number")) {{
+    ind.remove();
+  }}
+
+}})();
+</script>"##
+    ))
 }
 
 fn extract_body(full_html: String) -> String {
@@ -224,14 +403,23 @@ pub fn generate_blog_posts(t: &Translations, suffix: &str, show_home: bool) {
                 continue;
             }
 
-            // Compile Typst content
-            let body = compile_blog_body(file_path.to_str().unwrap());
+            // Prefer Tinymist-rendered sidecar HTML when available.
+            // Fallback to Typst CLI HTML if sidecar parsing fails.
+            let sidecar_path = generate_svg_sidecar(stem, &file_path)
+                .or_else(|| tinymist_sidecar_path(stem, &file_path));
+
+            let body = if let Some(sidecar_path) = sidecar_path {
+                tinymist_native_html(&sidecar_path, stem)
+                    .unwrap_or_else(|| compile_blog_body(file_path.to_str().unwrap()))
+            } else {
+                compile_blog_body(file_path.to_str().unwrap())
+            };
 
             // Wrap in Maud with breadcrumbs
             let markup = html! {
-                main class="main-content" {
-                    nav class="breadcrumbs" {
-                        a href=(blog_href.clone()) { (t.blog_back_to_posts) }
+                main class="main-content blog-post-content" {
+                    nav class="breadcrumbs blog-breadcrumbs" {
+                        a class="blog-back-link" href=(blog_href.clone()) { (t.blog_back_to_posts) }
                     }
                     article class="blog_post" { (PreEscaped(body)) }
                 }
