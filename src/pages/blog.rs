@@ -35,17 +35,10 @@ pub fn compile_blog_body(source_path: &str) -> String {
     extract_body(full_html)
 }
 
-fn tinymist_sidecar_path(stem: &str, _source_path: &Path) -> Option<String> {
-    let sidecar_path = format!("output/assets/blog/posts/{stem}.tinymist.html");
-    let sidecar = Path::new(&sidecar_path);
-    if sidecar.exists() {
-        return Some(sidecar_path);
-    }
-    None
-}
-
 fn generate_svg_sidecar(stem: &str, source_path: &Path) -> Option<String> {
-    let sidecar_path = format!("output/assets/blog/posts/{stem}.tinymist.html");
+    let sidecar_dir = Path::new("output/assets/blog/.cache");
+    let _ = fs::create_dir_all(sidecar_dir);
+    let sidecar_path = format!("output/assets/blog/.cache/{stem}.svg");
     let sidecar = Path::new(&sidecar_path);
     let components = Path::new("output/assets/blog/components.typ");
 
@@ -62,7 +55,12 @@ fn generate_svg_sidecar(stem: &str, source_path: &Path) -> Option<String> {
         }
     };
 
-    if !needs_regen {
+    let valid_cached_sidecar = fs::read_to_string(sidecar)
+        .ok()
+        .map(|s| s.contains("<svg class=\"typst-doc\""))
+        .unwrap_or(false);
+
+    if !needs_regen && valid_cached_sidecar {
         return Some(sidecar_path);
     }
 
@@ -164,7 +162,6 @@ fn tinymist_native_html(sidecar_path: &str, stem: &str) -> Option<String> {
     return;
   }}
 
-  // Flatten pages so Tinymist output reads like one continuous post.
   const pages = Array.from(svg.querySelectorAll("g.typst-page"));
   let y = 0;
   const pageGap = 10;
@@ -405,8 +402,7 @@ pub fn generate_blog_posts(t: &Translations, suffix: &str, show_home: bool) {
 
             // Prefer Tinymist-rendered sidecar HTML when available.
             // Fallback to Typst CLI HTML if sidecar parsing fails.
-            let sidecar_path = generate_svg_sidecar(stem, &file_path)
-                .or_else(|| tinymist_sidecar_path(stem, &file_path));
+            let sidecar_path = generate_svg_sidecar(stem, &file_path);
 
             let body = if let Some(sidecar_path) = sidecar_path {
                 tinymist_native_html(&sidecar_path, stem)

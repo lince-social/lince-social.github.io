@@ -7,7 +7,7 @@
 ]
 
 #let post(title: str, name: str, email: str, date: datetime, body) = [
-  // #set page(height: 10 * 297mm)
+  #set page(height: auto)
 
   #let this_by(start: bool) = by(
     start: start,

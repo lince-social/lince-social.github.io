@@ -1,8 +1,5 @@
-<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="ie=edge"><meta name="description" content="Lince - Registry, Interconnection, and Automation of Needs and Contributions"><link rel="icon" href="/assets/black_in_white.ico" type="image/x-icon"><script>(function(){try{const s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else document.documentElement.setAttribute('data-theme','dark');}catch(e){} })();</script><link rel="stylesheet" href="/assets/style.css"><title>Lince</title></head><body><nav class="navbar"><div class="navbar-container"><a class="navbar-brand" href="/index.html"><img src="/assets/logo/white.svg" alt="Lince Logo">Lince</a><ul class="navbar-menu"><li><a class="navbar-item" href="/index.html">Home</a></li><li><a class="navbar-item active" href="/blog.html">Blog</a></li><li class="desktop-only"><a class="navbar-item" href="https://github.com/lince-social/lince">GitHub</a></li><li class="desktop-only"><a class="navbar-item" href="https://github.com/lince-social/lince/releases">Download</a></li><li class="lang-switcher"><button class="lang-btn" onclick="toggleLangDropdown()">EN</button><div class="lang-dropdown" id="langDropdown"><a class="lang-option" href="/blog/0001_institute_an_institute.html">English</a><a class="lang-option" href="/blog/0001_institute_an_institute.pt-br.html">Português</a><a class="lang-option" href="/blog/0001_institute_an_institute.zh.html">中文</a></div></li><li><button class="theme-toggle" onclick="toggleTheme()" title="Theme">◐</button></li></ul></div></nav><main class="main-content blog-post-content"><nav class="breadcrumbs blog-breadcrumbs"><a class="blog-back-link" href="/blog.html">← Back to Blog Posts</a></nav><article class="blog_post"><div class="blog_post_embed">
-  <div class="tinymist-native" id="tinymist-native-0001_institute_an_institute">
-    
-    <svg class="typst-doc" viewBox="0 0 595.2755905511812 938.0992834645665" width="595.2755905511812pt" height="938.0992834645665pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:h5="http://www.w3.org/1999/xhtml">
-    <path class="typst-shape" fill="#ffffff" fill-rule="nonzero" d="M 0 0v 938.0993 h 595.2756 v -938.0993 Z "/>
+<svg class="typst-doc" viewBox="0 0 595.2755905511812 841.8897637795276" width="595.2755905511812pt" height="841.8897637795276pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:h5="http://www.w3.org/1999/xhtml">
+    <path class="typst-shape" fill="#ffffff" fill-rule="nonzero" d="M 0 0v 841.8898 h 595.2756 v -841.8898 Z "/>
     <g>
         <g class="typst-group" transform="matrix(1 0 0 1 70.86614173228347 70.86614173228347)">
             <g>
@@ -2225,61 +2222,6 @@
             <use xlink:href="#g210A76FA70E0B7E06E8E81EA70851AC5" x="393.0409999999999" y="0" fill="#000000" fill-rule="nonzero"/>
             <use xlink:href="#g501880211791377B6BE065F87E5C8E32" x="397.8479999999999" y="0" fill="#000000" fill-rule="nonzero"/>
         </g>
-        <g class="typst-text" transform="matrix(1 0 0 -1 70.86614173228347 774.4811417322833)">
-            <use xlink:href="#g599466330D21D12DE50967E5EC94EB3B" x="0" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g33E8C044EC1CB6878FE8A3A97847CA9F" x="5.544" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g599466330D21D12DE50967E5EC94EB3B" x="8.525" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g33E8C044EC1CB6878FE8A3A97847CA9F" x="14.068999999999999" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g599466330D21D12DE50967E5EC94EB3B" x="17.05" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g33E8C044EC1CB6878FE8A3A97847CA9F" x="22.594" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g33E8C044EC1CB6878FE8A3A97847CA9F" x="25.575000000000003" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g599466330D21D12DE50967E5EC94EB3B" x="28.556000000000004" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g38E868BE43C6E1A1F090A0E6C2C48B6E" x="34.1" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#gBCFF6253680621813BE4FABFDC50FC92" x="38.39" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g82D4ACFEBC1C71641FE993481E3BF36D" x="41.382" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g599466330D21D12DE50967E5EC94EB3B" x="46.409" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g38E868BE43C6E1A1F090A0E6C2C48B6E" x="51.952999999999996" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g33E8C044EC1CB6878FE8A3A97847CA9F" x="56.242999999999995" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#gEC885F7C46BC32C28AC075BAC33F280C" x="59.224" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#gBCFF6253680621813BE4FABFDC50FC92" x="64.61399999999999" y="0" fill="#000000" fill-rule="nonzero"/>
-        </g>
-        <g class="typst-text" transform="matrix(1 0 0 -1 398.9544488188976 846.795141732283)">
-            <use xlink:href="#g8E5ED1F88A2627F877238610800B9008" x="0" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g3A0C63DB9918F4F84F8C49B7772E8971" x="5.566000000000001" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g8E5ED1F88A2627F877238610800B9008" x="11.407" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g38E868BE43C6E1A1F090A0E6C2C48B6E" x="16.973" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#gEB0CA0F86F67CC8623C534B473F273FB" x="24.012999999999998" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#gEC885F7C46BC32C28AC075BAC33F280C" x="29.017999999999997" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g82D4ACFEBC1C71641FE993481E3BF36D" x="34.407999999999994" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g81058C4D6DE952008FEB50867CCB4DFF" x="39.434999999999995" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g33E8C044EC1CB6878FE8A3A97847CA9F" x="44.901999999999994" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g8E5ED1F88A2627F877238610800B9008" x="47.882999999999996" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g3A0C63DB9918F4F84F8C49B7772E8971" x="53.449" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g8E5ED1F88A2627F877238610800B9008" x="59.29" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g38E868BE43C6E1A1F090A0E6C2C48B6E" x="64.856" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g24156CC3B3F4594E6BD22D2A02BAD53C" x="69.146" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g52337453BF162CCE533D040B05F98C11" x="78.991" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g2573AFDB88BCCDBBB0E69CFE7AE957AF" x="84.491" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g82D4ACFEBC1C71641FE993481E3BF36D" x="93.181" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g33E8C044EC1CB6878FE8A3A97847CA9F" x="98.208" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g8709C738F4A4A5D01D21E5C8FFAEB214" x="101.189" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g501880211791377B6BE065F87E5C8E32" x="104.09299999999999" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g988E2665A54D918F87D661555DB3C6A4" x="106.51299999999999" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g599466330D21D12DE50967E5EC94EB3B" x="111.22099999999999" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g2573AFDB88BCCDBBB0E69CFE7AE957AF" x="116.76499999999999" y="0" fill="#000000" fill-rule="nonzero"/>
-        </g>
-        <g class="typst-text" transform="matrix(1 0 0 -1 476.05344881889766 867.233141732283)">
-            <use xlink:href="#g99C37BE13FBC19F1B94BDF88A5BEFB7A" x="0" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g7B0E90942F9BDDCF20E4C7BE74C0B950" x="5.115" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g99C37BE13FBC19F1B94BDF88A5BEFB7A" x="10.23" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g438981AEF3834D893CA2E591A9FF68B4" x="15.345" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g69A20F9D6661F4B39EAA167096C6B5F4" x="20.46" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g7B0E90942F9BDDCF20E4C7BE74C0B950" x="24.178" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g99C37BE13FBC19F1B94BDF88A5BEFB7A" x="29.293" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g69A20F9D6661F4B39EAA167096C6B5F4" x="34.408" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g99C37BE13FBC19F1B94BDF88A5BEFB7A" x="38.126000000000005" y="0" fill="#000000" fill-rule="nonzero"/>
-            <use xlink:href="#g438981AEF3834D893CA2E591A9FF68B4" x="43.24100000000001" y="0" fill="#000000" fill-rule="nonzero"/>
-        </g>
     </g>
     <defs id="glyph">
         <symbol id="gDC51EEF38AC56E36C865CAB83D86D551" overflow="visible">
@@ -2479,84 +2421,3 @@
         </symbol>
     </defs>
 </svg>
-  </div>
-</div>
-<script>
-(function() {
-  const root = document.getElementById("tinymist-native-0001_institute_an_institute");
-  if (!root) {
-    return;
-  }
-  const svg = root.querySelector("svg.typst-doc");
-  if (!svg) {
-    return;
-  }
-
-  const pages = Array.from(svg.querySelectorAll("g.typst-page"));
-  let y = 0;
-  const pageGap = 10;
-  for (const page of pages) {
-    let targetY = y;
-    let advance = Number(page.getAttribute("data-page-height")) || 0;
-    try {
-      // Measure only page content so pages collapse without huge blank bands.
-      const content = page.querySelector("g.typst-group") || page;
-      const box = content.getBBox();
-      if (box.height > 0) {
-        targetY = y - box.y;
-        advance = box.height + pageGap;
-      }
-    } catch (_err) {
-      // Keep data-page-height fallback when geometry isn't measurable.
-    }
-    page.setAttribute("transform", `translate(0, ${targetY})`);
-    y += advance;
-  }
-
-  const width = Number(svg.getAttribute("data-width"))
-    || Number((pages[0] && pages[0].getAttribute("data-page-width")) || 596);
-  if (width > 0 && y > 0) {
-    svg.setAttribute("viewBox", `0 0 ${width} ${y}`);
-  }
-
-  svg.removeAttribute("height");
-  svg.setAttribute("width", "100%");
-  svg.style.height = "auto";
-  svg.style.display = "block";
-  svg.style.maxWidth = "100%";
-  svg.style.background = "transparent";
-
-  for (const outer of svg.querySelectorAll(".typst-page-outer")) {
-    outer.remove();
-  }
-  for (const inner of svg.querySelectorAll(".typst-page-inner")) {
-    inner.remove();
-  }
-  for (const ind of svg.querySelectorAll(".typst-preview-canvas-page-number, .typst-preview-svg-page-number")) {
-    ind.remove();
-  }
-
-})();
-</script></article></main><footer class="footer"><div class="footer-container"><div class="footer-section"><h4>Resources</h4><ul class="footer-links"><li><a href="https://github.com/lince-social/lince">Lince Source</a></li><li><a href="https://raw.githubusercontent.com/lince-social/lince/dev/documents/content/documentation/lince-documentation-dark.pdf">Documentation</a></li><li><a href="https://github.com/lince-social/lince/releases">Downloads</a></li><li><a href="/visual-identity.html">Visual Identity</a></li><li><a href="https://github.com/lince-social/lince-social.github.io">Website Source</a></li></ul></div><div class="footer-section"><h4>Community</h4><ul class="footer-links"><li><a href="https://matrix.to/#/#lince:matrix.org">Matrix</a></li><li><a href="https://www.youtube.com/@lince-social">Youtube</a></li><li><a href="https://discord.gg/3Gr9rYWHpu">Discord</a></li><li><a href="https://www.instagram.com/lincesocial">Instagram</a></li><li><a href="https://github.com/lince-social/lince/discussions">Discussions</a></li></ul></div><div class="footer-section"><h4>Legal</h4><ul class="footer-links"><li><a href="https://github.com/lince-social/lince/blob/main/LICENSE">License</a></li></ul></div></div></footer><script>
-                    function toggleTheme() {
-                        const html = document.documentElement;
-                        const current = html.getAttribute('data-theme');
-                        const next = current === 'dark' ? 'light' : 'dark';
-                        html.setAttribute('data-theme', next);
-                        localStorage.setItem('theme', next);
-                    }
-                    (function() {
-                        const saved = localStorage.getItem('theme');
-                        if (saved) {
-                            document.documentElement.setAttribute('data-theme', saved);
-                        }
-                    })();
-                    function toggleLangDropdown() {
-                        document.getElementById('langDropdown').classList.toggle('show');
-                    }
-                    document.addEventListener('click', function(e) {
-                        if (!e.target.closest('.lang-switcher')) {
-                            document.getElementById('langDropdown').classList.remove('show');
-                        }
-                    });
-                    </script></body></html>

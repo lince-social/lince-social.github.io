@@ -97,7 +97,7 @@ on_change_strategy = "kill_then_restart"
 watch = [
     "src",
     "output/assets/blog/components.typ",
-    "output/assets/blog/posts",
+    "output/assets/blog/posts/*.typ",
     "Cargo.toml",
     "Cargo.lock",
 ]
