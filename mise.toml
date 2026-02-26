@@ -1,7 +1,7 @@
 [tasks.dev]
 description = "Full hot-reloading stack"
 tools = { "rust" = "stable", "bun" = "latest", "cargo:bacon" = "latest", "cargo:mprocs" = "latest"}
-run = "mprocs \"bacon --job run .\" \"bunx live-server output --port=3000 --no-browser\""
+run = "mprocs \"bacon --job run .\" \"bunx live-server output --port=46785 --no-browser\""
 
 [tasks.clean]
 description = "Bump dependencies and cargo fix"

@@ -1,11 +1,15 @@
 #import "../components.typ": post
 
-#post(name: "duds", email: "xaviduds@gmail.com", date: datetime(
-  year: 2026,
-  month: 02,
-  day: 25,
-))[
-  = institute an Institute?
+#post(
+  title: "institute an Institute?",
+  name: "duds",
+  email: "xaviduds@gmail.com",
+  date: datetime(
+    year: 2026,
+    month: 02,
+    day: 26,
+  ),
+)[
   \
   Why should we insitute an Institute?
 

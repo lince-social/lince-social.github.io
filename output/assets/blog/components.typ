@@ -6,13 +6,17 @@
   ]
 ]
 
-#let post(name: str, email: str, date: datetime, body) = [
+#let post(title: str, name: str, email: str, date: datetime, body) = [
   #let this_by(start: bool) = by(
     start: start,
     name: name,
     email: email,
     date: date,
   )
+
+  = #title
+
+  #v(0.5em)
 
   #this_by(start: true)
 
