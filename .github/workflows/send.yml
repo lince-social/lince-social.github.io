@@ -3,32 +3,14 @@ name: Send Countdown Email
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 3 1-7 * 1" # 00:00 Brazil (UTC-3), Mondays, first 7 days
+    - cron: "0 3 1-7 * 1" # 03:00 UTC = 00:00 Brazil (UTC-3)
 
 jobs:
   send:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check if today is first Monday
-        id: check
-        run: |
-          python3 - <<EOF
-          import datetime
-          today = datetime.date.today()
-          first_day = today.replace(day=1)
-          first_monday = first_day + datetime.timedelta((0 - first_day.weekday()) % 7)
-          if today == first_monday:
-              print("send=true")
-          else:
-              print("send=false")
-          EOF > result.txt
-
-          source result.txt
-          echo "send=$send" >> $GITHUB_OUTPUT
-
       - name: Create campaign
-        if: steps.check.outputs.send == 'true'
         run: |
           RESPONSE=$(curl -s -X POST \
             https://${{ secrets.MAILCHIMP_SERVER_PREFIX }}.api.mailchimp.com/3.0/campaigns \
@@ -44,13 +26,20 @@ jobs:
               }
             }')
 
-          CAMPAIGN_ID=$(echo $RESPONSE | jq -r .id)
+          echo "$RESPONSE"
+
+          CAMPAIGN_ID=$(echo "$RESPONSE" | jq -r '.id')
+
+          if [ "$CAMPAIGN_ID" = "null" ] || [ -z "$CAMPAIGN_ID" ]; then
+            echo "Failed to create campaign"
+            exit 1
+          fi
+
           echo "CAMPAIGN_ID=$CAMPAIGN_ID" >> $GITHUB_ENV
 
       - name: Set content
-        if: steps.check.outputs.send == 'true'
         run: |
-          curl -X PUT \
+          curl -s -X PUT \
             https://${{ secrets.MAILCHIMP_SERVER_PREFIX }}.api.mailchimp.com/3.0/campaigns/${{ env.CAMPAIGN_ID }}/content \
             -u "any:${{ secrets.MAILCHIMP_API_KEY }}" \
             -H "Content-Type: application/json" \
@@ -59,8 +48,7 @@ jobs:
             }'
 
       - name: Send campaign
-        if: steps.check.outputs.send == 'true'
         run: |
-          curl -X POST \
+          curl -s -X POST \
             https://${{ secrets.MAILCHIMP_SERVER_PREFIX }}.api.mailchimp.com/3.0/campaigns/${{ env.CAMPAIGN_ID }}/actions/send \
             -u "any:${{ secrets.MAILCHIMP_API_KEY }}"
