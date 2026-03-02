@@ -1,115 +1,177 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<title>Panorama Countdown</title>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Panorama Countdown</title>
 
-<style>
-  body {
-    margin: 0;
-    background: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
-  }
-  .count {
-    display: flex;
-    gap: 40px;
-  }
-  .num {
-    color: white;
-    font-weight: bold;
-    font-size: 80px;
-    font-feature-settings: "tnum";
-    font-variant-numeric: tabular-nums;
-  }
-  @media (min-width: 768px) {
-    .count {
-      gap: 80px;
-    }
-    .num {
-      font-size: 140px;
-    }
-  }
-</style>
+        <style>
+            body {
+                margin: 0;
+                background: black;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                padding: 20px;
+            }
+            .count {
+                display: flex;
+                gap: 40px;
+            }
+            .num {
+                color: white;
+                font-weight: bold;
+                font-size: 80px;
+                font-feature-settings: "tnum";
+                font-variant-numeric: tabular-nums;
+            }
+            @media (min-width: 768px) {
+                .count {
+                    gap: 80px;
+                }
+                .num {
+                    font-size: 140px;
+                }
+            }
+            .myform {
+                position: fixed;
+                left: 50%;
+                bottom: 2rem;
+                transform: translateX(-50%);
+                display: flex;
+                z-index: 10;
+                flex-direction: column;
+                align-items: center;
+            }
+            .myform input,
+            button {
+                border: 1px solid white;
+                background-color: black;
+                padding: 8px;
+                color: white;
+                border-radius: 0.12rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="count">
+            <div class="num" id="d">00</div>
+            <div class="num" id="h">00</div>
+            <div class="num" id="m">00</div>
+            <div class="num" id="s">00</div>
+        </div>
 
-</head>
-<body>
+        <script>
+            function getNextPanorama() {
+                const now = new Date();
+                const poaTime = new Date(
+                    now.toLocaleString("en-US", {
+                        timeZone: "America/Sao_Paulo",
+                    }),
+                );
 
-<div class="count">
-  <div class="num" id="d">00</div>
-  <div class="num" id="h">00</div>
-  <div class="num" id="m">00</div>
-  <div class="num" id="s">00</div>
-</div>
+                let year = poaTime.getFullYear();
+                let month = poaTime.getMonth();
 
-<script>
-function getNextPanorama() {
-  const now = new Date();
-  const poaTime = new Date(now.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
+                let firstDay = new Date(year, month, 1);
+                let dayOfWeek = firstDay.getDay();
+                let daysUntilTuesday = (2 - dayOfWeek + 7) % 7;
+                if (daysUntilTuesday === 0 && dayOfWeek !== 2)
+                    daysUntilTuesday = 7;
 
-  let year = poaTime.getFullYear();
-  let month = poaTime.getMonth();
+                let firstTuesday = new Date(year, month, 1 + daysUntilTuesday);
+                firstTuesday.setHours(11, 0, 0, 0);
 
-  let firstDay = new Date(year, month, 1);
-  let dayOfWeek = firstDay.getDay();
-  let daysUntilTuesday = (2 - dayOfWeek + 7) % 7;
-  if (daysUntilTuesday === 0 && dayOfWeek !== 2) daysUntilTuesday = 7;
+                if (firstTuesday <= poaTime) {
+                    month++;
+                    if (month > 11) {
+                        month = 0;
+                        year++;
+                    }
 
-  let firstTuesday = new Date(year, month, 1 + daysUntilTuesday);
-  firstTuesday.setHours(11, 0, 0, 0);
+                    firstDay = new Date(year, month, 1);
+                    dayOfWeek = firstDay.getDay();
+                    daysUntilTuesday = (2 - dayOfWeek + 7) % 7;
+                    if (daysUntilTuesday === 0 && dayOfWeek !== 2)
+                        daysUntilTuesday = 7;
 
-  if (firstTuesday <= poaTime) {
-    month++;
-    if (month > 11) { month = 0; year++; }
+                    firstTuesday = new Date(year, month, 1 + daysUntilTuesday);
+                    firstTuesday.setHours(11, 0, 0, 0);
+                }
 
-    firstDay = new Date(year, month, 1);
-    dayOfWeek = firstDay.getDay();
-    daysUntilTuesday = (2 - dayOfWeek + 7) % 7;
-    if (daysUntilTuesday === 0 && dayOfWeek !== 2) daysUntilTuesday = 7;
+                return firstTuesday;
+            }
 
-    firstTuesday = new Date(year, month, 1 + daysUntilTuesday);
-    firstTuesday.setHours(11, 0, 0, 0);
-  }
+            function calculateTimeLeft(target) {
+                const now = new Date();
+                const diff = target - now;
 
-  return firstTuesday;
-}
+                if (diff <= 0) return { d: 0, h: 0, m: 0, s: 0 };
 
-function calculateTimeLeft(target) {
-  const now = new Date();
-  const diff = target - now;
+                return {
+                    d: Math.floor(diff / (1000 * 60 * 60 * 24)),
+                    h: Math.floor(
+                        (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+                    ),
+                    m: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
+                    s: Math.floor((diff % (1000 * 60)) / 1000),
+                };
+            }
 
-  if (diff <= 0) return { d: 0, h: 0, m: 0, s: 0 };
+            let nextPanorama = getNextPanorama();
 
-  return {
-    d: Math.floor(diff / (1000 * 60 * 60 * 24)),
-    h: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-    m: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
-    s: Math.floor((diff % (1000 * 60)) / 1000)
-  };
-}
+            function update() {
+                const t = calculateTimeLeft(nextPanorama);
 
-let nextPanorama = getNextPanorama();
+                if (t.d === 0 && t.h === 0 && t.m === 0 && t.s === 0) {
+                    nextPanorama = getNextPanorama();
+                }
 
-function update() {
-  const t = calculateTimeLeft(nextPanorama);
+                document.getElementById("d").textContent = String(t.d).padStart(
+                    2,
+                    "0",
+                );
+                document.getElementById("h").textContent = String(t.h).padStart(
+                    2,
+                    "0",
+                );
+                document.getElementById("m").textContent = String(t.m).padStart(
+                    2,
+                    "0",
+                );
+                document.getElementById("s").textContent = String(t.s).padStart(
+                    2,
+                    "0",
+                );
+            }
 
-  if (t.d === 0 && t.h === 0 && t.m === 0 && t.s === 0) {
-    nextPanorama = getNextPanorama();
-  }
+            update();
+            setInterval(update, 1000);
+        </script>
+        <div class="myform">
+            <p style="color: white">Get notified 24h before</p>
+            <form
+                action="https://gmail.us17.list-manage.com/subscribe/post?u=176f9fb96ac4bc3aaed379b9b&id=56114c9eb3&f_id=002dc2e1f0"
+                method="post"
+                target="_blank"
+            >
+                <input type="email" name="EMAIL" placeholder="Email" required />
 
-  document.getElementById("d").textContent = String(t.d).padStart(2, "0");
-  document.getElementById("h").textContent = String(t.h).padStart(2, "0");
-  document.getElementById("m").textContent = String(t.m).padStart(2, "0");
-  document.getElementById("s").textContent = String(t.s).padStart(2, "0");
-}
+                <!-- bot protection (required) -->
+                <div
+                    style="position: absolute; left: -5000px"
+                    aria-hidden="true"
+                >
+                    <input
+                        type="text"
+                        name="b_176f9fb96ac4bc3aaed379b9b_56114c9eb3"
+                        tabindex="-1"
+                        value=""
+                    />
+                </div>
 
-update();
-setInterval(update, 1000);
-</script>
-
-</body>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </body>
 </html>
