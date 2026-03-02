@@ -1,0 +1,66 @@
+name: Send Countdown Email
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 3 1-7 * 1" # 00:00 Brazil (UTC-3), Mondays, first 7 days
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check if today is first Monday
+        id: check
+        run: |
+          python3 - <<EOF
+          import datetime
+          today = datetime.date.today()
+          first_day = today.replace(day=1)
+          first_monday = first_day + datetime.timedelta((0 - first_day.weekday()) % 7)
+          if today == first_monday:
+              print("send=true")
+          else:
+              print("send=false")
+          EOF > result.txt
+
+          source result.txt
+          echo "send=$send" >> $GITHUB_OUTPUT
+
+      - name: Create campaign
+        if: steps.check.outputs.send == 'true'
+        run: |
+          RESPONSE=$(curl -s -X POST \
+            https://${{ secrets.MAILCHIMP_SERVER_PREFIX }}.api.mailchimp.com/3.0/campaigns \
+            -u "any:${{ secrets.MAILCHIMP_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "type":"regular",
+              "recipients":{"list_id":"'"${{ secrets.MAILCHIMP_AUDIENCE_ID }}"'"},
+              "settings":{
+                "subject_line":"panorama_amanha",
+                "from_name":"panorama_amanha",
+                "reply_to":"xaviduds@gmail.com"
+              }
+            }')
+
+          CAMPAIGN_ID=$(echo $RESPONSE | jq -r .id)
+          echo "CAMPAIGN_ID=$CAMPAIGN_ID" >> $GITHUB_ENV
+
+      - name: Set content
+        if: steps.check.outputs.send == 'true'
+        run: |
+          curl -X PUT \
+            https://${{ secrets.MAILCHIMP_SERVER_PREFIX }}.api.mailchimp.com/3.0/campaigns/${{ env.CAMPAIGN_ID }}/content \
+            -u "any:${{ secrets.MAILCHIMP_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "html":"<body style=\"margin:0;background:#000;color:#fff;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:Arial;\"><div style=\"font-size:32px;\">Panorama amanhã</div><div style=\"margin-top:40px;font-size:12px;text-align:center;\"><a href=\"*|UNSUB|*\" style=\"color:#fff;\">unsubscribe</a><br>*|LIST:ADDRESS|*</div></body>"
+            }'
+
+      - name: Send campaign
+        if: steps.check.outputs.send == 'true'
+        run: |
+          curl -X POST \
+            https://${{ secrets.MAILCHIMP_SERVER_PREFIX }}.api.mailchimp.com/3.0/campaigns/${{ env.CAMPAIGN_ID }}/actions/send \
+            -u "any:${{ secrets.MAILCHIMP_API_KEY }}"
