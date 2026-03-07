@@ -108,7 +108,6 @@ pub struct Translations {
 
     // Blog
     pub blog_title: &'static str,
-    pub blog_posts: &'static str,
     pub blog_back_to_posts: &'static str,
 }
 
@@ -218,7 +217,6 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
 
         // Blog
         blog_title: "Blog",
-        blog_posts: "Blog Posts",
 
         blog_back_to_posts: "← Back to Blog Posts",
     });
@@ -325,7 +323,7 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
 
         // Blog
         blog_title: "Blog",
-        blog_posts: "Postagens do Blog",
+
 
         blog_back_to_posts: "← Voltar para Postagens do Blog",
     });
@@ -432,7 +430,7 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
 
         // Blog
         blog_title: "博客",
-        blog_posts: "博客文章",
+
 
         blog_back_to_posts: "← 返回博客文章",
     });

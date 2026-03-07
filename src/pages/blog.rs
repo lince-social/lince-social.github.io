@@ -515,7 +515,6 @@ pub fn page_blog(t: &Translations) -> String {
         main class="main-content" {
             section class="blog-header" {
                 h1 class="section-title" { (t.blog_title) }
-                p class="section-description" { (t.blog_posts) }
             }
 
             @if posts.is_empty() {

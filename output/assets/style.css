@@ -570,6 +570,7 @@ img {
     margin: 1rem 0;
     display: flex;
     justify-content: center;
+    background: var(--color-bg);
 }
 
 .blog_post_embed .tinymist-native {
@@ -577,7 +578,7 @@ img {
     width: 90%;
     margin: 0 auto;
     padding: 0;
-    background: transparent;
+    background: var(--color-bg);
 }
 
 .blog_post_embed .tinymist-native svg.typst-doc {
@@ -586,7 +587,7 @@ img {
     max-width: 100%;
     height: auto !important;
     margin: 0 auto;
-    background: transparent !important;
+    background: var(--color-bg) !important;
 }
 
 .blog_post_embed .tinymist-native .typst-page-outer,
