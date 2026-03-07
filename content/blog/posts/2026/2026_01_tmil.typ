@@ -2,14 +2,15 @@
 #show: checklist
 #import "../../components.typ": post
 #import "../../tmil.typ": (
-  tmil_blog, tmil_item, tmil_month_label, tmil_post_publish_date, tmil_post_title,
-  tmil_section, tmil_slides, tmil_tr,
+  tmil_blog, tmil_item, tmil_month_label, tmil_post_publish_date,
+  tmil_post_title, tmil_section, tmil_slides, tmil_tr,
 )
 
 #let tmil_mode = sys.inputs.at("tmil", default: "false") == "true"
 #let mdate = datetime(year: 2026, month: 1, day: 1)
 #let author_name = "duds"
 #let author_email = "xaviduds@gmail.com"
+#let video_url = "https://youtu.be/1IZjVhAFxSU?si=9FmIe1ppoZzqsJIf"
 
 #let growth_items = (
   tmil_item(

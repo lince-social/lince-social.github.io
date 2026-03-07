@@ -13,6 +13,7 @@
 #let mdate = datetime(year: 0000, month: 1, day: 1)
 #let author_name = "N1"
 #let author_email = "a@b.c"
+#let video_url = ""
 
 #let growth_items = (
   tmil_item(

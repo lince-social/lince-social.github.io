@@ -1,5 +1,5 @@
 use crate::config::INCLUDE_BLOG;
-use crate::i18n::Translations;
+use crate::i18n::{Translations, YOUTUBE_URL};
 use maud::{DOCTYPE, PreEscaped, html};
 
 fn lang_suffix(lang: &str) -> &str {
@@ -70,6 +70,11 @@ pub fn page(body: &str, t: &Translations, current_page: &str, show_home: bool) -
                             li.desktop-only {
                                 a.navbar-item href="https://github.com/lince-social/lince/releases" {
                                     (t.nav_download)
+                                }
+                            }
+                            li.desktop-only {
+                                a.navbar-item href=(YOUTUBE_URL) {
+                                    (t.nav_youtube)
                                 }
                             }
                             li.lang-switcher {

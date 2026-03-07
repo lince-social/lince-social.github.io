@@ -1,5 +1,7 @@
 use std::collections::HashMap;
 
+pub const YOUTUBE_URL: &str = "https://www.youtube.com/@lince.social";
+
 /// Image configuration for content blocks
 #[derive(Clone, Default)]
 pub struct ContentImage {
@@ -89,6 +91,7 @@ pub struct Translations {
     pub nav_blog: &'static str,
     pub nav_github: &'static str,
     pub nav_download: &'static str,
+    pub nav_youtube: &'static str,
     pub nav_theme: &'static str,
 
     // Hero Section
@@ -109,6 +112,7 @@ pub struct Translations {
     // Blog
     pub blog_title: &'static str,
     pub blog_back_to_posts: &'static str,
+    pub blog_watch_video: &'static str,
 }
 
 pub fn get_translations() -> HashMap<&'static str, Translations> {
@@ -126,6 +130,7 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
         nav_blog: "Blog",
         nav_github: "GitHub",
         nav_download: "Download",
+        nav_youtube: "YouTube",
         nav_theme: "Theme",
 
         // Hero Section
@@ -201,7 +206,7 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
                 title: "Community",
                 links: vec![
                     LinkItem::new("https://matrix.to/#/#lince:matrix.org", "Matrix"),
-                    LinkItem::new("https://www.youtube.com/@lince-social", "Youtube"),
+                    LinkItem::new(YOUTUBE_URL, "Youtube"),
                     LinkItem::new("https://discord.gg/3Gr9rYWHpu", "Discord"),
                     LinkItem::new("https://www.instagram.com/lincesocial", "Instagram"),
                     LinkItem::new("https://github.com/lince-social/lince/discussions", "Discussions"),
@@ -219,6 +224,7 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
         blog_title: "Blog",
 
         blog_back_to_posts: "← Back to Blog Posts",
+        blog_watch_video: "Watch on YouTube",
     });
 
     // ============================================================
@@ -233,6 +239,7 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
         nav_blog: "Blog",
         nav_github: "GitHub",
         nav_download: "Baixar",
+        nav_youtube: "YouTube",
         nav_theme: "Tema",
 
         // Hero Section
@@ -307,7 +314,7 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
                 title: "Comunidade",
                 links: vec![
                     LinkItem::new("https://matrix.to/#/#lince:matrix.org", "Matrix"),
-                    LinkItem::new("https://www.youtube.com/@lince-social", "YouTube"),
+                    LinkItem::new(YOUTUBE_URL, "YouTube"),
                     LinkItem::new("https://discord.gg/3Gr9rYWHpu", "Discord"),
                     LinkItem::new("https://www.instagram.com/lincesocial", "Instagram"),
                     LinkItem::new("https://github.com/lince-social/lince/discussions", "Discussões"),
@@ -326,6 +333,7 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
 
 
         blog_back_to_posts: "← Voltar para Postagens do Blog",
+        blog_watch_video: "Ver no YouTube",
     });
 
     // ============================================================
@@ -340,6 +348,7 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
         nav_blog: "博客",
         nav_github: "GitHub",
         nav_download: "下载",
+        nav_youtube: "YouTube",
         nav_theme: "主题",
 
         // Hero Section
@@ -414,7 +423,7 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
                 title: "社区",
                 links: vec![
                     LinkItem::new("https://matrix.to/#/#lince:matrix.org", "Matrix"),
-                    LinkItem::new("https://www.youtube.com/@lince-social", "YouTube"),
+                    LinkItem::new(YOUTUBE_URL, "YouTube"),
                     LinkItem::new("https://discord.gg/3Gr9rYWHpu", "Discord"),
                     LinkItem::new("https://www.instagram.com/lincesocial", "Instagram"),
                     LinkItem::new("https://github.com/lince-social/lince/discussions", "讨论"),
@@ -433,6 +442,7 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
 
 
         blog_back_to_posts: "← 返回博客文章",
+        blog_watch_video: "在 YouTube 观看",
     });
 
     map

@@ -7,7 +7,7 @@
 ]
 
 #let post(title: str, name: str, email: str, date: datetime, body) = [
-  #set page(height: auto)
+  #set page(height: auto, margin: (top: 8mm))
 
   #let this_by(start: bool) = by(
     start: start,
@@ -37,6 +37,6 @@
 
 #let mline(size) = [
   #v(size * 1em)
-  #line(length: 100%, stroke: 0.10pt + rgb("#fff"))
+  #line(length: 100%, stroke: 0.10pt + rgb("#000"))
   #v(size * 1em)
 ]

@@ -13,6 +13,7 @@ const BLOG_POSTS_ROOT: &str = "content/blog/posts";
 struct BlogMetadata {
     title: Option<String>,
     date: Option<String>,
+    video_url: Option<String>,
 }
 
 pub fn compile_blog_body(source_path: &str) -> String {
@@ -331,6 +332,19 @@ fn extract_named_string(args: &str, key: &str) -> Option<String> {
     None
 }
 
+fn extract_let_string(content: &str, key: &str) -> Option<String> {
+    let marker = format!("#let {key} = \"");
+    let start = content.find(&marker)? + marker.len();
+    let rest = &content[start..];
+    let end = rest.find('"')?;
+    let value = rest[..end].trim();
+    if value.is_empty() {
+        None
+    } else {
+        Some(value.to_string())
+    }
+}
+
 fn parse_tmil_post_title_call(value: &str, mdate: Option<(u32, u32, u32)>) -> Option<String> {
     let call = extract_parenthesized_block(value, "tmil_post_title(")?;
     let parts: Vec<&str> = call.split(',').map(|p| p.trim()).collect();
@@ -478,6 +492,17 @@ fn extract_post_metadata(file_path: &str) -> BlogMetadata {
     BlogMetadata {
         title: extract_named_title(&post_args, "title", mdate),
         date: extract_named_date(&post_args, "date", mdate),
+        video_url: extract_let_string(&content, "video_url")
+            .or_else(|| extract_named_string(&post_args, "video_url"))
+            .or_else(|| extract_named_string(&post_args, "youtube_url"))
+            .and_then(|v| {
+                let trimmed = v.trim();
+                if trimmed.is_empty() {
+                    None
+                } else {
+                    Some(trimmed.to_string())
+                }
+            }),
     }
 }
 
@@ -597,6 +622,10 @@ pub fn generate_blog_posts(t: &Translations, suffix: &str, show_home: bool) {
         if should_skip_blog_post(stem) {
             continue;
         }
+        let Some(path_str) = file_path.to_str() else {
+            continue;
+        };
+        let meta = extract_post_metadata(path_str);
         let slug = slug_from_path(&file_path).unwrap_or_else(|| stem.to_string());
         let (older_slug, newer_slug) = neighbors.get(&slug).cloned().unwrap_or((None, None));
         let older_href = older_slug
@@ -613,9 +642,9 @@ pub fn generate_blog_posts(t: &Translations, suffix: &str, show_home: bool) {
 
         let body = if let Some(sidecar_path) = sidecar_path {
             tinymist_native_html(&sidecar_path, &cache_key)
-                .unwrap_or_else(|| compile_blog_body(file_path.to_str().unwrap()))
+                .unwrap_or_else(|| compile_blog_body(path_str))
         } else {
-            compile_blog_body(file_path.to_str().unwrap())
+            compile_blog_body(path_str)
         };
 
         // Wrap in Maud with breadcrumbs
@@ -623,9 +652,14 @@ pub fn generate_blog_posts(t: &Translations, suffix: &str, show_home: bool) {
             main.main-content.blog-post-content {
                 nav.breadcrumbs.blog-breadcrumbs {
                     a.blog-back-link href=(blog_href.clone()) { (t.blog_back_to_posts) }
+                    @if let Some(video_url) = &meta.video_url {
+                        a.blog-video-link href=(video_url) target="_blank" rel="noopener noreferrer" {
+                            (t.blog_watch_video)
+                        }
+                    }
                 }
                 @if older_slug.is_some() || newer_slug.is_some() {
-                    nav.blog-post-pager style="display: flex; width: 100%; gap: 0.4rem;" {
+                    nav.blog-post-pager {
                         @if let Some(ref older) = older_slug {
                             a.blog-post-nav-link.blog-post-nav-left href=(format!("/blog/{}{}.html", older, suffix)) { "← Older" }
                         } @else {
@@ -867,6 +901,7 @@ mod tests {
             "#let mdate = datetime(",
             "#let author_name = ",
             "#let author_email = ",
+            "#let video_url = ",
             "#let roadmap_items = (",
             "date: tmil_post_publish_date(",
             "\"Roteiro | 路线图 | Roadmap\"",

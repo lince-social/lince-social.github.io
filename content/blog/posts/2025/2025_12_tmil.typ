@@ -10,6 +10,7 @@
 #let mdate = datetime(year: 2025, month: 12, day: 1)
 #let author_name = "duds"
 #let author_email = "xaviduds@gmail.com"
+#let video_url = "https://youtu.be/bAHJzsV3_GU?si=E2eJPUkoJbOHmuuY"
 
 #let growth_items = (
   tmil_item(
