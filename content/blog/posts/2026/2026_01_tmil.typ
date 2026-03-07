@@ -5,6 +5,9 @@
 )
 
 #let tmil_mode = sys.inputs.at("tmil", default: "false") == "true"
+#let mdate = datetime(year: 2026, month: 1, day: 1)
+#let author_name = "duds"
+#let author_email = "xaviduds@gmail.com"
 
 #let growth_items = (
   tmil_item(
@@ -74,14 +77,14 @@
 )
 
 #if tmil_mode [
-  #tmil_slides(tmil_month_label(2026, 1), sections)
+  #tmil_slides(tmil_month_label(mdate.year(), mdate.month()), sections)
 ] else [
   #post(
-    title: tmil_post_title(2026, 1),
-    name: "duds",
-    email: "xaviduds@gmail.com",
-    date: tmil_post_date(2026, 1, 1),
+    title: tmil_post_title(mdate.year(), mdate.month()),
+    name: author_name,
+    email: author_email,
+    date: tmil_post_date(mdate.year(), mdate.month(), mdate.day()),
   )[
-    #tmil_blog(tmil_month_label(2026, 1), sections)
+    #tmil_blog(tmil_month_label(mdate.year(), mdate.month()), sections)
   ]
 ]

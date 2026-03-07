@@ -4,49 +4,197 @@ TMIL_ROOT = "content/blog/posts"
 [tasks.dev]
 description = "Full hot-reloading stack"
 tools = { "rust" = "stable", "bun" = "latest", "cargo:bacon" = "latest", "cargo:mprocs" = "latest"}
+depends = ["tmil"]
 run = "mprocs \"bacon --job site .\" \"bunx live-server output --port=46785 --no-browser\""
 
-[tasks.clean]
+[tasks.tidy]
 description = "Bump dependencies and cargo fix"
 tools = { "rust" = "stable", "cargo:cargo-edit" = "latest" }
 run = "cargo upgrade; cargo fix --broken-code --allow-dirty && cargo clippy --fix --allow-dirty --quiet >/dev/null 2>&1 "
 
-[tasks.blog]
-description = "Preview a blog Typst post by id prefix (e.g. mise blog 0001 or mise blog 2026_02)"
-tools = { "tinymist" = "latest", "typst" = "latest" }
+[tasks.tmil]
+description = "Compile Touying for current+previous month (or all with --touying-all)"
+tools = { "pipx:touying" = "latest" }
+depends = ["new-tmil"]
 usage = '''
-arg "<id>" help="Blog post prefix (e.g. 0001 or 2026_02)"
-flag "-l --light" help="Use light mode in tinymist preview (disable inversion)"
+flag "--touying-all" help="Keep and compile Touying HTML for all TMIL months"
 '''
 run = """
-SEARCH_PATH="content/blog/posts"
-BLOG_ID="${usage_id?}"
+SEARCH_PATH="{{env.TMIL_ROOT}}"
+TOUYING_ALL="${usage_touying_all:-false}"
+COUNT=0
+DELETED=0
 
-if [ "${usage_light:-false}" = "true" ]; then
-  PREVIEW_INVERT="never"
+CURRENT_YEAR=$(date +%Y)
+CURRENT_MONTH=$((10#$(date +%m)))
+if [ "$CURRENT_MONTH" -eq 1 ]; then
+  PREV_YEAR=$((CURRENT_YEAR - 1))
+  PREV_MONTH=12
 else
-  PREVIEW_INVERT="auto"
+  PREV_YEAR=$CURRENT_YEAR
+  PREV_MONTH=$((CURRENT_MONTH - 1))
+fi
+CUR_KEY=$(printf "%04d_%02d_tmil" "$CURRENT_YEAR" "$CURRENT_MONTH")
+PREV_KEY=$(printf "%04d_%02d_tmil" "$PREV_YEAR" "$PREV_MONTH")
+
+if [ "$TOUYING_ALL" != "true" ]; then
+  while IFS= read -r html; do
+    [ -z "$html" ] && continue
+    stem=$(basename "$html" .html)
+    if [ "$stem" = "$CUR_KEY" ] || [ "$stem" = "$PREV_KEY" ]; then
+      continue
+    fi
+    rm -f "$html"
+    DELETED=$((DELETED + 1))
+    echo "Deleted old Touying HTML: $html"
+  done <<EOF
+$(find "$SEARCH_PATH" -mindepth 1 -type f -name "*_tmil.html" | sort -f)
+EOF
 fi
 
-POST_FILE=$(find "$SEARCH_PATH" -mindepth 1 -type f \\( -name "${BLOG_ID}.typ" -o -name "${BLOG_ID}_*.typ" \\) -printf '%P\\n' | sort -f | head -n 1)
+while IFS= read -r file; do
+  [ -z "$file" ] && continue
+  stem=$(basename "$file" .typ)
+  if [ "$TOUYING_ALL" != "true" ] && [ "$stem" != "$CUR_KEY" ] && [ "$stem" != "$PREV_KEY" ]; then
+    continue
+  fi
+  echo "Compiling TMIL: $file"
+  touying compile --root . --format html --sys-inputs '{"tmil":"true"}' "$file"
+  COUNT=$((COUNT + 1))
+done <<EOF
+$(find "$SEARCH_PATH" -mindepth 1 -type f -name "*_tmil.typ" | sort -f)
+EOF
 
-if [ -z "$POST_FILE" ]; then
-  echo "No blog post found for id: $BLOG_ID in $SEARCH_PATH"
+if [ "$TOUYING_ALL" != "true" ]; then
+  echo "Deleted $DELETED old Touying HTML file(s)."
+fi
+echo "Compiled $COUNT TMIL files."
+"""
+
+[tasks.new-tmil]
+description = "Ensure previous/current month TMIL files exist from template (idempotent)"
+run = '''
+SEARCH_PATH="{{env.TMIL_ROOT}}"
+TEMPLATE_PATH="content/blog/YYYY_MM_DD_tmil.typ"
+
+if [ ! -f "$TEMPLATE_PATH" ]; then
+  echo "Template not found: $TEMPLATE_PATH"
   exit 1
 fi
 
-SOURCE_PATH="$SEARCH_PATH/$POST_FILE"
-echo "Using blog post: $SOURCE_PATH"
+ROADMAP_BLOCK=$(awk '
+  /^#let roadmap_items = \(/ { in_block=1 }
+  in_block { print }
+  in_block && /^\)$/ { exit }
+' "$TEMPLATE_PATH")
 
-tinymist preview \
-  --root . \
-  --control-plane-host 127.0.0.1:0 \
-  --data-plane-host 127.0.0.1:0 \
-  --invert-colors "$PREVIEW_INVERT" \
-  "$SOURCE_PATH"
-"""
+if [ -z "$ROADMAP_BLOCK" ]; then
+  echo "Could not extract #let roadmap_items block from $TEMPLATE_PATH"
+  exit 1
+fi
 
-[tasks.tmil]
+CURRENT_YEAR=$(date +%Y)
+CURRENT_MONTH=$((10#$(date +%m)))
+if [ "$CURRENT_MONTH" -eq 1 ]; then
+  PREV_YEAR=$((CURRENT_YEAR - 1))
+  PREV_MONTH=12
+else
+  PREV_YEAR=$CURRENT_YEAR
+  PREV_MONTH=$((CURRENT_MONTH - 1))
+fi
+
+LATEST_REL=$(find "$SEARCH_PATH" -mindepth 1 -type f -name "20??_??_tmil.typ" -printf '%P\n' | sort -V | tail -n 1)
+if [ -n "$LATEST_REL" ]; then
+  LATEST_PATH="$SEARCH_PATH/$LATEST_REL"
+  LATEST_NAME=$(basename "$LATEST_REL")
+  LATEST_YEAR=${LATEST_NAME:0:4}
+  LATEST_MONTH=${LATEST_NAME:5:2}
+  LATEST_MONTH_INT=$((10#$LATEST_MONTH))
+
+  TMP_LATEST=$(mktemp)
+  printf '%s\n' "$ROADMAP_BLOCK" > "$TMP_LATEST.roadmap"
+  awk -v block_file="$TMP_LATEST.roadmap" '
+    BEGIN {
+      while ((getline line < block_file) > 0) block = block line ORS
+      close(block_file)
+    }
+    /^#let roadmap_items = \(/ && !replaced {
+      printf "%s", block
+      replaced=1
+      skipping=1
+      next
+    }
+    skipping {
+      if ($0 ~ /^\)$/) {
+        skipping=0
+      }
+      next
+    }
+    { print }
+    END {
+      if (!replaced) {
+        print ""
+        printf "%s", block
+      }
+    }
+  ' "$LATEST_PATH" > "$TMP_LATEST"
+  mv "$TMP_LATEST" "$LATEST_PATH"
+  rm -f "$TMP_LATEST.roadmap"
+else
+  LATEST_PATH=""
+fi
+
+CREATED=0
+create_tmil_file() {
+  year="$1"
+  month="$2"
+  month_padded=$(printf "%02d" "$month")
+  rel="$year/${year}_${month_padded}_tmil.typ"
+  path="$SEARCH_PATH/$rel"
+
+  if [ -e "$path" ]; then
+    echo "Exists, skipped: $path"
+    return
+  fi
+
+  mkdir -p "$(dirname "$path")"
+  cp "$TEMPLATE_PATH" "$path"
+
+  tmp_new=$(mktemp)
+  awk -v next_year="$year" -v next_month="$month" '
+  {
+    if ($0 ~ /^#let mdate = datetime\(/) {
+      print "#let mdate = datetime(year: " next_year ", month: " next_month ", day: 1)"
+      next
+    }
+    if (match($0, /^#import "([^"]+)"/, m)) {
+      path = m[1]
+      if (path !~ /^@/ && path !~ /^\// && path !~ /^\.\.\//) {
+        sub(/^#import "/, "#import \"../../")
+      }
+    }
+    print
+  }
+  ' "$path" > "$tmp_new"
+  mv "$tmp_new" "$path"
+  echo "Created TMIL file: $path"
+  CREATED=$((CREATED + 1))
+}
+
+create_tmil_file "$PREV_YEAR" "$PREV_MONTH"
+create_tmil_file "$CURRENT_YEAR" "$CURRENT_MONTH"
+
+if [ -n "$LATEST_PATH" ]; then
+  echo "Applied template roadmap to latest existing TMIL: $LATEST_PATH"
+fi
+if [ "$CREATED" -eq 0 ]; then
+  echo "No new TMIL files needed (already up to current month)."
+else
+  echo "Created $CREATED TMIL file(s)."
+fi
+'''
+
+[tasks.tmil-preview]
 description = "This Month in Lince (Latest Month Preview)"
 tools = { "tinymist" = "latest", "typst" = "latest", "pipx:touying" = "latest" }
 run = """
@@ -71,23 +219,4 @@ tinymist preview \
   --static-file-host 127.0.0.1:3003 \
   --input tmil=true \
   "$SOURCE_FILE"
-"""
-
-[tasks.tmil-all]
-description = "Compile all TMIL files to Touying HTML"
-tools = { "pipx:touying" = "latest" }
-run = """
-SEARCH_PATH="{{env.TMIL_ROOT}}"
-COUNT=0
-
-while IFS= read -r file; do
-  [ -z "$file" ] && continue
-  echo "Compiling TMIL: $file"
-  touying compile --root . --format html --sys-inputs '{"tmil":"true"}' "$file"
-  COUNT=$((COUNT + 1))
-done <<EOF
-$(find "$SEARCH_PATH" -mindepth 1 -type f -name "*_tmil.typ" | sort -f)
-EOF
-
-echo "Compiled $COUNT TMIL files."
 """

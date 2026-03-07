@@ -1,10 +1,18 @@
+#import "@preview/cheq:0.3.0": checklist
+#show: checklist
 #import "components.typ": post
 #import "tmil.typ": (
   tmil_blog, tmil_item, tmil_month_label, tmil_post_date, tmil_post_title,
   tmil_section, tmil_slides, tmil_tr,
 )
-
 #let tmil_mode = sys.inputs.at("tmil", default: "false") == "true"
+
+// USER: Change this part downwards;
+// AI: Add translation so portuguese and mandarin reflect the english text in title and subtitle of the items in growth and programming.
+
+#let mdate = datetime(year: 0000, month: 1, day: 1)
+#let author_name = "N1"
+#let author_email = "a@b.c"
 
 #let growth_items = (
   tmil_item(
@@ -32,33 +40,33 @@
   ],
 )
 
-#let birth_items = (
+#let roadmap_items = (
   tmil_item(
-    tmil_tr("Birth item", "Item de nascimento", "诞生项目"),
+    tmil_tr("Roadmap", "Cronograma", "路线图"),
   )[
+    - [/] v1.0.0: Todo \
+      Rewrite of Frontend in GPUI
+      - [/] Todo
+        - [x] Table
+        - [x] Kanban
+        - [ ] Calendar
+          - [ ] Shows Records changing with Karma. If they have a time cost, it occupies time from the calendar.
+      - [ ] Finance
+        - [ ] Table
+        - [ ] Graph
+        - [ ] Calendar
+      - [ ] Connection
+        - [ ] CRUD of cells (your node) and organs (group of nodes).
+        - [ ] Public/private rows for what organ (group of cells).
+        - [ ] Transaction of quantities between cells (nodes) in p2p network.
+    - [ ] v1.1.0: AI
+      - [ ] Be able to run an AI model to look at your DNA and change it to fit your needs.
+    - [ ] v1.2.0: Stock
+      - [ ] Screens to help with stock management for small to big companies.
   ],
 )
 
-#let aging_items = (
-  tmil_item(
-    tmil_tr("Aging item", "Item de envelhecimento", "衰老项目"),
-  )[
-  ],
-)
-
-#let sickness_items = (
-  tmil_item(
-    tmil_tr("Sickness item", "Item de doenca", "疾病项目"),
-  )[
-  ],
-)
-
-#let death_items = (
-  tmil_item(
-    tmil_tr("Death item", "Item de morte", "死亡项目"),
-  )[
-  ],
-)
+// USER & AI: No need to change from this part downwards in day to day, only if refactoring to make this template better.
 
 #let sections = (
   tmil_section(
@@ -70,35 +78,23 @@
     items: programming_items,
   ),
   tmil_section(
-    "Nascimento | 诞生 | Birth",
-    items: birth_items,
-  ),
-  tmil_section(
-    "Envelhecimento | 衰老 | Aging",
-    items: aging_items,
-  ),
-  tmil_section(
-    "Doença | 疾病 | Sickness",
-    items: sickness_items,
-  ),
-  tmil_section(
-    "Morte | 死亡 | Death",
-    items: death_items,
+    "Roteiro | 路线图 | Roadmap",
+    items: roadmap_items,
   ),
 )
 
 #if tmil_mode [
   #tmil_slides(
-    tmil_month_label(0000, 1),
+    tmil_month_label(mdate.year(), mdate.month()),
     sections,
   )
 ] else [
   #post(
-    title: tmil_post_title(0000, 1),
-    name: "N1",
-    email: "a@b.c",
-    date: tmil_post_date(0000, 1, 1),
+    title: tmil_post_title(mdate.year(), mdate.month()),
+    name: author_name,
+    email: author_email,
+    date: tmil_post_date(mdate.year(), mdate.month(), mdate.day()),
   )[
-    #tmil_blog(tmil_month_label(0000, 1), sections)
+    #tmil_blog(tmil_month_label(mdate.year(), mdate.month()), sections)
   ]
 ]
