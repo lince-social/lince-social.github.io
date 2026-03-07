@@ -1,7 +1,25 @@
+#import "components.typ": mline
 #import "@preview/touying:0.6.1": *
 #import themes.simple: *
 
 #let tmil_tr(en, pt_br, zh_cn) = (en, pt_br, zh_cn)
+#let tmil_langs = ("pt-BR", "zh-CN", "es")
+
+#let tmil_month_label(year, month) = {
+  str(year) + "-" + if month < 10 { "0" + str(month) } else { str(month) }
+}
+
+#let tmil_post_title(
+  year,
+  month,
+  prefix: "This Month in Lince",
+) = {
+  prefix + " | " + tmil_month_label(year, month)
+}
+
+#let tmil_post_date(year, month, day) = {
+  datetime(year: year, month: month, day: day)
+}
 
 #let tmil_text(value, lang: "en") = {
   if type(value) == array and value.len() >= 3 {
@@ -9,6 +27,8 @@
       value.at(1)
     } else if lang == "zh-CN" {
       value.at(2)
+    } else if lang == "es" {
+      value.at(0)
     } else {
       value.at(0)
     }
@@ -46,7 +66,7 @@
   items: items,
 )
 
-#let render_item_slide(entry, langs: ("en",)) = {
+#let render_item_slide(entry) = {
   let item_line = lang => {
     let title = tmil_text(entry.title, lang: lang)
     let subtitle = tmil_text(entry.subtitle, lang: lang)
@@ -56,9 +76,9 @@
   [
     #align(center + horizon)[
       #if entry.photo == none [
-        #for lang in langs [
+        #for lang in tmil_langs [
           #text(size: 24pt, weight: 400)[#item_line(lang)]
-          #if lang != langs.last() [
+          #if lang != tmil_langs.last() [
             #v(0.7em)
           ]
         ]
@@ -69,9 +89,9 @@
           columns: (1fr, 1fr),
           gutter: 32pt,
           align(left + horizon)[
-            #for lang in langs [
+            #for lang in tmil_langs [
               #text(size: 24pt, weight: 400)[#item_line(lang)]
-              #if lang != langs.last() [
+              #if lang != tmil_langs.last() [
                 #v(0.7em)
               ]
             ]
@@ -100,7 +120,6 @@
     "Ate o proximo mes!",
     "下个月见！",
   ),
-  langs: ("en",),
 ) = [
   #show: simple-theme.with(aspect-ratio: "16-9")
 
@@ -117,29 +136,29 @@
   )
   #set heading(numbering: none)
 
-  = #for lang in langs {
+  = #for lang in tmil_langs {
     tmil_text(title, lang: lang)
-    if lang != langs.last() { " | " }
+    if lang != tmil_langs.last() { " | " }
   } | #month_label
 
   #for block in sections [
     ==
     #align(center + horizon)[
       #text(size: 34pt, weight: "bold")[
-        #for lang in langs {
+        #for lang in tmil_langs {
           tmil_text(block.name, lang: lang)
-          if lang != langs.last() { " | " }
+          if lang != tmil_langs.last() { " | " }
         }
       ]
     ]
 
     #for entry in block.items [
-      == #for lang in langs {
+      == #for lang in tmil_langs {
         tmil_text(block.name, lang: lang)
-        if lang != langs.last() { " | " }
+        if lang != tmil_langs.last() { " | " }
       }
 
-      #render_item_slide(entry, langs: langs)
+      #render_item_slide(entry)
     ]
   ]
 
@@ -147,9 +166,9 @@
   #slide[
     #align(center + horizon)[
       #text(size: 34pt, weight: "bold")[
-        #for lang in langs {
+        #for lang in tmil_langs {
           tmil_text(closing, lang: lang)
-          if lang != langs.last() { linebreak() }
+          if lang != tmil_langs.last() { linebreak() }
         }
       ]
     ]
@@ -164,22 +183,49 @@
     "Este Mes na Lince",
     "本月在林斯",
   ),
-  lang: "en",
+  multiline: true,
 ) = [
+  #let join_lines(lines) = {
+    if multiline {
+      [#for i in range(0, lines.len()) {
+        lines.at(i)
+        if i != lines.len() - 1 { linebreak() }
+      }]
+    } else {
+      lines.join(" | ")
+    }
+  }
+
   #for block in sections [
-    == #tmil_text(block.name, lang: lang)
+    #let area_line = (
+      tmil_langs.map(lang => tmil_text(block.name, lang: lang)).join(" | ")
+    )
+
+    // #mline(1)
+
+    #align(center + horizon)[
+      == #text(size: 24pt)[#area_line]
+    ]
+    #v(3em)
+
 
     #for entry in block.items [
-      #let title = tmil_text(entry.title, lang: lang)
-      #let subtitle = tmil_text(entry.subtitle, lang: lang)
-      === #if subtitle == "" { title } else { title + ": " + subtitle }
+      #let lines = tmil_langs.map(lang => {
+        let title = tmil_text(entry.title, lang: lang)
+        let subtitle = tmil_text(entry.subtitle, lang: lang)
+        if subtitle == "" { title } else { title + ": " + subtitle }
+      })
+      === #join_lines(lines)
+
+      #linebreak()
 
       #if entry.photo != none [
         #image(entry.photo, width: 100%)
       ]
 
       #entry.body
-      #v(0.8em)
+
+      #mline(2)
     ]
   ]
 ]

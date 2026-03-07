@@ -47,17 +47,20 @@ fn generate_svg_sidecar(stem: &str, source_path: &Path) -> Option<String> {
     let sidecar_path = format!("output/assets/blog/.cache/{stem}.svg");
     let sidecar = Path::new(&sidecar_path);
     let components = Path::new("content/blog/components.typ");
+    let tmil = Path::new("content/blog/tmil.typ");
 
     let sidecar_mtime = fs::metadata(sidecar).and_then(|m| m.modified()).ok();
     let source_mtime = fs::metadata(source_path).and_then(|m| m.modified()).ok();
     let components_mtime = fs::metadata(components).and_then(|m| m.modified()).ok();
+    let tmil_mtime = fs::metadata(tmil).and_then(|m| m.modified()).ok();
 
     let needs_regen = match sidecar_mtime {
         None => true,
         Some(sidecar_time) => {
             let source_newer = source_mtime.map(|t| t > sidecar_time).unwrap_or(false);
             let components_newer = components_mtime.map(|t| t > sidecar_time).unwrap_or(false);
-            source_newer || components_newer
+            let tmil_newer = tmil_mtime.map(|t| t > sidecar_time).unwrap_or(false);
+            source_newer || components_newer || tmil_newer
         }
     };
 
@@ -327,10 +330,46 @@ fn extract_named_string(args: &str, key: &str) -> Option<String> {
     None
 }
 
+fn parse_tmil_post_title_call(value: &str) -> Option<String> {
+    let call = extract_parenthesized_block(value, "tmil_post_title(")?;
+    let parts: Vec<&str> = call.split(',').map(|p| p.trim()).collect();
+    if parts.len() < 2 {
+        return None;
+    }
+    let year = parts.first()?.parse::<u32>().ok()?;
+    let month = parts.get(1)?.parse::<u32>().ok()?;
+    Some(format!("This Month in Lince | {year:04}-{month:02}"))
+}
+
+fn parse_tmil_post_date_call(value: &str) -> Option<String> {
+    let call = extract_parenthesized_block(value, "tmil_post_date(")?;
+    let parts: Vec<&str> = call.split(',').map(|p| p.trim()).collect();
+    if parts.len() < 3 {
+        return None;
+    }
+    let year = parts.first()?.parse::<u32>().ok()?;
+    let month = parts.get(1)?.parse::<u32>().ok()?;
+    let day = parts.get(2)?.parse::<u32>().ok()?;
+    Some(format!("{year:04}-{month:02}-{day:02}"))
+}
+
+fn extract_named_title(args: &str, key: &str) -> Option<String> {
+    extract_named_string(args, key).or_else(|| {
+        let marker = format!("{key}:");
+        let start = args.find(&marker)? + marker.len();
+        let value = args[start..].trim_start();
+        parse_tmil_post_title_call(value)
+    })
+}
+
 fn extract_named_date(args: &str, key: &str) -> Option<String> {
     let marker = format!("{key}:");
     let start = args.find(&marker)? + marker.len();
     let tail = args[start..].trim_start();
+    if let Some(parsed) = parse_tmil_post_date_call(tail) {
+        return Some(parsed);
+    }
+
     let datetime_block = extract_parenthesized_block(tail, "datetime(")?;
 
     let mut year: Option<u32> = None;
@@ -363,7 +402,7 @@ fn extract_post_metadata(file_path: &str) -> BlogMetadata {
     };
 
     BlogMetadata {
-        title: extract_named_string(&post_args, "title"),
+        title: extract_named_title(&post_args, "title"),
         date: extract_named_date(&post_args, "date"),
     }
 }
@@ -414,8 +453,8 @@ pub fn get_blog_posts() -> Vec<(String, String, String)> {
         posts.push((slug, title, date));
     }
 
-    // Always sort alphabetically by lowercase slug.
-    posts.sort_by(|a, b| a.0.to_lowercase().cmp(&b.0.to_lowercase()));
+    // Always sort reverse alphabetically by lowercase slug (latest first).
+    posts.sort_by(|a, b| b.0.to_lowercase().cmp(&a.0.to_lowercase()));
     posts
 }
 pub fn generate_blog_posts(t: &Translations, suffix: &str, show_home: bool) {

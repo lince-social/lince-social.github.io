@@ -1,4 +1,4 @@
-#import "../components.typ": post
+#import "components.typ": post
 
 #post(
   title: "Lorem",

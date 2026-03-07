@@ -34,3 +34,9 @@
 
   #this_by(start: false)
 ]
+
+#let mline(size) = [
+  #v(size * 1em)
+  #line(length: 100%, stroke: 0.10pt + rgb("#fff"))
+  #v(size * 1em)
+]

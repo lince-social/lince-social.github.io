@@ -1,5 +1,8 @@
-#import "../components.typ": post
-#import "../tmil.typ": tmil_blog, tmil_item, tmil_section, tmil_slides, tmil_tr
+#import "components.typ": post
+#import "tmil.typ": (
+  tmil_blog, tmil_item, tmil_month_label, tmil_post_date, tmil_post_title,
+  tmil_section, tmil_slides, tmil_tr,
+)
 
 #let tmil_mode = sys.inputs.at("tmil", default: "false") == "true"
 
@@ -86,22 +89,16 @@
 
 #if tmil_mode [
   #tmil_slides(
-    "0000-00",
+    tmil_month_label(0000, 1),
     sections,
-    langs: ("pt-BR", "zh-CN", "en"),
   )
 ] else [
   #post(
-    title: "This Month in Lince | 0000-00",
+    title: tmil_post_title(0000, 1),
     name: "N1",
     email: "a@b.c",
-    date: datetime(
-      year: 0000,
-      month: 1,
-      day: 1,
-    ),
+    date: tmil_post_date(0000, 1, 1),
   )[
-    // Choose one language in blog mode.
-    #tmil_blog("0000-00", sections, lang: "en")
+    #tmil_blog(tmil_month_label(0000, 1), sections)
   ]
 ]
