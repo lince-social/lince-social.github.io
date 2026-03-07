@@ -1,3 +1,6 @@
+[env]
+TMIL_ROOT = "content/blog/posts"
+
 [tasks.dev]
 description = "Full hot-reloading stack"
 tools = { "rust" = "stable", "bun" = "latest", "cargo:bacon" = "latest", "cargo:mprocs" = "latest"}
@@ -9,14 +12,14 @@ tools = { "rust" = "stable", "cargo:cargo-edit" = "latest" }
 run = "cargo upgrade; cargo fix --broken-code --allow-dirty && cargo clippy --fix --allow-dirty --quiet >/dev/null 2>&1 "
 
 [tasks.blog]
-description = "Preview a blog Typst post by numeric id (e.g. mise blog 0001)"
+description = "Preview a blog Typst post by id prefix (e.g. mise blog 0001 or mise blog 2026_02)"
 tools = { "tinymist" = "latest", "typst" = "latest" }
 usage = '''
-arg "<id>" help="Blog post numeric prefix (e.g. 0001)"
+arg "<id>" help="Blog post prefix (e.g. 0001 or 2026_02)"
 flag "-l --light" help="Use light mode in tinymist preview (disable inversion)"
 '''
 run = """
-SEARCH_PATH="output/assets/blog/posts"
+SEARCH_PATH="content/blog/posts"
 BLOG_ID="${usage_id?}"
 
 if [ "${usage_light:-false}" = "true" ]; then
@@ -25,7 +28,7 @@ else
   PREVIEW_INVERT="auto"
 fi
 
-POST_FILE=$(find "$SEARCH_PATH" -mindepth 1 -maxdepth 1 -type f -name "${BLOG_ID}_*.typ" -printf '%f\\n' | sort -V | tail -n 1)
+POST_FILE=$(find "$SEARCH_PATH" -mindepth 1 -type f \\( -name "${BLOG_ID}.typ" -o -name "${BLOG_ID}_*.typ" \\) -printf '%P\\n' | sort -f | head -n 1)
 
 if [ -z "$POST_FILE" ]; then
   echo "No blog post found for id: $BLOG_ID in $SEARCH_PATH"
@@ -41,4 +44,50 @@ tinymist preview \
   --data-plane-host 127.0.0.1:0 \
   --invert-colors "$PREVIEW_INVERT" \
   "$SOURCE_PATH"
+"""
+
+[tasks.tmil]
+description = "This Month in Lince (Latest Month Preview)"
+tools = { "tinymist" = "latest", "typst" = "latest", "pipx:touying" = "latest" }
+run = """
+SEARCH_PATH="{{env.TMIL_ROOT}}"
+DEFAULT_FILE="2026/2026_02_tmil.typ"
+LATEST_FILE=$(find "$SEARCH_PATH" -mindepth 1 -type f -name "20??_??_tmil.typ" -printf '%P\\n' | sort -V | tail -n 1)
+if [ -z "$LATEST_FILE" ]; then
+  SOURCE_FILE="$SEARCH_PATH/$DEFAULT_FILE"
+else
+  SOURCE_FILE="$SEARCH_PATH/$LATEST_FILE"
+fi
+
+echo "Using TMIL file: $SOURCE_FILE"
+SYS_INPUTS='{"tmil":"true"}'
+
+trap 'touying compile --root . --format html --sys-inputs "$SYS_INPUTS" "$SOURCE_FILE"' EXIT
+
+tinymist preview \
+  --root . \
+  --control-plane-host 127.0.0.1:3002 \
+  --data-plane-host 127.0.0.1:3001 \
+  --static-file-host 127.0.0.1:3003 \
+  --input tmil=true \
+  "$SOURCE_FILE"
+"""
+
+[tasks.tmil-all]
+description = "Compile all TMIL files to Touying HTML"
+tools = { "pipx:touying" = "latest" }
+run = """
+SEARCH_PATH="{{env.TMIL_ROOT}}"
+COUNT=0
+
+while IFS= read -r file; do
+  [ -z "$file" ] && continue
+  echo "Compiling TMIL: $file"
+  touying compile --root . --format html --sys-inputs '{"tmil":"true"}' "$file"
+  COUNT=$((COUNT + 1))
+done <<EOF
+$(find "$SEARCH_PATH" -mindepth 1 -type f -name "*_tmil.typ" | sort -f)
+EOF
+
+echo "Compiled $COUNT TMIL files."
 """

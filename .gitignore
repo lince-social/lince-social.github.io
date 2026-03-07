@@ -2,3 +2,4 @@
 mprocs.log
 main.pdf
 content.txt
+content/blog/posts/**/*.html

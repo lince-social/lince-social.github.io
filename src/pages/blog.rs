@@ -1,6 +1,12 @@
 use crate::{html::page, i18n::Translations};
 use maud::{PreEscaped, html};
-use std::{fs, path::Path, process::Command};
+use std::{
+    fs,
+    path::{Path, PathBuf},
+    process::Command,
+};
+
+const BLOG_POSTS_ROOT: &str = "content/blog/posts";
 
 #[derive(Default)]
 struct BlogMetadata {
@@ -40,7 +46,7 @@ fn generate_svg_sidecar(stem: &str, source_path: &Path) -> Option<String> {
     let _ = fs::create_dir_all(sidecar_dir);
     let sidecar_path = format!("output/assets/blog/.cache/{stem}.svg");
     let sidecar = Path::new(&sidecar_path);
-    let components = Path::new("output/assets/blog/components.typ");
+    let components = Path::new("content/blog/components.typ");
 
     let sidecar_mtime = fs::metadata(sidecar).and_then(|m| m.modified()).ok();
     let source_mtime = fs::metadata(source_path).and_then(|m| m.modified()).ok();
@@ -231,6 +237,29 @@ fn should_skip_blog_post(stem: &str) -> bool {
     stem == "0000_template" || stem.ends_with("_template")
 }
 
+fn collect_blog_post_files(dir: &Path, files: &mut Vec<PathBuf>) {
+    let Ok(entries) = fs::read_dir(dir) else {
+        return;
+    };
+
+    for entry in entries.flatten() {
+        let path = entry.path();
+        if path.is_dir() {
+            collect_blog_post_files(&path, files);
+            continue;
+        }
+        if path.extension().and_then(|s| s.to_str()) == Some("typ") {
+            files.push(path);
+        }
+    }
+}
+
+fn slug_from_path(file_path: &Path) -> Option<String> {
+    let rel = file_path.strip_prefix(BLOG_POSTS_ROOT).ok()?;
+    let no_ext = rel.with_extension("");
+    Some(no_ext.to_string_lossy().replace('\\', "/"))
+}
+
 fn extract_parenthesized_block(input: &str, marker: &str) -> Option<String> {
     let start = input.find(marker)? + marker.len();
     let mut depth = 1usize;
@@ -363,68 +392,79 @@ fn extract_title_from_typst(file_path: &str) -> String {
 /// Get all blog posts with their metadata
 pub fn get_blog_posts() -> Vec<(String, String, String)> {
     let mut posts = Vec::new();
+    let mut files = Vec::new();
+    collect_blog_post_files(Path::new(BLOG_POSTS_ROOT), &mut files);
 
-    if let Ok(entries) = fs::read_dir("output/assets/blog/posts") {
-        for entry in entries.flatten() {
-            let file_path = entry.path();
-            if file_path.extension().and_then(|s| s.to_str()) == Some("typ") {
-                let stem = file_path.file_stem().unwrap().to_str().unwrap();
-                if should_skip_blog_post(stem) {
-                    continue;
-                }
-                let path_str = file_path.to_str().unwrap();
-                let meta = extract_post_metadata(path_str);
-                let title = meta
-                    .title
-                    .unwrap_or_else(|| extract_title_from_typst(path_str));
-                let date = meta.date.unwrap_or_default();
-                posts.push((stem.to_string(), title, date));
-            }
+    for file_path in files {
+        let Some(stem) = file_path.file_stem().and_then(|s| s.to_str()) else {
+            continue;
+        };
+        if should_skip_blog_post(stem) {
+            continue;
         }
+        let Some(path_str) = file_path.to_str() else {
+            continue;
+        };
+        let meta = extract_post_metadata(path_str);
+        let title = meta
+            .title
+            .unwrap_or_else(|| extract_title_from_typst(path_str));
+        let date = meta.date.unwrap_or_default();
+        let slug = slug_from_path(&file_path).unwrap_or_else(|| stem.to_string());
+        posts.push((slug, title, date));
     }
 
-    // Sort posts in reverse order (newest first)
-    posts.sort_by(|a, b| b.0.cmp(&a.0));
+    // Always sort alphabetically by lowercase slug.
+    posts.sort_by(|a, b| a.0.to_lowercase().cmp(&b.0.to_lowercase()));
     posts
 }
 pub fn generate_blog_posts(t: &Translations, suffix: &str, show_home: bool) {
-    let paths = fs::read_dir("output/assets/blog/posts").expect("Could not read blog directory");
     let blog_href = format!("/blog{}.html", suffix);
+    let mut files = Vec::new();
+    collect_blog_post_files(Path::new(BLOG_POSTS_ROOT), &mut files);
+    files.sort_by(|a, b| {
+        let sa = slug_from_path(a).unwrap_or_default().to_lowercase();
+        let sb = slug_from_path(b).unwrap_or_default().to_lowercase();
+        sa.cmp(&sb)
+    });
 
-    for entry in paths.flatten() {
-        let file_path = entry.path();
-
-        if file_path.extension().and_then(|s| s.to_str()) == Some("typ") {
-            let stem = file_path.file_stem().unwrap().to_str().unwrap();
-            if should_skip_blog_post(stem) {
-                continue;
-            }
-
-            // Prefer Tinymist-rendered sidecar HTML when available.
-            // Fallback to Typst CLI HTML if sidecar parsing fails.
-            let sidecar_path = generate_svg_sidecar(stem, &file_path);
-
-            let body = if let Some(sidecar_path) = sidecar_path {
-                tinymist_native_html(&sidecar_path, stem)
-                    .unwrap_or_else(|| compile_blog_body(file_path.to_str().unwrap()))
-            } else {
-                compile_blog_body(file_path.to_str().unwrap())
-            };
-
-            // Wrap in Maud with breadcrumbs
-            let markup = html! {
-                main class="main-content blog-post-content" {
-                    nav class="breadcrumbs blog-breadcrumbs" {
-                        a class="blog-back-link" href=(blog_href.clone()) { (t.blog_back_to_posts) }
-                    }
-                    article class="blog_post" { (PreEscaped(body)) }
-                }
-            };
-            let blog_post_page = format!("blog/{}", stem);
-            let final_html = page(&markup.0, t, &blog_post_page, show_home);
-
-            fs::write(format!("output/blog/{}{}.html", stem, suffix), final_html).unwrap();
+    for file_path in files {
+        let Some(stem) = file_path.file_stem().and_then(|s| s.to_str()) else {
+            continue;
+        };
+        if should_skip_blog_post(stem) {
+            continue;
         }
+        let slug = slug_from_path(&file_path).unwrap_or_else(|| stem.to_string());
+        let cache_key = slug.replace('/', "__");
+
+        // Prefer Tinymist-rendered sidecar HTML when available.
+        // Fallback to Typst CLI HTML if sidecar parsing fails.
+        let sidecar_path = generate_svg_sidecar(&cache_key, &file_path);
+
+        let body = if let Some(sidecar_path) = sidecar_path {
+            tinymist_native_html(&sidecar_path, &cache_key)
+                .unwrap_or_else(|| compile_blog_body(file_path.to_str().unwrap()))
+        } else {
+            compile_blog_body(file_path.to_str().unwrap())
+        };
+
+        // Wrap in Maud with breadcrumbs
+        let markup = html! {
+            main class="main-content blog-post-content" {
+                nav class="breadcrumbs blog-breadcrumbs" {
+                    a class="blog-back-link" href=(blog_href.clone()) { (t.blog_back_to_posts) }
+                }
+                article class="blog_post" { (PreEscaped(body)) }
+            }
+        };
+        let blog_post_page = format!("blog/{}", slug);
+        let final_html = page(&markup.0, t, &blog_post_page, show_home);
+        let output_path = format!("output/blog/{}{}.html", slug, suffix);
+        if let Some(parent) = Path::new(&output_path).parent() {
+            let _ = fs::create_dir_all(parent);
+        }
+        fs::write(output_path, final_html).unwrap();
     }
 }
 

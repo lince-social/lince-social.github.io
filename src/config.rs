@@ -1,1 +1,1 @@
-pub const INCLUDE_BLOG: bool = false;
+pub const INCLUDE_BLOG: bool = true;
