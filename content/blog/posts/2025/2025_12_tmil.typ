@@ -1,3 +1,5 @@
+#import "@preview/cheq:0.3.0": checklist
+#show: checklist
 #import "../../components.typ": post
 #import "../../tmil.typ": (
   tmil_blog, tmil_item, tmil_month_label, tmil_post_date, tmil_post_title,
@@ -54,9 +56,36 @@
   ],
 )
 
+#let roadmap_items = (
+  tmil_item(
+    tmil_tr("Roadmap", "Cronograma", "路线图"),
+  )[
+    - [/] v1.0.0: Todo \
+      Rewrite of Frontend in GPUI
+      - [/] Todo
+        - [/] Table
+        - [ ] Kanban
+        - [ ] Calendar
+          - [ ] Shows Records changing with Karma. If they have a time cost, it occupies time from the calendar.
+      - [ ] Finance
+        - [ ] Table
+        - [ ] Graph
+        - [ ] Calendar
+      - [ ] Connection
+        - [ ] CRUD of cells (your node) and organs (group of nodes).
+        - [ ] Public/private rows for what organ (group of cells).
+        - [ ] Transaction of quantities between cells (nodes) in p2p network.
+    - [ ] v1.1.0: AI
+      - [ ] Be able to run an AI model to look at your DNA and change it to fit your needs.
+    - [ ] v1.2.0: Stock
+      - [ ] Screens to help with stock management for small to big companies.
+  ],
+)
+
 #let sections = (
   tmil_section("Crescimento | 成长工作 | Growth", items: growth_items),
   tmil_section("Programação | 开发 | Programming", items: programming_items),
+  tmil_section("Roteiro | 路线图 | Roadmap", items: roadmap_items),
 )
 
 #if tmil_mode [

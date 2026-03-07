@@ -89,7 +89,7 @@ background = true
 
 # Rebuild the website when Rust or Typst blog sources change.
 [jobs.site]
-command = ["cargo", "run"]
+command = ["bash", "-lc", "cargo nextest run --hide-progress-bar --failure-output final && cargo run"]
 need_stdout = true
 allow_warnings = true
 background = false

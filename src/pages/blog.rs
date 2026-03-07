@@ -330,43 +330,63 @@ fn extract_named_string(args: &str, key: &str) -> Option<String> {
     None
 }
 
-fn parse_tmil_post_title_call(value: &str) -> Option<String> {
+fn parse_tmil_post_title_call(value: &str, mdate: Option<(u32, u32, u32)>) -> Option<String> {
     let call = extract_parenthesized_block(value, "tmil_post_title(")?;
     let parts: Vec<&str> = call.split(',').map(|p| p.trim()).collect();
     if parts.len() < 2 {
         return None;
     }
-    let year = parts.first()?.parse::<u32>().ok()?;
-    let month = parts.get(1)?.parse::<u32>().ok()?;
+    let year = if parts.first()? == &"mdate.year()" {
+        mdate?.0
+    } else {
+        parts.first()?.parse::<u32>().ok()?
+    };
+    let month = if parts.get(1)? == &"mdate.month()" {
+        mdate?.1
+    } else {
+        parts.get(1)?.parse::<u32>().ok()?
+    };
     Some(format!("This Month in Lince | {year:04}-{month:02}"))
 }
 
-fn parse_tmil_post_date_call(value: &str) -> Option<String> {
+fn parse_tmil_post_date_call(value: &str, mdate: Option<(u32, u32, u32)>) -> Option<String> {
     let call = extract_parenthesized_block(value, "tmil_post_date(")?;
     let parts: Vec<&str> = call.split(',').map(|p| p.trim()).collect();
     if parts.len() < 3 {
         return None;
     }
-    let year = parts.first()?.parse::<u32>().ok()?;
-    let month = parts.get(1)?.parse::<u32>().ok()?;
-    let day = parts.get(2)?.parse::<u32>().ok()?;
+    let year = if parts.first()? == &"mdate.year()" {
+        mdate?.0
+    } else {
+        parts.first()?.parse::<u32>().ok()?
+    };
+    let month = if parts.get(1)? == &"mdate.month()" {
+        mdate?.1
+    } else {
+        parts.get(1)?.parse::<u32>().ok()?
+    };
+    let day = if parts.get(2)? == &"mdate.day()" {
+        mdate?.2
+    } else {
+        parts.get(2)?.parse::<u32>().ok()?
+    };
     Some(format!("{year:04}-{month:02}-{day:02}"))
 }
 
-fn extract_named_title(args: &str, key: &str) -> Option<String> {
+fn extract_named_title(args: &str, key: &str, mdate: Option<(u32, u32, u32)>) -> Option<String> {
     extract_named_string(args, key).or_else(|| {
         let marker = format!("{key}:");
         let start = args.find(&marker)? + marker.len();
         let value = args[start..].trim_start();
-        parse_tmil_post_title_call(value)
+        parse_tmil_post_title_call(value, mdate)
     })
 }
 
-fn extract_named_date(args: &str, key: &str) -> Option<String> {
+fn extract_named_date(args: &str, key: &str, mdate: Option<(u32, u32, u32)>) -> Option<String> {
     let marker = format!("{key}:");
     let start = args.find(&marker)? + marker.len();
     let tail = args[start..].trim_start();
-    if let Some(parsed) = parse_tmil_post_date_call(tail) {
+    if let Some(parsed) = parse_tmil_post_date_call(tail, mdate) {
         return Some(parsed);
     }
 
@@ -393,6 +413,29 @@ fn extract_named_date(args: &str, key: &str) -> Option<String> {
     }
 }
 
+fn extract_mdate(content: &str) -> Option<(u32, u32, u32)> {
+    let args = extract_parenthesized_block(content, "#let mdate = datetime(")?;
+    let mut year: Option<u32> = None;
+    let mut month: Option<u32> = None;
+    let mut day: Option<u32> = None;
+
+    for part in args.split(',') {
+        let trimmed = part.trim();
+        if let Some(value) = trimmed.strip_prefix("year:") {
+            year = value.trim().parse::<u32>().ok();
+        } else if let Some(value) = trimmed.strip_prefix("month:") {
+            month = value.trim().parse::<u32>().ok();
+        } else if let Some(value) = trimmed.strip_prefix("day:") {
+            day = value.trim().parse::<u32>().ok();
+        }
+    }
+
+    match (year, month, day) {
+        (Some(y), Some(m), Some(d)) => Some((y, m, d)),
+        _ => None,
+    }
+}
+
 fn extract_post_metadata(file_path: &str) -> BlogMetadata {
     let Ok(content) = fs::read_to_string(file_path) else {
         return BlogMetadata::default();
@@ -400,10 +443,11 @@ fn extract_post_metadata(file_path: &str) -> BlogMetadata {
     let Some(post_args) = extract_parenthesized_block(&content, "#post(") else {
         return BlogMetadata::default();
     };
+    let mdate = extract_mdate(&content);
 
     BlogMetadata {
-        title: extract_named_title(&post_args, "title"),
-        date: extract_named_date(&post_args, "date"),
+        title: extract_named_title(&post_args, "title", mdate),
+        date: extract_named_date(&post_args, "date", mdate),
     }
 }
 
@@ -538,4 +582,37 @@ pub fn page_blog(t: &Translations) -> String {
         }
     }
     .0
+}
+
+#[cfg(test)]
+mod tests {
+    use super::get_blog_posts;
+    use std::path::Path;
+
+    #[test]
+    fn blog_post_titles_are_not_filename_fallbacks() {
+        let posts = get_blog_posts();
+        assert!(
+            !posts.is_empty(),
+            "Expected at least one blog post when validating titles"
+        );
+
+        let offenders: Vec<String> = posts
+            .iter()
+            .filter_map(|(slug, title, _date)| {
+                let stem = Path::new(slug).file_name()?.to_str()?;
+                if title.trim() == stem {
+                    Some(format!("{slug} -> {title}"))
+                } else {
+                    None
+                }
+            })
+            .collect();
+
+        assert!(
+            offenders.is_empty(),
+            "Blog listing is using filename fallback titles for: {}",
+            offenders.join(", ")
+        );
+    }
 }
