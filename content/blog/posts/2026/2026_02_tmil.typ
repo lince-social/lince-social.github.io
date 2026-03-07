@@ -2,7 +2,7 @@
 #show: checklist
 #import "../../components.typ": post
 #import "../../tmil.typ": (
-  tmil_blog, tmil_item, tmil_month_label, tmil_post_date, tmil_post_title,
+  tmil_blog, tmil_item, tmil_month_label, tmil_post_publish_date, tmil_post_title,
   tmil_section, tmil_slides, tmil_tr,
 )
 
@@ -78,7 +78,7 @@
 
 #let roadmap_items = (
   tmil_item(
-    tmil_tr("Roadmap", "Cronograma", "路线图"),
+    "",
   )[
     - [/] v1.0.0: Todo \
       Rewrite of Frontend in GPUI
@@ -115,7 +115,7 @@
     title: tmil_post_title(mdate.year(), mdate.month()),
     name: author_name,
     email: author_email,
-    date: tmil_post_date(mdate.year(), mdate.month(), mdate.day()),
+    date: tmil_post_publish_date(mdate.year(), mdate.month()),
   )[
     #tmil_blog(tmil_month_label(mdate.year(), mdate.month()), sections)
   ]

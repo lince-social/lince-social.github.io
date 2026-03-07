@@ -14,9 +14,13 @@ curl https://mise.run | sh
 
 The dependencies are installed automatically, once, when running commands. Just type `mise dev` to do the following:
 
-- Create the blogposts from Typst including TMIL blogpost version. If there are missing months of TMIL from this month backwards (up to one year) they will be generated; the Typst for them, their equivalent html blogpost (svg based) and maintain the two most recent months of TMIL with touying (slides) to not fill up with .gitignored generated HTML.
+- Create the blogposts from Typst including TMIL blogpost version.
+  - If there are missing months of TMIL from this month backwards (up to one year) they will be generated; the Typst for them, their equivalent html blogpost (svg based) and maintain the two most recent months of TMIL with touying (slides) to not fill up with .gitignored generated HTML.
+  - During new TMIL creation the Roadmap of the template and now latest TMIL is set to equal the former latest TMIL (last month now). That way one needs to update the roadmap of the latest TMIL only, the creation continues it's edits.
 - Create the website's HTML.
 - Runs the Rust's tests that assure the website works correctly.
 - Serves the website locally at `http://localhost:46785`
 
 This way whenever a new month passes, the TMIL blogpost will be automatically generated and the website will be updated. All one needs to do is run `mise dev`, edit the Typst (the website will update in real time), and commit/push the changes to update the website. If one wants to present the TMIL they can open the HTML (.gitignored) next to the real TMIL Typst in the browser and it is good to go.
+
+If you want to live-preview the TMIL slide version, not only compiling once with mise dev, run `mise tmil-preview`.

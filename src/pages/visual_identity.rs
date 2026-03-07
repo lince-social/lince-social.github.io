@@ -106,29 +106,29 @@ pub fn page_visual_identity() -> String {
     let sections = sections();
 
     html! {
-        main class="main-content" {
-            section class="content-block" {
-                h1 class="content-block__title" { "Visual Identity" }
-                p class="content-block__body" {
+        main.main-content {
+            section.content-block {
+                h1.content-block__title { "Visual Identity" }
+                p.content-block__body {
                     "Official logo files for download in SVG, PNG, JPG, and ICO formats."
                 }
             }
 
             @for section_data in sections {
-                section class="content-block content-block--with-image" {
-                    div class="content-block__text" {
-                        h2 class="content-block__title" { (section_data.title) }
+                section.content-block.content-block--with-image {
+                    .content-block__text {
+                        h2.content-block__title { (section_data.title) }
                         @if let Some(desc) = section_data.description {
-                            p class="content-block__body" { (desc) }
+                            p.content-block__body { (desc) }
                         }
-                        p class="content-block__body" {
+                        p.content-block__body {
                             @for (i, link) in section_data.links.iter().enumerate() {
                                 @if i > 0 { " • " }
                                 a href=(link.href) { (link.label) }
                             }
                         }
                     }
-                    div class="content-block__image" {
+                    .content-block__image {
                         img src=(section_data.preview_src) alt=(section_data.preview_alt);
                     }
                 }

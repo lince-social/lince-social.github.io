@@ -1,6 +1,7 @@
 use crate::{html::page, i18n::Translations};
 use maud::{PreEscaped, html};
 use std::{
+    collections::HashMap,
     fs,
     path::{Path, PathBuf},
     process::Command,
@@ -373,6 +374,32 @@ fn parse_tmil_post_date_call(value: &str, mdate: Option<(u32, u32, u32)>) -> Opt
     Some(format!("{year:04}-{month:02}-{day:02}"))
 }
 
+fn parse_tmil_post_publish_date_call(
+    value: &str,
+    mdate: Option<(u32, u32, u32)>,
+) -> Option<String> {
+    let call = extract_parenthesized_block(value, "tmil_post_publish_date(")?;
+    let parts: Vec<&str> = call.split(',').map(|p| p.trim()).collect();
+    if parts.len() < 2 {
+        return None;
+    }
+
+    let base_year = if parts.first()? == &"mdate.year()" {
+        mdate?.0
+    } else {
+        parts.first()?.parse::<u32>().ok()?
+    };
+    let base_month = if parts.get(1)? == &"mdate.month()" {
+        mdate?.1
+    } else {
+        parts.get(1)?.parse::<u32>().ok()?
+    };
+
+    let publish_year = base_year + if base_month == 12 { 1 } else { 0 };
+    let publish_month = if base_month == 12 { 1 } else { base_month + 1 };
+    Some(format!("{publish_year:04}-{publish_month:02}-01"))
+}
+
 fn extract_named_title(args: &str, key: &str, mdate: Option<(u32, u32, u32)>) -> Option<String> {
     extract_named_string(args, key).or_else(|| {
         let marker = format!("{key}:");
@@ -386,6 +413,9 @@ fn extract_named_date(args: &str, key: &str, mdate: Option<(u32, u32, u32)>) -> 
     let marker = format!("{key}:");
     let start = args.find(&marker)? + marker.len();
     let tail = args[start..].trim_start();
+    if let Some(parsed) = parse_tmil_post_publish_date_call(tail, mdate) {
+        return Some(parsed);
+    }
     if let Some(parsed) = parse_tmil_post_date_call(tail, mdate) {
         return Some(parsed);
     }
@@ -472,6 +502,52 @@ fn extract_title_from_typst(file_path: &str) -> String {
         .to_string()
 }
 
+fn build_blog_neighbors(
+    ordered_posts: &[(String, String, String)],
+) -> HashMap<String, (Option<String>, Option<String>)> {
+    let mut neighbors: HashMap<String, (Option<String>, Option<String>)> = HashMap::new();
+    for (idx, (slug, _, _)) in ordered_posts.iter().enumerate() {
+        let newer = if idx > 0 {
+            Some(ordered_posts[idx - 1].0.clone())
+        } else {
+            None
+        };
+        let older = ordered_posts.get(idx + 1).map(|p| p.0.clone());
+        neighbors.insert(slug.clone(), (older, newer));
+    }
+    neighbors
+}
+
+fn render_blog_nav_script(older_href: Option<&str>, newer_href: Option<&str>) -> String {
+    let older = older_href
+        .map(|s| format!("\"{s}\""))
+        .unwrap_or_else(|| "null".to_string());
+    let newer = newer_href
+        .map(|s| format!("\"{s}\""))
+        .unwrap_or_else(|| "null".to_string());
+
+    format!(
+        r#"(function() {{
+  const olderUrl = {older};
+  const newerUrl = {newer};
+  const shouldIgnore = (el) => {{
+    if (!el) return false;
+    const tag = (el.tagName || "").toLowerCase();
+    return el.isContentEditable || tag === "input" || tag === "textarea" || tag === "select";
+  }};
+  window.addEventListener("keydown", (ev) => {{
+    if (ev.defaultPrevented || ev.altKey || ev.ctrlKey || ev.metaKey || ev.shiftKey) return;
+    if (shouldIgnore(document.activeElement)) return;
+    if (ev.key === "ArrowLeft" && olderUrl) {{
+      window.location.href = olderUrl;
+    }} else if (ev.key === "ArrowRight" && newerUrl) {{
+      window.location.href = newerUrl;
+    }}
+  }});
+}})();"#,
+    )
+}
+
 /// Get all blog posts with their metadata
 pub fn get_blog_posts() -> Vec<(String, String, String)> {
     let mut posts = Vec::new();
@@ -503,6 +579,9 @@ pub fn get_blog_posts() -> Vec<(String, String, String)> {
 }
 pub fn generate_blog_posts(t: &Translations, suffix: &str, show_home: bool) {
     let blog_href = format!("/blog{}.html", suffix);
+    let ordered_posts = get_blog_posts(); // latest first
+    let neighbors = build_blog_neighbors(&ordered_posts);
+
     let mut files = Vec::new();
     collect_blog_post_files(Path::new(BLOG_POSTS_ROOT), &mut files);
     files.sort_by(|a, b| {
@@ -519,6 +598,13 @@ pub fn generate_blog_posts(t: &Translations, suffix: &str, show_home: bool) {
             continue;
         }
         let slug = slug_from_path(&file_path).unwrap_or_else(|| stem.to_string());
+        let (older_slug, newer_slug) = neighbors.get(&slug).cloned().unwrap_or((None, None));
+        let older_href = older_slug
+            .as_ref()
+            .map(|older| format!("/blog/{}{}.html", older, suffix));
+        let newer_href = newer_slug
+            .as_ref()
+            .map(|newer| format!("/blog/{}{}.html", newer, suffix));
         let cache_key = slug.replace('/', "__");
 
         // Prefer Tinymist-rendered sidecar HTML when available.
@@ -534,11 +620,31 @@ pub fn generate_blog_posts(t: &Translations, suffix: &str, show_home: bool) {
 
         // Wrap in Maud with breadcrumbs
         let markup = html! {
-            main class="main-content blog-post-content" {
-                nav class="breadcrumbs blog-breadcrumbs" {
-                    a class="blog-back-link" href=(blog_href.clone()) { (t.blog_back_to_posts) }
+            main.main-content.blog-post-content {
+                nav.breadcrumbs.blog-breadcrumbs {
+                    a.blog-back-link href=(blog_href.clone()) { (t.blog_back_to_posts) }
                 }
-                article class="blog_post" { (PreEscaped(body)) }
+                @if older_slug.is_some() || newer_slug.is_some() {
+                    nav.blog-post-pager style="display: flex; width: 100%; gap: 0.4rem;" {
+                        @if let Some(ref older) = older_slug {
+                            a.blog-post-nav-link.blog-post-nav-left href=(format!("/blog/{}{}.html", older, suffix)) { "← Older" }
+                        } @else {
+                            span.blog-post-nav-link.blog-post-nav-left.disabled { "← Older" }
+                        }
+                        @if let Some(ref newer) = newer_slug {
+                            a.blog-post-nav-link.blog-post-nav-right href=(format!("/blog/{}{}.html", newer, suffix)) { "Newer →" }
+                        } @else {
+                            span.blog-post-nav-link.blog-post-nav-right.disabled { "Newer →" }
+                        }
+                    }
+                    script {
+                        (PreEscaped(render_blog_nav_script(
+                            older_href.as_deref(),
+                            newer_href.as_deref(),
+                        )))
+                    }
+                }
+                article.blog_post { (PreEscaped(body)) }
             }
         };
         let blog_post_page = format!("blog/{}", slug);
@@ -556,23 +662,24 @@ pub fn page_blog(t: &Translations) -> String {
     let posts = get_blog_posts();
 
     html! {
-        main class="main-content" {
-            section class="blog-header" {
-                h1 class="section-title" { (t.blog_title) }
+        main.main-content {
+            section.blog-header {
+                h1.section-title { (t.blog_title) }
             }
 
             @if posts.is_empty() {
-                section class="blog-posts-container" {
-                    p class="no-posts" { "No blog posts yet." }
+                section.blog-posts-container {
+                    p.no-posts { "No blog posts yet." }
                 }
             } @else {
-                section class="blog-posts-container" {
-                    ul class="blog-posts-list" {
+                section.blog-posts-container {
+                    ul.blog-posts-list {
                         @for (slug, title, date) in posts {
-                            li class="blog-post-item" {
-                                a class="blog-post-link" href=(format!("/blog/{}{}.html", slug, suffix)) {
-                                    h3 class="blog-post-title" { (title) }
-                                    p class="blog-post-date" { (date) }
+                            li.blog-post-item {
+                                a.blog-post-link href=(format!("/blog/{}{}.html", slug, suffix)) {
+                                    h3.blog-post-title { (title) }
+                                    span.blog-post-dots aria-hidden="true" {}
+                                    p.blog-post-date { (date) }
                                 }
                             }
                         }
@@ -586,8 +693,11 @@ pub fn page_blog(t: &Translations) -> String {
 
 #[cfg(test)]
 mod tests {
-    use super::get_blog_posts;
-    use std::path::Path;
+    use super::{
+        build_blog_neighbors, collect_blog_post_files, extract_mdate, extract_post_metadata,
+        get_blog_posts, render_blog_nav_script,
+    };
+    use std::path::{Path, PathBuf};
 
     #[test]
     fn blog_post_titles_are_not_filename_fallbacks() {
@@ -614,5 +724,265 @@ mod tests {
             "Blog listing is using filename fallback titles for: {}",
             offenders.join(", ")
         );
+    }
+
+    #[test]
+    fn blog_navigation_neighbors_match_post_order() {
+        let posts = get_blog_posts(); // latest first
+        assert!(
+            !posts.is_empty(),
+            "Expected at least one blog post when validating neighbors"
+        );
+
+        let neighbors = build_blog_neighbors(&posts);
+        for (idx, (slug, _, _)) in posts.iter().enumerate() {
+            let (older, newer) = neighbors
+                .get(slug)
+                .unwrap_or_else(|| panic!("Missing neighbor entry for slug: {slug}"));
+
+            let expected_older = posts.get(idx + 1).map(|p| p.0.clone());
+            let expected_newer = if idx > 0 {
+                Some(posts[idx - 1].0.clone())
+            } else {
+                None
+            };
+
+            assert_eq!(
+                older, &expected_older,
+                "Older neighbor mismatch for slug {slug}"
+            );
+            assert_eq!(
+                newer, &expected_newer,
+                "Newer neighbor mismatch for slug {slug}"
+            );
+
+            if let Some(older_slug) = older {
+                let (_olders_older, olders_newer) =
+                    neighbors.get(older_slug).unwrap_or_else(|| {
+                        panic!("Missing reverse neighbor entry for older slug: {older_slug}")
+                    });
+                assert_eq!(
+                    olders_newer,
+                    &Some(slug.clone()),
+                    "Reciprocal navigation mismatch: older({slug}) should point newer back"
+                );
+            }
+            if let Some(newer_slug) = newer {
+                let (newers_older, _newers_newer) =
+                    neighbors.get(newer_slug).unwrap_or_else(|| {
+                        panic!("Missing reverse neighbor entry for newer slug: {newer_slug}")
+                    });
+                assert_eq!(
+                    newers_older,
+                    &Some(slug.clone()),
+                    "Reciprocal navigation mismatch: newer({slug}) should point older back"
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn blog_posts_have_non_empty_title_and_parseable_date() {
+        let posts = get_blog_posts();
+        assert!(
+            !posts.is_empty(),
+            "Expected at least one blog post when validating metadata"
+        );
+
+        for (slug, title, date) in posts {
+            assert!(
+                !title.trim().is_empty(),
+                "Post title is empty for slug: {slug}"
+            );
+            assert!(
+                is_valid_iso_date(&date),
+                "Post date is not valid YYYY-MM-DD for slug {slug}: {date}"
+            );
+        }
+    }
+
+    #[test]
+    fn tmil_posts_publish_one_month_after_mdate() {
+        let mut files = Vec::new();
+        collect_blog_post_files(Path::new("content/blog/posts"), &mut files);
+        let tmil_files: Vec<PathBuf> = files
+            .into_iter()
+            .filter(|p| {
+                p.file_stem()
+                    .and_then(|s| s.to_str())
+                    .map(|s| s.ends_with("_tmil"))
+                    .unwrap_or(false)
+            })
+            .collect();
+        assert!(
+            !tmil_files.is_empty(),
+            "Expected TMIL files for date-rule check"
+        );
+
+        for file_path in tmil_files {
+            let Some(path_str) = file_path.to_str() else {
+                continue;
+            };
+            let content = std::fs::read_to_string(path_str)
+                .unwrap_or_else(|e| panic!("Failed to read {path_str}: {e}"));
+            let mdate = extract_mdate(&content).unwrap_or_else(|| {
+                panic!("Missing/invalid #let mdate datetime(...) in {path_str}")
+            });
+            let meta = extract_post_metadata(path_str);
+            let actual_date = meta
+                .date
+                .unwrap_or_else(|| panic!("Missing parsed post date in {path_str}"));
+            let expected = expected_publish_date(mdate.0, mdate.1);
+            assert_eq!(
+                actual_date, expected,
+                "TMIL publish date must be next-month day 1 in {path_str}"
+            );
+        }
+    }
+
+    #[test]
+    fn blog_posts_are_sorted_latest_first() {
+        let posts = get_blog_posts();
+        assert!(!posts.is_empty(), "Expected posts for ordering check");
+
+        for pair in posts.windows(2) {
+            let a = pair[0].0.to_lowercase();
+            let b = pair[1].0.to_lowercase();
+            assert!(
+                a >= b,
+                "Posts are not sorted latest-first by slug: {} then {}",
+                pair[0].0,
+                pair[1].0
+            );
+        }
+    }
+
+    #[test]
+    fn tmil_template_has_required_structure() {
+        let template_path = "content/blog/YYYY_MM_DD_tmil.typ";
+        let content = std::fs::read_to_string(template_path)
+            .unwrap_or_else(|e| panic!("Failed to read template {template_path}: {e}"));
+
+        for needle in [
+            "#let mdate = datetime(",
+            "#let author_name = ",
+            "#let author_email = ",
+            "#let roadmap_items = (",
+            "date: tmil_post_publish_date(",
+            "\"Roteiro | 路线图 | Roadmap\"",
+        ] {
+            assert!(
+                content.contains(needle),
+                "Template missing required pattern `{needle}`"
+            );
+        }
+    }
+
+    #[test]
+    fn generated_blog_links_point_to_existing_output_html() {
+        let posts = get_blog_posts();
+        assert!(!posts.is_empty(), "Expected posts for output-link check");
+        for (slug, _title, _date) in posts {
+            let output = format!("output/blog/{slug}.html");
+            assert!(
+                Path::new(&output).exists(),
+                "Missing generated blog output file for slug {slug}: {output}"
+            );
+        }
+    }
+
+    #[test]
+    fn blog_nav_script_contains_arrow_key_navigation() {
+        let script = render_blog_nav_script(Some("/blog/older.html"), Some("/blog/newer.html"));
+        assert!(script.contains("ArrowLeft"), "Missing ArrowLeft handler");
+        assert!(script.contains("ArrowRight"), "Missing ArrowRight handler");
+        assert!(
+            script.contains("\"/blog/older.html\""),
+            "Missing older URL in nav script"
+        );
+        assert!(
+            script.contains("\"/blog/newer.html\""),
+            "Missing newer URL in nav script"
+        );
+    }
+
+    #[test]
+    fn tmil_referenced_media_assets_exist() {
+        let mut targets = vec![PathBuf::from("content/blog/YYYY_MM_DD_tmil.typ")];
+        let mut files = Vec::new();
+        collect_blog_post_files(Path::new("content/blog/posts"), &mut files);
+        targets.extend(files.into_iter().filter(|p| {
+            p.file_stem()
+                .and_then(|s| s.to_str())
+                .map(|s| s.ends_with("_tmil"))
+                .unwrap_or(false)
+        }));
+
+        for file_path in targets {
+            let Some(path_str) = file_path.to_str() else {
+                continue;
+            };
+            let content = std::fs::read_to_string(path_str)
+                .unwrap_or_else(|e| panic!("Failed to read {path_str}: {e}"));
+            for asset in extract_media_references(&content) {
+                let full = Path::new("content/blog").join(&asset);
+                assert!(
+                    full.exists(),
+                    "Missing media asset `{}` referenced in {}",
+                    asset,
+                    path_str
+                );
+            }
+        }
+    }
+
+    fn expected_publish_date(year: u32, month: u32) -> String {
+        let publish_year = year + if month == 12 { 1 } else { 0 };
+        let publish_month = if month == 12 { 1 } else { month + 1 };
+        format!("{publish_year:04}-{publish_month:02}-01")
+    }
+
+    fn is_valid_iso_date(value: &str) -> bool {
+        if value.len() != 10 {
+            return false;
+        }
+        let bytes = value.as_bytes();
+        bytes[4] == b'-'
+            && bytes[7] == b'-'
+            && bytes
+                .iter()
+                .enumerate()
+                .all(|(i, b)| i == 4 || i == 7 || b.is_ascii_digit())
+    }
+
+    fn extract_media_references(content: &str) -> Vec<String> {
+        let mut refs = Vec::new();
+
+        for line in content.lines() {
+            let trimmed = line.trim();
+            if let Some(rest) = trimmed.strip_prefix("photo: \"") {
+                if let Some(end) = rest.find('"') {
+                    let candidate = &rest[..end];
+                    if candidate.starts_with("media/") {
+                        refs.push(candidate.to_string());
+                    }
+                }
+            }
+        }
+
+        let mut offset = 0usize;
+        while let Some(pos) = content[offset..].find("#image(\"") {
+            let start = offset + pos + "#image(\"".len();
+            let Some(end_rel) = content[start..].find('"') else {
+                break;
+            };
+            let candidate = &content[start..start + end_rel];
+            if candidate.starts_with("media/") {
+                refs.push(candidate.to_string());
+            }
+            offset = start + end_rel + 1;
+        }
+
+        refs
     }
 }

@@ -296,3 +296,30 @@ main() {
 
 main
 '''
+
+[tasks.tmil-preview]
+description = "This Month in Lince (Latest Month Preview)"
+tools = { "tinymist" = "latest", "typst" = "latest", "pipx:touying" = "latest" }
+run = """
+SEARCH_PATH="{{env.TMIL_ROOT}}"
+DEFAULT_FILE="2026/2026_02_tmil.typ"
+LATEST_FILE=$(find "$SEARCH_PATH" -mindepth 1 -type f -name "20??_??_tmil.typ" -printf '%P\\n' | sort -V | tail -n 1)
+if [ -z "$LATEST_FILE" ]; then
+  SOURCE_FILE="$SEARCH_PATH/$DEFAULT_FILE"
+else
+  SOURCE_FILE="$SEARCH_PATH/$LATEST_FILE"
+fi
+
+echo "Using TMIL file: $SOURCE_FILE"
+SYS_INPUTS='{"tmil":"true"}'
+
+trap 'touying compile --root . --format html --sys-inputs "$SYS_INPUTS" "$SOURCE_FILE"' EXIT
+
+tinymist preview \
+  --root . \
+  --control-plane-host 127.0.0.1:3002 \
+  --data-plane-host 127.0.0.1:3001 \
+  --static-file-host 127.0.0.1:3003 \
+  --input tmil=true \
+  "$SOURCE_FILE"
+"""

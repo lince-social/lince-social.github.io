@@ -2,8 +2,8 @@
 #show: checklist
 #import "../../components.typ": post
 #import "../../tmil.typ": (
-  tmil_blog, tmil_item, tmil_month_label, tmil_post_date, tmil_post_title,
-  tmil_section, tmil_slides, tmil_tr,
+  tmil_blog, tmil_item, tmil_month_label, tmil_post_publish_date,
+  tmil_post_title, tmil_section, tmil_slides, tmil_tr,
 )
 
 #let tmil_mode = sys.inputs.at("tmil", default: "false") == "true"
@@ -35,7 +35,7 @@
     The first LinceCon, we talked about ideas, goals and plans for 2026.
   ],
   tmil_item(
-    tmil_tr("This Month in Lince", "Este Mes na Lince", "本月在林斯"),
+    tmil_tr("This Month in Lince", "Este Mês na Lince", "本月在 Lince"),
     subtitle: tmil_tr(
       "Starting with month 2025-12",
       "Comecando no mes 2025-12",
@@ -58,7 +58,7 @@
 
 #let roadmap_items = (
   tmil_item(
-    tmil_tr("Roadmap", "Cronograma", "路线图"),
+    "",
   )[
     - [/] v1.0.0: Todo \
       Rewrite of Frontend in GPUI
@@ -95,7 +95,7 @@
     title: tmil_post_title(mdate.year(), mdate.month()),
     name: author_name,
     email: author_email,
-    date: tmil_post_date(mdate.year(), mdate.month(), mdate.day()),
+    date: tmil_post_publish_date(mdate.year(), mdate.month()),
   )[
     #tmil_blog(tmil_month_label(mdate.year(), mdate.month()), sections)
   ]

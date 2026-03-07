@@ -39,13 +39,13 @@ pub fn page(body: &str, t: &Translations, current_page: &str, show_home: bool) -
                 title { "Lince" }
             }
             body {
-                nav class="navbar" {
-                    div class="navbar-container" {
-                        a class="navbar-brand" href=(home_href) {
+                nav.navbar {
+                    .navbar-container {
+                        a.navbar-brand href=(home_href) {
                             img src="/assets/logo/white.svg" alt="Lince Logo";
                             "Lince"
                         }
-                        ul class="navbar-menu" {
+                        ul.navbar-menu {
                             @if show_home {
                                 li {
                                     a class=(if current_page == "index" { "navbar-item active" } else { "navbar-item" })
@@ -62,30 +62,30 @@ pub fn page(body: &str, t: &Translations, current_page: &str, show_home: bool) -
                                     }
                                 }
                             }
-                            li class="desktop-only" {
-                                a class="navbar-item" href="https://github.com/lince-social/lince" {
+                            li.desktop-only {
+                                a.navbar-item href="https://github.com/lince-social/lince" {
                                     (t.nav_github)
                                 }
                             }
-                            li class="desktop-only" {
-                                a class="navbar-item" href="https://github.com/lince-social/lince/releases" {
+                            li.desktop-only {
+                                a.navbar-item href="https://github.com/lince-social/lince/releases" {
                                     (t.nav_download)
                                 }
                             }
-                            li class="lang-switcher" {
-                                button class="lang-btn" onclick="toggleLangDropdown()" {
+                            li.lang-switcher {
+                                button.lang-btn onclick="toggleLangDropdown()" {
                                     @if t.lang_code == "en" { "EN" }
                                     @else if t.lang_code == "pt-br" { "PT" }
                                     @else { "中文" }
                                 }
-                                div class="lang-dropdown" id="langDropdown" {
-                                    a class="lang-option" href=(link_en) { "English" }
-                                    a class="lang-option" href=(link_pt) { "Português" }
-                                    a class="lang-option" href=(link_zh) { "中文" }
+                                .lang-dropdown id="langDropdown" {
+                                    a.lang-option href=(link_en) { "English" }
+                                    a.lang-option href=(link_pt) { "Português" }
+                                    a.lang-option href=(link_zh) { "中文" }
                                 }
                             }
                             li {
-                                button class="theme-toggle" onclick="toggleTheme()" title=(t.nav_theme) {
+                                button.theme-toggle onclick="toggleTheme()" title=(t.nav_theme) {
                                     "◐"
                                 }
                             }
@@ -93,12 +93,12 @@ pub fn page(body: &str, t: &Translations, current_page: &str, show_home: bool) -
                     }
                 }
                 (PreEscaped(body))
-                footer class="footer" {
-                    div class="footer-container" {
+                footer.footer {
+                    .footer-container {
                         @for section in &t.footer_sections {
-                            div class="footer-section" {
+                            .footer-section {
                                 h4 { (section.title) }
-                                ul class="footer-links" {
+                                ul.footer-links {
                                     @for link in &section.links {
                                         @let href = if link.href.starts_with("http") {
                                             link.href.to_string()

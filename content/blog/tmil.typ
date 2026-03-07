@@ -21,6 +21,12 @@
   datetime(year: year, month: month, day: day)
 }
 
+#let tmil_post_publish_date(year, month) = {
+  let publish_year = year + if month == 12 { 1 } else { 0 }
+  let publish_month = if month == 12 { 1 } else { month + 1 }
+  datetime(year: publish_year, month: publish_month, day: 1)
+}
+
 #let tmil_text(value, lang: "en") = {
   if type(value) == array and value.len() >= 3 {
     if lang == "pt-BR" {
@@ -67,6 +73,12 @@
 )
 
 #let render_item_slide(entry) = {
+  let has_heading = tmil_langs.any(lang => {
+    let title = tmil_text(entry.title, lang: lang)
+    let subtitle = tmil_text(entry.subtitle, lang: lang)
+    title != "" or subtitle != ""
+  })
+
   let item_line = lang => {
     let title = tmil_text(entry.title, lang: lang)
     let subtitle = tmil_text(entry.subtitle, lang: lang)
@@ -74,35 +86,35 @@
   }
 
   [
-    #align(center + horizon)[
-      #if entry.photo == none [
-        #for lang in tmil_langs [
-          #text(size: 24pt, weight: 400)[#item_line(lang)]
-          #if lang != tmil_langs.last() [
-            #v(0.7em)
+    #if entry.photo == none [
+      #if has_heading [
+        #align(center + horizon)[
+          #for lang in tmil_langs [
+            #text(size: 24pt, weight: 400)[#item_line(lang)]
+            #if lang != tmil_langs.last() [
+              #v(0.7em)
+            ]
           ]
         ]
-        #v(0.7em)
-        #entry.body
       ] else [
-        #grid(
-          columns: (1fr, 1fr),
-          gutter: 32pt,
-          align(left + horizon)[
-            #for lang in tmil_langs [
-              #text(size: 24pt, weight: 400)[#item_line(lang)]
-              #if lang != tmil_langs.last() [
-                #v(0.7em)
-              ]
-            ]
-            #v(0.7em)
-            #entry.body
-          ],
-          align(center + horizon)[
-            #image(entry.photo, width: 92%)
-          ],
-        )
+        #entry.body
       ]
+    ] else [
+      #grid(
+        columns: (1fr, 1fr),
+        gutter: 32pt,
+        align(left + horizon)[
+          #for lang in tmil_langs [
+            #text(size: 24pt, weight: 400)[#item_line(lang)]
+            #if lang != tmil_langs.last() [
+              #v(0.7em)
+            ]
+          ]
+        ],
+        align(center + horizon)[
+          #image(entry.photo, width: 92%)
+        ],
+      )
     ]
   ]
 }
@@ -112,8 +124,8 @@
   sections,
   title: tmil_tr(
     "This Month in Lince",
-    "Este Mes na Lince",
-    "本月在林斯",
+    "Este Mês na Lince",
+    "本月在 Lince",
   ),
   closing: tmil_tr(
     "See you next month!",
@@ -136,10 +148,13 @@
   )
   #set heading(numbering: none)
 
-  = #for lang in tmil_langs {
-    tmil_text(title, lang: lang)
-    if lang != tmil_langs.last() { " | " }
-  } | #month_label
+  #let title_line = (
+    tmil_langs.map(lang => tmil_text(title, lang: lang)).join(" | ")
+  )
+  = #image("media/logo/white.svg", width: 18%) \
+  #text(size: 27pt, weight: "bold")[#title_line] \
+  #text(size: 32pt, weight: 700)[#month_label]
+
 
   #for block in sections [
     ==
@@ -180,8 +195,8 @@
   sections,
   title: tmil_tr(
     "This Month in Lince",
-    "Este Mes na Lince",
-    "本月在林斯",
+    "Este Mês na Lince",
+    "本月在 Lince",
   ),
   multiline: true,
 ) = [
@@ -215,9 +230,11 @@
         let subtitle = tmil_text(entry.subtitle, lang: lang)
         if subtitle == "" { title } else { title + ": " + subtitle }
       })
-      === #join_lines(lines)
-
-      #linebreak()
+      #let has_heading = lines.any(line => line != "")
+      #if has_heading [
+        === #join_lines(lines)
+        #linebreak()
+      ]
 
       #if entry.photo != none [
         #image(entry.photo, width: 100%)
