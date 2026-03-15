@@ -2,7 +2,9 @@ use crate::{html::page, i18n::Translations};
 use maud::{PreEscaped, html};
 use std::{
     collections::HashMap,
+    collections::hash_map::DefaultHasher,
     fs,
+    hash::{Hash, Hasher},
     path::{Path, PathBuf},
     process::Command,
 };
@@ -46,32 +48,16 @@ pub fn compile_blog_body(source_path: &str) -> String {
 fn generate_svg_sidecar(stem: &str, source_path: &Path) -> Option<String> {
     let sidecar_dir = Path::new("output/assets/blog/.cache");
     let _ = fs::create_dir_all(sidecar_dir);
-    let sidecar_path = format!("output/assets/blog/.cache/{stem}.svg");
+    let fingerprint = blog_sidecar_fingerprint(source_path)?;
+    let sidecar_path = format!("output/assets/blog/.cache/{stem}-{fingerprint:016x}.svg");
     let sidecar = Path::new(&sidecar_path);
-    let components = Path::new("content/blog/components.typ");
-    let tmil = Path::new("content/blog/tmil.typ");
-
-    let sidecar_mtime = fs::metadata(sidecar).and_then(|m| m.modified()).ok();
-    let source_mtime = fs::metadata(source_path).and_then(|m| m.modified()).ok();
-    let components_mtime = fs::metadata(components).and_then(|m| m.modified()).ok();
-    let tmil_mtime = fs::metadata(tmil).and_then(|m| m.modified()).ok();
-
-    let needs_regen = match sidecar_mtime {
-        None => true,
-        Some(sidecar_time) => {
-            let source_newer = source_mtime.map(|t| t > sidecar_time).unwrap_or(false);
-            let components_newer = components_mtime.map(|t| t > sidecar_time).unwrap_or(false);
-            let tmil_newer = tmil_mtime.map(|t| t > sidecar_time).unwrap_or(false);
-            source_newer || components_newer || tmil_newer
-        }
-    };
 
     let valid_cached_sidecar = fs::read_to_string(sidecar)
         .ok()
         .map(|s| s.contains("<svg class=\"typst-doc\""))
         .unwrap_or(false);
 
-    if !needs_regen && valid_cached_sidecar {
+    if valid_cached_sidecar {
         return Some(sidecar_path);
     }
 
@@ -91,6 +77,17 @@ fn generate_svg_sidecar(stem: &str, source_path: &Path) -> Option<String> {
     }
 
     Some(sidecar_path)
+}
+
+fn blog_sidecar_fingerprint(source_path: &Path) -> Option<u64> {
+    let mut hasher = DefaultHasher::new();
+    source_path.to_string_lossy().hash(&mut hasher);
+    fs::read(source_path).ok()?.hash(&mut hasher);
+    fs::read("content/blog/components.typ")
+        .ok()?
+        .hash(&mut hasher);
+    fs::read("content/blog/tmil.typ").ok()?.hash(&mut hasher);
+    Some(hasher.finish())
 }
 
 fn extract_first_block(input: &str, start_marker: &str, end_marker: &str) -> Option<String> {
@@ -923,6 +920,30 @@ mod tests {
                 Path::new(&output).exists(),
                 "Missing generated blog output file for slug {slug}: {output}"
             );
+        }
+    }
+
+    #[test]
+    fn generated_blog_outputs_are_unique_per_slug() {
+        let posts = get_blog_posts();
+        assert!(!posts.is_empty(), "Expected posts for uniqueness check");
+
+        let mut rendered = Vec::new();
+        for (slug, _title, _date) in posts {
+            let output = format!("output/blog/{slug}.html");
+            let body = std::fs::read_to_string(&output)
+                .unwrap_or_else(|e| panic!("Failed to read generated output {output}: {e}"));
+            rendered.push((slug, body));
+        }
+
+        for i in 0..rendered.len() {
+            for j in (i + 1)..rendered.len() {
+                assert_ne!(
+                    rendered[i].1, rendered[j].1,
+                    "Generated blog outputs are identical for {} and {}",
+                    rendered[i].0, rendered[j].0
+                );
+            }
         }
     }
 
