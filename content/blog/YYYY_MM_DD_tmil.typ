@@ -18,16 +18,11 @@
 #let growth_items = (
   tmil_item(
     tmil_tr(
-      "Title",
-      "Titulo",
-      "标题",
+      ("Title", "Optional subtitle"),
+      ("Titulo", "Subtitulo opcional"),
+      ("标题", "可选副标题"),
     ),
-    subtitle: tmil_tr(
-      "Optional subtitle",
-      "Subtitulo opcional",
-      "可选副标题",
-    ),
-    photo: "media/logo/white_in_black.png",
+    photo: "logo/white_in_black.png",
   )[
     Normal Typst body.
   ],
@@ -35,7 +30,11 @@
 
 #let programming_items = (
   tmil_item(
-    tmil_tr("Another item", "Outro item", "另一个项目"),
+    tmil_tr(
+      ("Another item", ""),
+      ("Outro item", ""),
+      ("另一个项目", ""),
+    ),
   )[
     More details in normal Typst.
   ],
@@ -43,9 +42,9 @@
 
 #let roadmap_items = (
   tmil_item(
-    "",
+    ("", ""),
   )[
-    - [/] v1.0.0: Todo \
+    - [/] v1.0.0: Dogfooding \
       Rewrite of Frontend in GPUI
       - [/] Todo
         - [/] Table

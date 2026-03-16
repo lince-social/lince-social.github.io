@@ -14,23 +14,32 @@
 
 #let growth_items = (
   tmil_item(
-    tmil_tr("New Logo", "Novo Logo", "新标志"),
-    subtitle: tmil_tr("Made by Nica", "Feito pela Nica", "由 Nica 设计"),
-    photo: "media/logo/white_in_black.png",
+    tmil_tr(
+      ("New Logo", "Made by Nica"),
+      ("Novo Logo", "Feito pela Nica"),
+      ("新标志", "由 Nica 设计"),
+    ),
+    photo: "logo/white_in_black.png",
   )[
     Look at it!
   ],
   tmil_item(
-    tmil_tr("Website", "Website", "网站"),
-    subtitle: tmil_tr("lince.social", "lince.social", "lince.social"),
-    photo: "media/random/website1.jpg",
+    tmil_tr(
+      ("Website", "lince.social"),
+      ("Website", "lince.social"),
+      ("网站", "lince.social"),
+    ),
+    photo: "random/website1.jpg",
   )[
     We started this website. Simple, central point for buncha links with some description.
   ],
   tmil_item(
-    tmil_tr("Prototyping", "Prototipagem", "原型设计"),
-    subtitle: tmil_tr("Wireframes", "Wireframes", "线框图"),
-    photo: "media/planning/wireframing.png",
+    tmil_tr(
+      ("Prototyping", "Wireframes"),
+      ("Prototipagem", "Wireframes"),
+      ("原型设计", "线框图"),
+    ),
+    photo: "planning/wireframing.png",
   )[
     Spent some time wireframing, we externalized some ideas before coding. Mainly around Tables, some for the P2P connection between nodes.
   ],
@@ -38,40 +47,47 @@
 
 #let programming_items = (
   tmil_item(
-    tmil_tr("Views", "Views", "视图"),
-    subtitle: tmil_tr(
-      "Creation Modal with Autocomplete",
-      "Modal de criação com autocomplete",
-      "带自动补全的创建模态框",
+    tmil_tr(
+      ("Views", "Creation Modal with Autocomplete"),
+      ("Views", "Modal de criação com autocomplete"),
+      ("视图", "带自动补全的创建模态框"),
     ),
   )[
     When I'm creating data in any table, that component has autocomplete. It can be a modal or a View in my content area.
   ],
   tmil_item(
-    tmil_tr("Table", "Table", "表格"),
-    subtitle: tmil_tr(
-      "Editable Cell: Modal or not",
-      "Célula editável: Modal ou não",
-      "可编辑单元格：使用或不使用模态框",
+    tmil_tr(
+      ("Table", "Editable Cell: Modal or not"),
+      ("Table", "Célula editável: Modal ou não"),
+      ("表格", "可编辑单元格：使用或不使用模态框"),
     ),
   )[
     Tables can have editable cells that can be edited either in a modal throgh an icon, or directly in the table.
   ],
   tmil_item(
-    tmil_tr("Vim mode", "Modo Vim", "Vim 模式"),
-    subtitle: tmil_tr("Vim mode", "Modo Vim", "Vim 模式"),
+    tmil_tr(
+      ("Vim mode", "Vim mode"),
+      ("Modo Vim", "Modo Vim"),
+      ("Vim 模式", "Vim 模式"),
+    ),
   )[
     For the Operation input and the Editable Cells the user can set Vim mode through the Configuration.
   ],
   tmil_item(
-    tmil_tr("Views", "Views", "视图"),
-    subtitle: tmil_tr("Pin/Unpin", "Fixar/Desafixar", "固定/取消固定"),
+    tmil_tr(
+      ("Views", "Pin/Unpin"),
+      ("Views", "Fixar/Desafixar"),
+      ("视图", "固定/取消固定"),
+    ),
   )[
     The user is able to pin or unpin views, keeping them fixed at a position on the screen on top of other components; independently of the active Collection.
   ],
   tmil_item(
-    tmil_tr("Views", "Views", "视图"),
-    subtitle: tmil_tr("Command Buffer", "Command Buffer", "命令缓冲区"),
+    tmil_tr(
+      ("Views", "Command Buffer"),
+      ("Views", "Command Buffer"),
+      ("视图", "命令缓冲区"),
+    ),
   )[
     Then running Commands, one can see their output/errors and be able to interact with them (mpv).
   ],
@@ -79,7 +95,7 @@
 
 #let roadmap_items = (
   tmil_item(
-    "",
+    ("", ""),
   )[
     - [/] v1.0.0: Todo \
       Rewrite of Frontend in GPUI

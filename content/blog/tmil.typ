@@ -45,12 +45,37 @@
   }
 }
 
-#let tmil_item(title, subtitle: "", photo: none, body) = (
-  title: title,
-  subtitle: subtitle,
+#let tmil_item(heading, photo: none, body) = (
+  heading: heading,
   photo: photo,
   body: body,
 )
+
+#let tmil_photo_path(photo) = {
+  if type(photo) == str and not photo.starts-with("media/") {
+    "media/" + photo
+  } else {
+    photo
+  }
+}
+
+#let tmil_item_title(heading, lang: "en") = {
+  let value = tmil_text(heading, lang: lang)
+  if type(value) == array and value.len() >= 1 {
+    value.at(0)
+  } else {
+    value
+  }
+}
+
+#let tmil_item_subtitle(heading, lang: "en") = {
+  let value = tmil_text(heading, lang: lang)
+  if type(value) == array and value.len() >= 2 {
+    value.at(1)
+  } else {
+    ""
+  }
+}
 
 #let tmil_section_name(name) = {
   if type(name) != str {
@@ -74,14 +99,14 @@
 
 #let render_item_slide(entry) = {
   let has_heading = tmil_langs.any(lang => {
-    let title = tmil_text(entry.title, lang: lang)
-    let subtitle = tmil_text(entry.subtitle, lang: lang)
+    let title = tmil_item_title(entry.heading, lang: lang)
+    let subtitle = tmil_item_subtitle(entry.heading, lang: lang)
     title != "" or subtitle != ""
   })
 
   let item_line = lang => {
-    let title = tmil_text(entry.title, lang: lang)
-    let subtitle = tmil_text(entry.subtitle, lang: lang)
+    let title = tmil_item_title(entry.heading, lang: lang)
+    let subtitle = tmil_item_subtitle(entry.heading, lang: lang)
     if subtitle == "" { title } else { title + ": " + subtitle }
   }
 
@@ -112,7 +137,7 @@
           ]
         ],
         align(center + horizon)[
-          #image(entry.photo, width: 92%)
+          #image(tmil_photo_path(entry.photo), width: 92%)
         ],
       )
     ]
@@ -216,8 +241,6 @@
       tmil_langs.map(lang => tmil_text(block.name, lang: lang)).join(" | ")
     )
 
-    // #mline(1)
-
     #align(center + horizon)[
       == #text(size: 24pt)[#area_line]
     ]
@@ -226,8 +249,8 @@
 
     #for entry in block.items [
       #let lines = tmil_langs.map(lang => {
-        let title = tmil_text(entry.title, lang: lang)
-        let subtitle = tmil_text(entry.subtitle, lang: lang)
+        let title = tmil_item_title(entry.heading, lang: lang)
+        let subtitle = tmil_item_subtitle(entry.heading, lang: lang)
         if subtitle == "" { title } else { title + ": " + subtitle }
       })
       #let has_heading = lines.any(line => line != "")
@@ -237,7 +260,9 @@
       ]
 
       #if entry.photo != none [
-        #image(entry.photo, width: 100%)
+        #align(center + horizon)[
+          #image(tmil_photo_path(entry.photo), width: 72%)
+        ]
       ]
 
       #entry.body

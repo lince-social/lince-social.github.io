@@ -15,27 +15,30 @@
 #let growth_items = (
   tmil_item(
     tmil_tr(
-      "Lince Institute in Brazil",
-      "Instituto Lince no Brasil",
-      "巴西 Lince 研究所",
+      (
+        "Lince Institute in Brazil",
+        "Draft of Institute regiment (Estatuto Social) + In touch with help to create it",
+      ),
+      (
+        "Instituto Lince no Brasil",
+        "Rascunho do Estatuto Social + Em contato com ajuda para criar",
+      ),
+      (
+        "巴西 Lince 研究所",
+        "章程草案（Estatuto Social）+ 正在联系协助创建",
+      ),
     ),
-    subtitle: tmil_tr(
-      "Draft of Institute regiment (Estatuto Social) + In touch with help to create it",
-      "Rascunho do Estatuto Social + Em contato com ajuda para criar",
-      "章程草案（Estatuto Social）+ 正在联系协助创建",
-    ),
-    photo: "media/random/institute_depenency.jpg",
+    photo: "random/institute_depenency.jpg",
   )[
     The creation of the Lince Institute, a non-profit organization in Brazil, will wait. The cost is high to justify right now. The documents are being prepared and the organization to help create it has been contacted very thoroughly.
   ],
   tmil_item(
-    tmil_tr("Social Media Posts", "Posts de redes sociais", "社交媒体帖子"),
-    subtitle: tmil_tr(
-      "Draft, in Typst -> PNG",
-      "Rascunho, em Typst -> PNG",
-      "草稿，Typst -> PNG",
+    tmil_tr(
+      ("Social Media Posts", "Draft, in Typst -> PNG"),
+      ("Posts de redes sociais", "Rascunho, em Typst -> PNG"),
+      ("社交媒体帖子", "草稿，Typst -> PNG"),
     ),
-    photo: "media/random/social_media_posts.jpg",
+    photo: "random/social_media_posts.jpg",
   )[
     An experiment was concluded to test if it was possible to create social media posts using Typst. The result was a process of writting something in english, then with an ai translation into portuguese and mandarin all the images where created.
 
@@ -46,28 +49,24 @@
 #let programming_items = (
   tmil_item(
     tmil_tr(
-      "Playing around, bugging out",
-      "Brincando e encontrando bugs",
-      "尝试中，发现 bug",
-    ),
-    subtitle: tmil_tr(
-      "Exploration with manual input",
-      "Exploracao com entrada manual",
-      "使用手动输入进行探索",
+      ("Playing around, bugging out", "Exploration with manual input"),
+      ("Brincando e encontrando bugs", "Exploracao com entrada manual"),
+      ("尝试中，发现 bug", "使用手动输入进行探索"),
     ),
   )[
     Created a simple input field to send operations.
   ],
   tmil_item(
     tmil_tr(
-      "Playing around, bugging out",
-      "Brincando e encontrando bugs",
-      "尝试中，发现 bug",
-    ),
-    subtitle: tmil_tr(
-      "Small bugs (Toggle View now updating data)",
-      "Bugs pequenos (Toggle View agora atualiza os dados)",
-      "小问题（Toggle View 现在会更新数据）",
+      (
+        "Playing around, bugging out",
+        "Small bugs (Toggle View now updating data)",
+      ),
+      (
+        "Brincando e encontrando bugs",
+        "Bugs pequenos (Toggle View agora atualiza os dados)",
+      ),
+      ("尝试中，发现 bug", "小问题（Toggle View 现在会更新数据）"),
     ),
   )[
     Solved some bugs, namely the View change not updating main content.
@@ -76,7 +75,7 @@
 
 #let roadmap_items = (
   tmil_item(
-    "",
+    ("", ""),
   )[
     - [/] v1.0.0: Todo \
       Rewrite of Frontend in GPUI

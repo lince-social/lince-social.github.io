@@ -14,35 +14,32 @@
 
 #let growth_items = (
   tmil_item(
-    tmil_tr("Planning", "Planejamento", "规划"),
-    subtitle: tmil_tr(
-      "Roadmap for the v1.0.0",
-      "Roteiro para a v1.0.0",
-      "v1.0.0 路线图",
+    tmil_tr(
+      ("Planning", "Roadmap for the v1.0.0"),
+      ("Planejamento", "Roteiro para a v1.0.0"),
+      ("规划", "v1.0.0 路线图"),
     ),
-    photo: "media/planning/2025_12.jpg",
+    photo: "planning/2025_12.jpg",
   )[
     We decided on the roadmap for the v1.0.0.
   ],
   tmil_item(
-    tmil_tr("LinceCon", "LinceCon", "LinceCon"),
-    subtitle: tmil_tr(
-      "2025 Edition. online",
-      "Edicao 2025. online",
-      "2025 版，线上",
+    tmil_tr(
+      ("LinceCon", "2025 Edition. online"),
+      ("LinceCon", "Edicao 2025. online"),
+      ("LinceCon", "2025 版，线上"),
     ),
-    photo: "media/lincecon/2025/full.jpg",
+    photo: "lincecon/2025/full.jpg",
   )[
     The first LinceCon, we talked about ideas, goals and plans for 2026.
   ],
   tmil_item(
-    tmil_tr("This Month in Lince", "Este Mês na Lince", "本月在 Lince"),
-    subtitle: tmil_tr(
-      "Starting with month 2025-12",
-      "Comecando no mes 2025-12",
-      "从 2025-12 月开始",
+    tmil_tr(
+      ("This Month in Lince", "Starting with month 2025-12"),
+      ("Este Mês na Lince", "Comecando no mes 2025-12"),
+      ("本月在 Lince", "从 2025-12 月开始"),
     ),
-    photo: "media/random/tmil.jpg",
+    photo: "random/tmil.jpg",
   )[
     Started doing the This Month In Lince monthly videos.
   ],
@@ -50,8 +47,11 @@
 
 #let programming_items = (
   tmil_item(
-    tmil_tr("Everything", "Tudo", "全部内容"),
-    subtitle: tmil_tr("Demo Time", "Hora da Demo", "演示时间"),
+    tmil_tr(
+      ("Everything", "Demo Time"),
+      ("Tudo", "Hora da Demo"),
+      ("全部内容", "演示时间"),
+    ),
   )[
     Shortest demo, the application appears in video. Showcased the HTML (Datastar) deprecated version and the GPUI next version.
   ],
@@ -59,7 +59,7 @@
 
 #let roadmap_items = (
   tmil_item(
-    "",
+    ("", ""),
   )[
     - [/] v1.0.0: Todo \
       Rewrite of Frontend in GPUI

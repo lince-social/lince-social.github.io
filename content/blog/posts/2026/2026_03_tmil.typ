@@ -14,17 +14,12 @@
 
 #let growth_items = (
   tmil_item(
+    photo: "random/blog_init.png",
     tmil_tr(
-      "Blog",
-      "Titulo",
-      "标题",
+      ("Blog", "This Month In Lince + anything that comes to mind"),
+      ("Titulo", "Subtitulo opcional"),
+      ("标题", "可选副标题"),
     ),
-    subtitle: tmil_tr(
-      "This Month In Lince + anything that comes to mind",
-      "Subtitulo opcional",
-      "可选副标题",
-    ),
-    photo: "media/random/blog_init.png",
   )[
     Started the blog, currently only hosting the This Month In Lince Blogpost version. Speaking of which, the TMIL is now fully in Typst, no AI to create it based on an .md file, just used for translation.
   ],
@@ -32,17 +27,33 @@
 
 #let programming_items = (
   tmil_item(
-    tmil_tr("Another item", "Outro item", "另一个项目"),
+    photo: "random/tui_init.png",
+    tmil_tr(
+      ("TUI with Ratatui", "Basic CRUD done"),
+      ("Outro item", ""),
+      ("另一个项目", ""),
+    ),
   )[
-    More details in normal Typst.
+  ],
+  tmil_item(
+    photo: "random/web_return.png",
+    tmil_tr(
+      ("Web's Return", "I am inevitable"),
+      ("Outro item", ""),
+      ("另一个项目", ""),
+    ),
+  )[
+    Before we had an HTML version using Datastar for frontend/backend reactivity. After the start of the development of the GPUI version we deprecated it, for it wasn't in the plan to maintain it.
+
+    But, considering the fact that HTML is really easy to build and join together we decided to keep it to create extensions easily and fit various user's needs. We plan on creating a system of connectors that will deliver data and allow for the creation of UI with user or AI built Views that receive that data.
   ],
 )
 
 #let roadmap_items = (
   tmil_item(
-    "",
+    ("", ""),
   )[
-    - [/] v1.0.0: Todo \
+    - [/] v1.0.0: Dogfooding \
       Rewrite of Frontend in GPUI
       - [/] Todo
         - [/] Table
