@@ -48,7 +48,7 @@
       Rewrite of Frontend in GPUI
       - [/] Todo
         - [/] Table
-        - [ ] Kanban
+        - [/] Kanban
         - [ ] Calendar
           - [ ] Shows Records changing with Karma. If they have a time cost, it occupies time from the calendar.
       - [ ] Finance

@@ -128,14 +128,13 @@ fn extract_balanced_svg(input: &str, start: usize) -> Option<String> {
 }
 
 fn extract_typst_doc_svg(input: &str) -> Option<String> {
-    if let Some(app_start) = input.find("<div id=\"typst-app\"") {
-        if let Some(svg_rel_start) = input[app_start..].find("<svg") {
+    if let Some(app_start) = input.find("<div id=\"typst-app\"")
+        && let Some(svg_rel_start) = input[app_start..].find("<svg") {
             let svg_start = app_start + svg_rel_start;
             if let Some(svg) = extract_balanced_svg(input, svg_start) {
                 return Some(svg);
             }
         }
-    }
 
     // Support static Tinymist HTML exports where the document SVG is emitted directly.
     if let Some(svg_start) = input.find("<svg class=\"typst-doc\"") {

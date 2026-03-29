@@ -23,9 +23,34 @@
   )[
     Started the blog, currently only hosting the This Month In Lince Blogpost version. Speaking of which, the TMIL is now fully in Typst, no AI to create it based on an .md file, just used for translation.
   ],
+  tmil_item(
+    photo: "random/visual_identity_wow.png",
+    tmil_tr(
+      ("Visual Identity Wooow", "Amazing Wooow"),
+      ("Identidade Visual Uaaau", "Incrível Uaaau"),
+      ("标题", "可选副标题"),
+    ),
+  )[
+    The visual identity turned into something leagues above what we had before. It got a huge boost, and now is a whole brand, designed with an official colorscheme, typography and text+logo visualizers.
+  ],
 )
 
 #let programming_items = (
+  tmil_item(photo: "random/ecosystem.png", tmil_tr(
+    ("Ecosystem Commit", "Maintenance of three interfaces"),
+    ("Comprometimento de Ecosistema", "Manutenção de três interfaces"),
+    ("chinese here", "here too"),
+  ))[
+    For the ecosystem, we believe that simultaneously there will be three frontends being maintained at the same time.
+
+    The TUI version is lightweight. A wrapper around the db.
+
+    The web version will be carried by the versatility of HTML. If the user wants a component Lince didnt provide, they will have a marketplace of extensions and ease of access to a development kit of their own components, writing code by hand or with the help of agents.
+
+    The final client will be go beyond what the most twised and pulled HTML can do. That will be Lince's endgame for client-side, probably a desktop GUI, currently using Zed's GPUI. Rendering should have access to the GPU and the feel should be of controlling an alien spaceship if you are an alien with a lot of flight experience.
+
+    The backend should allow for conversation between many clients. If you are using locally one web and one GUI version, they should be able to access the data in the way they can without breaking each other's workflow. If two people using different clients trade Records they will not be stopped by the difference of their interfaces.
+  ],
   tmil_item(
     photo: "random/tui_init.png",
     tmil_tr(
@@ -34,18 +59,19 @@
       ("另一个项目", ""),
     ),
   )[
+    The init of the TUI version counts with basic features aimed at doing a tutorial, called First Steps.
   ],
   tmil_item(
     photo: "random/web_return.png",
     tmil_tr(
-      ("Web's Return", "I am inevitable"),
-      ("Outro item", ""),
+      ("HTML's Return", "I am inevitable"),
+      ("O Retorno do HTML", "Eu sou inevitável"),
       ("另一个项目", ""),
     ),
   )[
     Before we had an HTML version using Datastar for frontend/backend reactivity. After the start of the development of the GPUI version we deprecated it, for it wasn't in the plan to maintain it.
 
-    But, considering the fact that HTML is really easy to build and join together we decided to keep it to create extensions easily and fit various user's needs. We plan on creating a system of connectors that will deliver data and allow for the creation of UI with user or AI built Views that receive that data.
+    But, considering the fact that HTML is really easy to build and join together we decided to keep it to create extensions easily and fit various user's needs. We plan on creating a system of connectors that will deliver data to a Sandbox and allow for the creation of UI with custom components (Views) that receive that data.
   ],
 )
 
@@ -57,7 +83,7 @@
       Rewrite of Frontend in GPUI
       - [/] Todo
         - [/] Table
-        - [ ] Kanban
+        - [/] Kanban
         - [ ] Calendar
           - [ ] Shows Records changing with Karma. If they have a time cost, it occupies time from the calendar.
       - [ ] Finance
