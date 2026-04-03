@@ -1,6 +1,14 @@
 use std::collections::HashMap;
 
 pub const YOUTUBE_URL: &str = "https://www.youtube.com/@lince.social";
+pub const GITHUB_LATEST_RELEASE_URL: &str = "https://github.com/lince-social/lince/releases/latest";
+pub const FIRST_STEPS_URL: &str = "https://raw.githubusercontent.com/lince-social/lince/main/documentation/first_steps/first_steps-dark.pdf";
+pub const INSTINTO_URL: &str = "https://raw.githubusercontent.com/lince-social/lince/main/documentation/technical/lince-documentation-dark.pdf";
+pub const LATEST_LINUX_DOWNLOAD_URL: &str =
+    "https://github.com/lince-social/lince/releases/latest/download/lince-x86_64-unknown-linux-gnu";
+pub const LATEST_MACOS_DOWNLOAD_URL: &str =
+    "https://github.com/lince-social/lince/releases/latest/download/lince-aarch64-apple-darwin";
+pub const LATEST_WINDOWS_DOWNLOAD_URL: &str = "https://github.com/lince-social/lince/releases/latest/download/lince-x86_64-pc-windows-msvc.exe";
 
 /// Image configuration for content blocks
 #[derive(Clone, Default)]
@@ -98,7 +106,14 @@ pub struct Translations {
     pub hero_tagline: &'static str,
     pub hero_title: &'static str,
     pub hero_subtitle: &'static str,
-    pub hero_buttons: Vec<LinkItem>,
+    pub hero_install_label: &'static str,
+    pub hero_install_copy: &'static str,
+    pub hero_install_copied: &'static str,
+    pub hero_install_or: &'static str,
+    pub hero_linux_executable: &'static str,
+    pub hero_macos_executable: &'static str,
+    pub hero_windows_executable: &'static str,
+    pub hero_doc_buttons: Vec<LinkItem>,
 
     // Index Page - Quick Links
     // quick_links removed - merged into `footer_sections` as a LinkGroup
@@ -137,9 +152,16 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
         hero_tagline: "Open Source • Non-Profit • Local First • Data-Powered",
         hero_title: "Lince",
         hero_subtitle: "A tool for registry, interconnection, and automation of Needs and Contributions with open scope",
-        hero_buttons: vec![
-            LinkItem::with_class("https://github.com/lince-social/lince/releases", "Download", "btn btn-primary"),
-            LinkItem::with_class("https://raw.githubusercontent.com/lince-social/lince/dev/documentation/lince-documentation-dark.pdf", "Documentation", "btn btn-secondary"),
+        hero_install_label: "Install:",
+        hero_install_copy: "Copy",
+        hero_install_copied: "Copied",
+        hero_install_or: "or download the",
+        hero_linux_executable: "Linux executable",
+        hero_macos_executable: "macOS executable",
+        hero_windows_executable: "Windows executable",
+        hero_doc_buttons: vec![
+            LinkItem::with_class(FIRST_STEPS_URL, "Beginner's Guide", "btn btn-primary"),
+            LinkItem::with_class(INSTINTO_URL, "Documentation", "btn btn-secondary"),
         ],
 
         // Index Page - Main Content
@@ -196,8 +218,8 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
                 title: "Resources",
                 links: vec![
                     LinkItem::new("https://github.com/lince-social/lince", "Lince Source"),
-                    LinkItem::new("https://raw.githubusercontent.com/lince-social/lince/dev/documentation/lince-documentation-dark.pdf", "Documentation"),
-                    LinkItem::new("https://github.com/lince-social/lince/releases", "Downloads"),
+                    LinkItem::new(INSTINTO_URL, "Documentation"),
+                    LinkItem::new(GITHUB_LATEST_RELEASE_URL, "Downloads"),
                     LinkItem::new("visual-identity.html", "Visual Identity"),
                     LinkItem::new("https://github.com/lince-social/lince-social.github.io", "Website Source"),
                 ],
@@ -246,9 +268,16 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
         hero_tagline: "Código Aberto • Sem Fins Lucrativos • Local First • Impulsionado por Dados",
         hero_title: "Lince",
         hero_subtitle: "Uma ferramenta para registro, interconexão e automação de Necessidades e Contribuições com escopo aberto",
-        hero_buttons: vec![
-            LinkItem::with_class("https://github.com/lince-social/lince/releases", "Baixar", "btn btn-primary"),
-            LinkItem::with_class("https://raw.githubusercontent.com/lince-social/lince/dev/documentation/lince-documentation-dark.pdf", "Documentação", "btn btn-secondary"),
+        hero_install_label: "Instale com:",
+        hero_install_copy: "Copiar",
+        hero_install_copied: "Copiado",
+        hero_install_or: "ou baixe o",
+        hero_linux_executable: "executável para Linux",
+        hero_macos_executable: "executável para macOS",
+        hero_windows_executable: "executável para Windows",
+        hero_doc_buttons: vec![
+            LinkItem::with_class(FIRST_STEPS_URL, "Primeiros Passos: Guia para Iniciantes", "btn btn-primary"),
+            LinkItem::with_class(INSTINTO_URL, "Instinto: Documentação Técnica", "btn btn-secondary"),
         ],
 
         // Index Page - Main Content
@@ -304,8 +333,8 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
                 title: "Recursos",
                 links: vec![
                     LinkItem::new("https://github.com/lince-social/lince", "Código Fonte"),
-                    LinkItem::new("https://raw.githubusercontent.com/lince-social/lince/dev/documentation/lince-documentation-dark.pdf", "Documentação"),
-                    LinkItem::new("https://github.com/lince-social/lince/releases", "Downloads"),
+                    LinkItem::new(INSTINTO_URL, "Documentação"),
+                    LinkItem::new(GITHUB_LATEST_RELEASE_URL, "Downloads"),
                     LinkItem::new("visual-identity.pt-br.html", "Identidade Visual"),
                     LinkItem::new("https://github.com/lince-social/lince-social.github.io", "Código do Site"),
                 ],
@@ -355,9 +384,16 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
         hero_tagline: "开源 • 非营利 • 本地优先 • 数据驱动",
         hero_title: "Lince",
         hero_subtitle: "用于需求与贡献的登记、互联和自动化的工具，开放范围",
-        hero_buttons: vec![
-            LinkItem::with_class("https://github.com/lince-social/lince/releases", "下载", "btn btn-primary"),
-            LinkItem::with_class("https://raw.githubusercontent.com/lince-social/lince/dev/documentation/lince-documentation-dark.pdf", "文档", "btn btn-secondary"),
+        hero_install_label: "安装命令：",
+        hero_install_copy: "复制",
+        hero_install_copied: "已复制",
+        hero_install_or: "或下载",
+        hero_linux_executable: "Linux 可执行文件",
+        hero_macos_executable: "macOS 可执行文件",
+        hero_windows_executable: "Windows 可执行文件",
+        hero_doc_buttons: vec![
+            LinkItem::with_class(FIRST_STEPS_URL, "First Steps：新手指南", "btn btn-primary"),
+            LinkItem::with_class(INSTINTO_URL, "Instinto：技术文档", "btn btn-secondary"),
         ],
 
         // Index Page - Main Content
@@ -413,8 +449,8 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
                 title: "资源",
                 links: vec![
                     LinkItem::new("https://github.com/lince-social/lince", "源代码"),
-                    LinkItem::new("https://raw.githubusercontent.com/lince-social/lince/dev/documentation/lince-documentation-dark.pdf", "文档"),
-                    LinkItem::new("https://github.com/lince-social/lince/releases", "下载"),
+                    LinkItem::new(INSTINTO_URL, "文档"),
+                    LinkItem::new(GITHUB_LATEST_RELEASE_URL, "下载"),
                     LinkItem::new("visual-identity.zh.html", "视觉识别"),
                     LinkItem::new("https://github.com/lince-social/lince-social.github.io", "网站源码"),
                 ],

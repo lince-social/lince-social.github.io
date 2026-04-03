@@ -1,5 +1,5 @@
 use crate::config::INCLUDE_BLOG;
-use crate::i18n::{Translations, YOUTUBE_URL};
+use crate::i18n::{GITHUB_LATEST_RELEASE_URL, Translations, YOUTUBE_URL};
 use maud::{DOCTYPE, PreEscaped, html};
 
 fn lang_suffix(lang: &str) -> &str {
@@ -68,7 +68,7 @@ pub fn page(body: &str, t: &Translations, current_page: &str, show_home: bool) -
                                 }
                             }
                             li.desktop-only {
-                                a.navbar-item href="https://github.com/lince-social/lince/releases" {
+                                a.navbar-item href=(GITHUB_LATEST_RELEASE_URL) {
                                     (t.nav_download)
                                 }
                             }
@@ -121,6 +121,65 @@ pub fn page(body: &str, t: &Translations, current_page: &str, show_home: bool) -
                 }
                 script {
                     (PreEscaped(r#"
+                    function detectHeroDownloadOs() {
+                        const platform = (
+                            (navigator.userAgentData && navigator.userAgentData.platform) ||
+                            navigator.platform ||
+                            navigator.userAgent ||
+                            ""
+                        ).toLowerCase();
+
+                        if (platform.includes('mac')) return 'macos';
+                        if (platform.includes('win')) return 'windows';
+                        return 'linux';
+                    }
+                    function configureHeroDownloadLink() {
+                        const link = document.getElementById('hero-os-download');
+                        if (!link) return;
+                        const os = detectHeroDownloadOs();
+                        const href = link.dataset[os + 'Href'] || link.dataset.linuxHref;
+                        const text = link.dataset[os + 'Text'] || link.dataset.linuxText;
+                        link.href = href;
+                        link.textContent = text;
+                    }
+                    async function copyHeroInstall(button) {
+                        const row = button.closest('.hero-install-row');
+                        if (!row) return;
+                        const command = row.querySelector('.hero-install-command');
+                        if (!command) return;
+                        const text = command.dataset.copyText || command.querySelector('.hero-install-text')?.textContent?.trim() || '';
+                        if (!text) return;
+
+                        try {
+                            await navigator.clipboard.writeText(text);
+                        } catch (err) {
+                            const helper = document.createElement('textarea');
+                            helper.value = text;
+                            helper.setAttribute('readonly', '');
+                            helper.style.position = 'fixed';
+                            helper.style.opacity = '0';
+                            helper.style.pointerEvents = 'none';
+                            document.body.appendChild(helper);
+                            helper.focus();
+                            helper.select();
+                            document.execCommand('copy');
+                            document.body.removeChild(helper);
+                        }
+
+                        const defaultLabel = button.dataset.copyDefault || button.getAttribute('aria-label') || '';
+                        const successLabel = button.dataset.copySuccess || defaultLabel;
+                        button.setAttribute('aria-label', successLabel);
+                        row.classList.add('is-copied');
+                        window.setTimeout(() => {
+                            button.setAttribute('aria-label', defaultLabel);
+                            row.classList.remove('is-copied');
+                        }, 1000);
+                    }
+                    function copyHeroInstallFromCommand(command) {
+                        const button = command.querySelector('.hero-install-copy');
+                        if (!button) return;
+                        copyHeroInstall(button);
+                    }
                     function toggleTheme() {
                         const html = document.documentElement;
                         const current = html.getAttribute('data-theme');
@@ -133,6 +192,7 @@ pub fn page(body: &str, t: &Translations, current_page: &str, show_home: bool) -
                         if (saved) {
                             document.documentElement.setAttribute('data-theme', saved);
                         }
+                        configureHeroDownloadLink();
                     })();
                     function toggleLangDropdown() {
                         document.getElementById('langDropdown').classList.toggle('show');

@@ -405,6 +405,158 @@ img {
     line-height: 1.8;
 }
 
+.hero-button-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+
+.hero-install-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.hero-install-label,
+.hero-install-alt {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+.hero-install-alt {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.hero-install-command {
+    position: relative;
+    display: block;
+    width: min(100%, 31rem);
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
+    cursor: copy;
+}
+
+.hero-install-text {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    color: var(--color-text);
+    padding: 0.7rem 2.4rem 0.7rem 0.85rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    cursor: inherit;
+    text-align: left;
+    user-select: text;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.hero-install-text::-webkit-scrollbar {
+    display: none;
+}
+
+.hero-install-copy {
+    position: absolute;
+    top: 50%;
+    right: 0.6rem;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 0;
+    background: transparent;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    padding: 0;
+    transition: all var(--transition);
+}
+
+.hero-install-copy::after {
+    content: attr(data-copy-success);
+    position: absolute;
+    right: -0.15rem;
+    bottom: calc(100% + 0.4rem);
+    padding: 0.2rem 0.45rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-size: 0.7rem;
+    line-height: 1;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(0.2rem);
+    transition:
+        opacity var(--transition),
+        transform var(--transition);
+}
+
+.hero-install-copy:hover {
+    color: var(--color-text);
+}
+
+.hero-install-row.is-copied .hero-install-copy {
+    color: var(--color-text);
+}
+
+.hero-install-row.is-copied .hero-install-copy::after {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.copy-icon {
+    position: relative;
+    width: 0.95rem;
+    height: 0.95rem;
+}
+
+.copy-icon::before,
+.copy-icon::after {
+    content: "";
+    position: absolute;
+    width: 0.68rem;
+    height: 0.68rem;
+    border: 1px solid currentColor;
+    background: var(--color-bg);
+}
+
+.copy-icon::before {
+    top: 0;
+    left: 0.18rem;
+}
+
+.copy-icon::after {
+    top: 0.18rem;
+    left: 0;
+}
+
+.hero-install-row.is-copied .copy-icon::before {
+    width: 0.38rem;
+    height: 0.72rem;
+    top: 0.04rem;
+    left: 0.28rem;
+    border: 0;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    background: transparent;
+    transform: rotate(40deg);
+}
+
+.hero-install-row.is-copied .copy-icon::after {
+    display: none;
+}
+
+.hero-os-download {
+    white-space: nowrap;
+}
+
 .hero-buttons {
     display: flex;
     gap: 0.75rem;
@@ -1069,6 +1221,25 @@ pre code {
     .hero-buttons {
         flex-direction: column;
         align-items: stretch;
+    }
+
+    .hero-button-stack {
+        align-items: stretch;
+    }
+
+    .hero-install-row {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .hero-install-command {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .hero-install-alt {
+        justify-content: center;
+        flex-wrap: wrap;
     }
 
     .btn {

@@ -17,8 +17,8 @@
     photo: "random/blog_init.png",
     tmil_tr(
       ("Blog", "This Month In Lince + anything that comes to mind"),
-      ("Titulo", "Subtitulo opcional"),
-      ("标题", "可选副标题"),
+      ("Blog", "Este Mês na Lince + qualquer coisa que venha à mente"),
+      ("博客", "本月在 Lince + 任何想到的内容"),
     ),
   )[
     Started the blog, currently only hosting the This Month In Lince Blogpost version. Speaking of which, the TMIL is now fully in Typst, no AI to create it based on an .md file, just used for translation.
@@ -38,8 +38,8 @@
 #let programming_items = (
   tmil_item(photo: "random/ecosystem.png", tmil_tr(
     ("Ecosystem Commit", "Maintenance of three interfaces"),
-    ("Comprometimento de Ecosistema", "Manutenção de três interfaces"),
-    ("chinese here", "here too"),
+    ("Compromisso do Ecossistema", "Manutenção de três interfaces"),
+    ("生态系统承诺", "维护三个前端"),
   ))[
     For the ecosystem, we believe that simultaneously there will be three frontends being maintained at the same time.
 
@@ -55,8 +55,8 @@
     photo: "random/tui_init.png",
     tmil_tr(
       ("TUI with Ratatui", "Basic CRUD done"),
-      ("Outro item", ""),
-      ("另一个项目", ""),
+      ("TUI com Ratatui", "CRUD básico concluído"),
+      ("使用 Ratatui 的 TUI", "基础 CRUD 已完成"),
     ),
   )[
     The init of the TUI version, counts with basic features. Initially aimed at doing a tutorial, called First Steps. Now an interface that will be built in parallel with the current main one. It is for those that like efficiency and simplicity.
@@ -66,7 +66,7 @@
     tmil_tr(
       ("HTML's Return", "I am inevitable"),
       ("O Retorno do HTML", "Eu sou inevitável"),
-      ("另一个项目", ""),
+      ("HTML 的回归", "我是不可避免的"),
     ),
   )[
     Before we had an HTML version using Datastar for frontend/backend reactivity. After the start of the development of the GPUI version we deprecated it, for it wasn't in the plan to maintain it.
