@@ -169,17 +169,24 @@
   #set text(
     lang: "en",
     font: "New Computer Modern Math",
-    size: 20pt,
+    size: 29pt,
   )
   #set heading(numbering: none)
 
   #let title_line = (
     tmil_langs.map(lang => tmil_text(title, lang: lang)).join(" | ")
   )
-  = #image("media/logo/white.svg", width: 18%) \
-  #text(size: 27pt, weight: "bold")[#title_line] \
-  #text(size: 32pt, weight: 700)[#month_label]
+  #align(center + horizon)[
+    #image("media/logo/white.svg", width: 20%)
+    #title_line \
+    #month_label
+  ]
 
+  #set text(
+    lang: "en",
+    font: "New Computer Modern Math",
+    size: 20pt,
+  )
 
   #for block in sections [
     ==

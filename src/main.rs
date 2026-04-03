@@ -21,6 +21,9 @@ fn main() {
     if INCLUDE_BLOG {
         fs::create_dir_all("output/blog").expect("Failed to create output directory");
     }
+    fs::create_dir_all("output").expect("Failed to create output directory");
+    fs::write("output/install.sh", include_str!("../content/install.sh"))
+        .expect("Failed to write install.sh");
 
     for (lang_code, t) in &translations {
         let suffix = if lang_code == &"en" {

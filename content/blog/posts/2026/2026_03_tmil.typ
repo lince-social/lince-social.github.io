@@ -59,7 +59,7 @@
       ("另一个项目", ""),
     ),
   )[
-    The init of the TUI version counts with basic features aimed at doing a tutorial, called First Steps.
+    The init of the TUI version, counts with basic features. Initially aimed at doing a tutorial, called First Steps. Now an interface that will be built in parallel with the current main one. It is for those that like efficiency and simplicity.
   ],
   tmil_item(
     photo: "random/web_return.png",
@@ -71,7 +71,9 @@
   )[
     Before we had an HTML version using Datastar for frontend/backend reactivity. After the start of the development of the GPUI version we deprecated it, for it wasn't in the plan to maintain it.
 
-    But, considering the fact that HTML is really easy to build and join together we decided to keep it to create extensions easily and fit various user's needs. We plan on creating a system of connectors that will deliver data to a Sandbox and allow for the creation of UI with custom components (Views) that receive that data.
+    But, considering the fact that HTML is really easy to build and join together we decided to keep it to create extensions easily and fit various user's needs. We plan on creating a system of connectors that will deliver data to a Sandbox and allow for the creation of UI with custom components (Views) that receive that data. We want to make this the main interface until it can fit the overwhelmingly majority of user's needs. We want to give them freedom to create components (Sand) for their workflows.
+
+    After we have a lot of web resources, official and community ones, we can decide the best components to be ported to other less generic and easy interfaces; like a GPU accelerated desktop version of Lince for great rendering capabilities, or the terminal for minimalism.
   ],
 )
 
@@ -79,25 +81,22 @@
   tmil_item(
     ("", ""),
   )[
-    - [/] v1.0.0: Dogfooding \
-      Rewrite of Frontend in GPUI
+    - [/] v1.0.0: Dogfooding (Web HTML) \
       - [/] Todo
-        - [/] Table
-        - [/] Kanban
-        - [ ] Calendar
-          - [ ] Shows Records changing with Karma. If they have a time cost, it occupies time from the calendar.
+        - [ ] Table: The most basic viewing experience. From direct 1-to-1 matching of database data to combined sources into one columnn.
+        - [/] Kanban: Built for great vision of projects and tasks.
+        - [ ] Calendar: Shows Records changing with Karma. If they have a time cost, it occupies time from the calendar. Built with Deterministic Simulation Testing.
       - [ ] Finance
-        - [ ] Table
-        - [ ] Graph
-        - [ ] Calendar
-      - [ ] Connection
-        - [ ] CRUD of cells (your node) and organs (group of nodes).
+        - [ ] Graph with different assumptions and starting points: Karma changes Records in different ways to see scenarios with quantities in Y axis and time in X axis, or other viewing configurations.
+      - [/] Connection
+        - [x] CRUD of cells (your node) and organs (group of nodes).
         - [ ] Public/private rows for what organ (group of cells).
-        - [ ] Transaction of quantities between cells (nodes) in p2p network.
-    - [ ] v1.1.0: AI
-      - [ ] Be able to run an AI model to look at your DNA and change it to fit your needs.
-    - [ ] v1.2.0: Stock
-      - [ ] Screens to help with stock management for small to big companies.
+        - [/] Transaction of quantities between cells (nodes) in p2p network.
+    - [ ] AI: Be able to run an AI model to look at your DNA and change it to fit your needs.
+      - [ ] Creating components
+      - [ ] Suggesting Karma, or more Lince ways of doing things.
+    - [ ] Minor Version: Stock & Orders Management
+      - [ ] Interfaces to help with stock management and customer orders for small to big companies.
   ],
 )
 

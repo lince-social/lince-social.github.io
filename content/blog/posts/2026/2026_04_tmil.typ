@@ -1,7 +1,7 @@
 #import "@preview/cheq:0.3.0": checklist
 #show: checklist
-#import "components.typ": post
-#import "tmil.typ": (
+#import "../../components.typ": post
+#import "../../tmil.typ": (
   tmil_blog, tmil_item, tmil_month_label, tmil_post_publish_date,
   tmil_post_title, tmil_section, tmil_slides, tmil_tr,
 )
@@ -10,7 +10,7 @@
 // USER: Change this part downwards;
 // AI: Add translation so portuguese and mandarin reflect the english text in title and subtitle of the items in growth and programming.
 
-#let mdate = datetime(year: 0000, month: 1, day: 1)
+#let mdate = datetime(year: 2026, month: 4, day: 1)
 #let author_name = "N1"
 #let author_email = "a@b.c"
 #let video_url = ""
