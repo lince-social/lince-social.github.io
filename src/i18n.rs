@@ -2,8 +2,7 @@ use std::collections::HashMap;
 
 pub const YOUTUBE_URL: &str = "https://www.youtube.com/@lince.social";
 pub const GITHUB_LATEST_RELEASE_URL: &str = "https://github.com/lince-social/lince/releases/latest";
-pub const FIRST_STEPS_URL: &str = "https://raw.githubusercontent.com/lince-social/lince/main/documentation/first_steps/first_steps-dark.pdf";
-pub const INSTINTO_URL: &str = "https://raw.githubusercontent.com/lince-social/lince/main/documentation/technical/lince-documentation-dark.pdf";
+pub const INSTINTO_URL: &str = "https://raw.githubusercontent.com/lince-social/lince/main/documentation/lince-documentation-dark.pdf";
 pub const LATEST_LINUX_DOWNLOAD_URL: &str =
     "https://github.com/lince-social/lince/releases/latest/download/lince-x86_64-unknown-linux-gnu";
 pub const LATEST_MACOS_DOWNLOAD_URL: &str =
@@ -159,10 +158,11 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
         hero_linux_executable: "Linux executable",
         hero_macos_executable: "macOS executable",
         hero_windows_executable: "Windows executable",
-        hero_doc_buttons: vec![
-            LinkItem::with_class(FIRST_STEPS_URL, "Beginner's Guide", "btn btn-primary"),
-            LinkItem::with_class(INSTINTO_URL, "Documentation", "btn btn-secondary"),
-        ],
+        hero_doc_buttons: vec![LinkItem::with_class(
+            INSTINTO_URL,
+            "Documentation",
+            "btn btn-primary",
+        )],
 
         // Index Page - Main Content
         index_content: vec![
@@ -276,8 +276,7 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
         hero_macos_executable: "executável para macOS",
         hero_windows_executable: "executável para Windows",
         hero_doc_buttons: vec![
-            LinkItem::with_class(FIRST_STEPS_URL, "Primeiros Passos: Guia para Iniciantes", "btn btn-primary"),
-            LinkItem::with_class(INSTINTO_URL, "Instinto: Documentação Técnica", "btn btn-secondary"),
+            LinkItem::with_class(INSTINTO_URL, "Instinto: Documentação Técnica", "btn btn-primary"),
         ],
 
         // Index Page - Main Content
@@ -392,8 +391,7 @@ pub fn get_translations() -> HashMap<&'static str, Translations> {
         hero_macos_executable: "macOS 可执行文件",
         hero_windows_executable: "Windows 可执行文件",
         hero_doc_buttons: vec![
-            LinkItem::with_class(FIRST_STEPS_URL, "First Steps：新手指南", "btn btn-primary"),
-            LinkItem::with_class(INSTINTO_URL, "Instinto：技术文档", "btn btn-secondary"),
+            LinkItem::with_class(INSTINTO_URL, "Instinto：技术文档", "btn btn-primary"),
         ],
 
         // Index Page - Main Content
